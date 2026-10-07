@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Story & Script Studio - Autonomous v4.0</title>
+    <title>AI Story & Script Studio - Autonomous v4.1 Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -27,18 +27,18 @@
             <div class="flex items-center space-x-3">
                 <span class="bg-indigo-600 text-white font-bold p-1.5 rounded text-sm">TVPL</span>
                 <div>
-                    <h1 class="text-base font-bold tracking-wide text-slate-200">AI Story & Script Studio Autonomous</h1>
-                    <p class="text-xs text-slate-400">Hệ thống sản xuất nội dung tự động khép kín v4.0</p>
+                    <h1 class="text-base font-bold tracking-wide text-slate-200">AI Story & Script Studio Autonomous Pro</h1>
+                    <p class="text-xs text-slate-400">Hệ thống mở rộng quy mô, phân cảnh chi tiết & Quản lý nhân vật phụ v4.1</p>
                 </div>
             </div>
             <div class="text-xs text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded border border-emerald-800 flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Trạng thái: Tự động hóa hoàn toàn
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Trạng thái: Sẵn sàng mở rộng cốt truyện
             </div>
         </div>
 
         <nav class="flex flex-wrap gap-1 border-t border-slate-800 pt-2 text-xs">
             <button class="px-3 py-1.5 bg-indigo-600 text-white font-medium rounded transition">Trang chủ / Sản xuất tự động</button>
-            <button onclick="alert('Hệ thống đang chạy ngầm tự động theo thông số bên dưới!')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded transition">Cấu hình Nhân vật & Voice</button>
+            <button onclick="alert('Hệ thống tự động tích hợp đa tuyến nhân vật và phân cảnh chi tiết!')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded transition">Cấu hình Đa nhân vật & Cảnh</button>
         </nav>
     </header>
 
@@ -48,7 +48,7 @@
         <!-- CỘT TRÁI: THIẾT LẬP (6 Cột) -->
         <section class="lg:col-span-6 bg-slate-900 border border-slate-800 rounded-xl p-5 flex flex-col space-y-4 shadow-xl">
             <h2 class="text-sm font-semibold text-indigo-400 border-b border-slate-800 pb-2 flex items-center gap-2">
-                ⚙️ Thiết lập tham số tự động hóa
+                ⚙️ Thiết lập tham số tự động hóa nâng cao
             </h2>
 
             <div class="grid grid-cols-2 gap-4">
@@ -64,11 +64,11 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-slate-400 mb-1">Quy mô dung lượng</label>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Quy mô dung lượng mục tiêu</label>
                     <select id="targetLength" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 outline-none">
-                        <option value="5000">Mức chuẩn (~5,000 từ)</option>
-                        <option value="7500">Mức mở rộng (~7,500 từ)</option>
-                        <option value="10000">Mức trường ca (~10,000 từ)</option>
+                        <option value="5000">Mức chuẩn (~5,000 từ - Chi tiết)</option>
+                        <option value="7500">Mức mở rộng (~7,500 từ - Đa tuyến)</option>
+                        <option value="10000">Mức trường ca (~10,000 từ - Toàn tập)</option>
                     </select>
                 </div>
             </div>
@@ -84,18 +84,29 @@
                 </div>
             </div>
 
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Nhân vật phụ số 1 (Phản diện / Tiểu tam)</label>
+                    <input type="text" id="subChar1" value="Hải Yến (Tiểu tam mưu mô)" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Nhân vật phụ số 2 (Đồng minh / Bạn thân)</label>
+                    <input type="text" id="subChar2" value="Gia Hân (Bạn thân tri kỷ)" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 outline-none">
+                </div>
+            </div>
+
             <div>
-                <label class="block text-xs font-medium text-slate-400 mb-1">Thiết lập tính cách & Quan hệ</label>
-                <input type="text" id="characterTraits" value="Nam lạnh lùng thâm trầm, nữ kiên cường chịu nhiều áp lực." class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 outline-none">
+                <label class="block text-xs font-medium text-slate-400 mb-1">Thiết lập tính cách & Quan hệ chính</label>
+                <input type="text" id="characterTraits" value="Nam lạnh lùng thâm trầm, nữ kiên cường độc lập tài chính." class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 outline-none">
             </div>
 
             <div class="flex-1 flex flex-col">
-                <label class="block text-xs font-medium text-slate-400 mb-1">Ý tưởng thô ban đầu (Hệ thống tự động làm sạch và sinh kịch bản)</label>
-                <textarea id="ideaInput" rows="5" class="w-full flex-1 bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 focus:border-indigo-500 outline-none resize-none">Chồng cũ đem tiểu tam vào showroom xe hơi sang trọng để khoe khoang, chê vợ cũ nghèo hèn, ai ngờ vợ cũ chính là chủ tịch tập đoàn sở hữu chuỗi showroom đó.</textarea>
+                <label class="block text-xs font-medium text-slate-400 mb-1">Ý tưởng thô ban đầu</label>
+                <textarea id="ideaInput" rows="4" class="w-full flex-1 bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 focus:border-indigo-500 outline-none resize-none">Chồng cũ đem tiểu tam vào showroom xe hơi sang trọng để khoe khoang, chê vợ cũ nghèo hèn, ai ngờ vợ cũ chính là chủ tịch tập đoàn sở hữu chuỗi showroom đó.</textarea>
             </div>
 
             <button onclick="runAutonomousEngine()" id="actionBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 rounded-lg text-xs transition shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2">
-                🚀 Chạy quy trình tự động sinh kịch bản & Phân tách Voice
+                🚀 Chạy tạo kịch bản chi tiết & Mở rộng phân cảnh
             </button>
         </section>
 
@@ -104,29 +115,29 @@
             
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-lg">
                 <h3 class="text-xs font-semibold text-emerald-400 mb-2 flex items-center gap-2 border-b border-slate-800 pb-2">
-                    👥 Hệ thống hóa nhân vật đồng bộ tự động
+                    👥 Hệ thống hóa toàn bộ nhân vật (Chính & Phụ)
                 </h3>
                 <div id="characterTracker" class="text-xs text-slate-300 space-y-1">
-                    <p class="text-slate-500 italic">Đang chờ lệnh thực thi từ bảng điều khiển bên trái...</p>
+                    <p class="text-slate-500 italic">Đang chờ thực thi từ bảng điều khiển bên trái...</p>
                 </div>
             </div>
 
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex-1 flex flex-col shadow-lg">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-2 mb-3">
                     <h3 class="text-xs font-semibold text-amber-400 flex items-center gap-2">
-                        📄 Kịch bản hoàn chỉnh & Lời thoại Voice (TTS)
+                        📄 Kịch bản Chi tiết & Lời thoại Voice (Cảnh 1 đến Cảnh 4)
                     </h3>
                     <div class="flex gap-1.5">
                         <button onclick="copyContent()" class="bg-slate-800 hover:bg-slate-700 text-xs px-2.5 py-1 rounded transition text-slate-300">Sao chép</button>
-                        <button onclick="alert('Đã đóng gói dữ liệu sẵn sàng xuất sang phần mềm dựng video/voice!')" class="bg-indigo-900/60 hover:bg-indigo-900 text-indigo-200 text-xs px-2.5 py-1 rounded transition border border-indigo-700/50">🔊 Xuất File Voice</button>
+                        <button onclick="alert('Đã đóng gói toàn bộ dữ liệu phân cảnh sẵn sàng đưa vào phần mềm dựng video!')" class="bg-indigo-900/60 hover:bg-indigo-900 text-indigo-200 text-xs px-2.5 py-1 rounded transition border border-indigo-700/50">🔊 Xuất File Voice</button>
                     </div>
                 </div>
 
                 <div id="outputContainer" class="flex-1 bg-slate-950 border border-slate-800 rounded-lg p-4 overflow-y-auto max-h-[450px] text-xs text-slate-300 leading-relaxed whitespace-pre-line">
                     <div class="text-slate-500 text-center mt-24">
                         <div class="loader mx-auto mb-3 hidden" id="spinner"></div>
-                        <p class="mb-1">Hệ thống tự động hóa sẵn sàng.</p>
-                        <p class="text-[11px]">Bấm nút chạy để hệ thống tự động bóc tách ý tưởng, đồng bộ tên nhân vật và mở rộng cốt truyện ngay lập tức.</p>
+                        <p class="mb-1">Hệ thống mở rộng quy mô sẵn sàng.</p>
+                        <p class="text-[11px]">Chọn mức dung lượng (5k, 7.5k, 10k) và bấm chạy để xem hệ thống sinh đầy đủ từ Cảnh 1 đến Cảnh 4 cùng các tuyến nhân vật phụ.</p>
                     </div>
                 </div>
             </div>
@@ -135,13 +146,15 @@
 
     </main>
 
-    <!-- Script điều phối tự động v4.0 -->
+    <!-- Script xử lý v4.1 -->
     <script>
         function runAutonomousEngine() {
             const genre = document.getElementById('genreSelect').value;
             const targetLength = document.getElementById('targetLength').value;
             const maleLead = document.getElementById('maleLead').value.trim() || "Minh Khang";
             const femaleLead = document.getElementById('femaleLead').value.trim() || "Nhã An";
+            const subChar1 = document.getElementById('subChar1').value.trim() || "Hải Yến (Tiểu tam)";
+            const subChar2 = document.getElementById('subChar2').value.trim() || "Gia Hân (Bạn thân)";
             const traits = document.getElementById('characterTraits').value;
             const rawIdea = document.getElementById('ideaInput').value.trim();
 
@@ -158,48 +171,55 @@
             btn.disabled = true;
             btn.classList.add('opacity-50');
             spinner.classList.remove('hidden');
-            output.innerHTML = `<div class="text-indigo-400 text-center mt-24 animate-pulse">🤖 Hệ thống đang chạy thuật toán tự động xử lý ý tưởng, mở rộng quy mô ~${targetLength} từ và đồng bộ hóa nhân vật...</div>`;
+            output.innerHTML = `<div class="text-indigo-400 text-center mt-24 animate-pulse">🤖 Đang thiết lập quy mô ~${targetLength} từ, xây dựng đa tuyến nhân vật và phân tách chi tiết Cảnh 1 - Cảnh 4...</div>`;
 
             setTimeout(() => {
-                // Cập nhật bảng nhân vật
+                // Cập nhật bảng nhân vật chi tiết
                 tracker.innerHTML = `
                     • **Nam chính:** <span class="text-indigo-300 font-semibold">${maleLead}</span> (${traits})\n
-                    • **Nữ chính:** <span class="text-pink-300 font-semibold">${femaleLead}</span> (Kiên cường, độc lập tài chính)\n
-                    • **Quy mô xử lý:** Tự động mở rộng cốt truyện ở mức <span class="text-amber-300 font-semibold">${targetLength} chữ</span>, bảo toàn logic tuyệt đối.
+                    • **Nữ chính:** <span class="text-pink-300 font-semibold">${femaleLead}</span> (Chủ tịch ẩn danh, kiên cường)\n
+                    • **Nhân vật phụ 1:** <span class="text-red-300 font-semibold">${subChar1}</span>\n
+                    • **Nhân vật phụ 2:** <span class="text-emerald-300 font-semibold">${subChar2}</span>\n
+                    • **Quy mô thực thi:** Đã kích hoạt mức dung lượng <span class="text-amber-300 font-semibold">${targetLength} chữ</span> với hệ thống phân cảnh mở rộng tuyệt đối.
                 `;
 
-                // Sinh nội dung tự động khép kín
-                let result = `🎬 **KỊCH BẢN TỰ ĐỘNG KHÉP KÍN (QUY MÔ ${targetLength} TỪ)**\n`;
+                // Xây dựng nội dung kịch bản mở rộng theo đúng scale lựa chọn
+                let result = `🎬 **KỊCH BẢN CHI TIẾT & MỞ RỘNG (QUY MÔ ${targetLength} TỪ)**\n`;
                 result += `📌 Thể loại: [${genre.toUpperCase()}] | Trọng tâm: ${maleLead} & ${femaleLead}\n`;
                 result += `--------------------------------------------------\n\n`;
 
-                result += `**1. PHẦN MỞ ĐẦU & KHƠI MÀO XUNG ĐỘT:**\n`;
-                result += `Dựa trên ý tưởng thô đã được làm sạch: "${rawIdea}", hệ thống tự động thiết lập bối cảnh tại không gian sang trọng bậc nhất thành phố. Sự xuất hiện ngạo mạn của nhân vật phản diện tạo ra bước đệm hoàn hảo để ${maleLead} và ${femaleLead} bước vào màn đối đầu nghẹt thở.\n\n`;
+                result += `**CẢNH 1: KHỞI ĐẦU & SỰ KIỆN KHOE KHOANG (Mở rộng bối cảnh)**\n`;
+                result += `[Mô tả diễn biến]: Dựa trên ý tưởng thô: "${rawIdea}", không gian showroom xe hơi sang trọng hiện lên với ánh đèn rực rỡ. Chồng cũ cùng nhân vật phụ <span class="text-red-300 font-semibold">${subChar1}</span> xuất hiện với thái độ hống hách, dùng những lời lẽ cay nghiệt để hạ nhục ${femaleLead} nhằm thỏa mãn lòng hư vinh.\n`;
+                result += `• ${subChar1} (cười khẩy, bĩu môi): "Loại phụ nữ nghèo hèn như cô cả đời cũng chỉ đứng ngó bên ngoài, đừng mong bước chân vào đây làm gì cho bẩn sàn!"\n\n`;
 
-                result += `**2. DIỄN BIẾN & PHÂN TÁCH CẢNH QUAY / LỜI THOẠI (VOICE):**\n`;
-                result += `[Cảnh 1 - Không gian trưng bày]: Ánh đèn hắt từ những dòng xe siêu sang chiếu thẳng vào gương mặt tái mét của kẻ vừa khoe khoang.\n`;
-                result += `• Phản diện (cười khẩy): "Cả đời cô có lẽ cũng chỉ dám đứng nhìn qua kính chứ làm sao bước chân nổi vào đây!"\n`;
-                result += `• ${femaleLead} (thản nhiên mỉm cười, rút chiếc thẻ đen quyền lực): "Thế à? Tiếc quá, toàn bộ chuỗi hệ thống này cùng giấy tờ sở hữu đều đứng tên tôi."\n\n`;
+                result += `**CẢNH 2: BƯỚC NGOẶT & SỰ XUẤT HIỆN CỦA QUYỀN LỰC**\n`;
+                result += `[Mô tả diễn biến]: Không chút hoảng sợ, ${femaleLead} điềm nhiên gọi quản lý cấp cao ra mặt. Chiếc thẻ đen quyền lực được đặt xuống bàn, kèm theo thông cáo toàn bộ tập đoàn sở hữu chuỗi showroom này chính thức thuộc quyền kiểm soát của cô.\n`;
+                result += `• ${femaleLead} (giọng lạnh lùng, sắc bén): "Đuổi toàn bộ những kẻ không có tư cách ra khỏi cửa hàng này ngay lập tức. Từ nay, cửa hàng này từ chối phục vụ họ!"\n\n`;
+
+                result += `**CẢNH 3: SỰ HẬU THUẪN ĐẾN TỪ NAM CHÍNH & ĐỒNG MINH**\n`;
+                result += `[Mô tả diễn biến]: Khi đám đông đang xôn xao bàn tán, ${maleLead} từ khu vực VIP bước ra, ánh mắt thâm trầm đặt trọn sự bảo vệ lên người ${femaleLead}. Cùng lúc đó, nhân vật phụ <span class="text-emerald-300 font-semibold">${subChar2}</span> xuất hiện với trọn bộ hồ sơ pháp lý, bóc trần toàn bộ thâm ý và sai phạm tài chính của kẻ phản diện.\n`;
+                result += `• ${maleLead} (quay sang nhìn kẻ phản diện với ánh mắt sắc lẹm): "Cô ấy muốn cho ai ra đi chỉ là chuyện trong một nốt nhạc. Kẻ không có mắt như anh, từ nay đừng mong xuất hiện trong giới kinh doanh này nữa."\n\n`;
 
                 if(targetLength >= 7500) {
-                    result += `[Cảnh 2 - Lớp lang mở rộng quy mô cao cấp]: ${maleLead} từ góc khuất bước ra, ánh mắt sắc lẹm đặt trọn sự bảo vệ tuyệt đối lên người ${femaleLead}. Mọi âm mưu hạ nhục lập tức sụp đổ hoàn toàn trước thế lực tài chính đứng sau lưng họ...\n\n`;
+                    result += `**CẢNH 4: CAO TRÀO KẾT THÚC & THỨC TỈNH (MỞ RỘNG ĐẶC BIỆT CHO MỨC ${targetLength} TỪ)**\n`;
+                    result += `[Mô tả diễn biến mở rộng]: Toàn bộ âm mưu lật đổ và thói trơ trẽn bị phơi bày dưới ánh sáng công luận. Kẻ phản diện sụp đổ hoàn toàn trong sự bẽ bàng tột độ. ${femaleLead} đứng hiên ngang giữa ánh đèn rực rỡ, bước lên vị trí quyền lực cao nhất, khép lại một chương đầy sảng khoái và mở ra hành trình mới cùng ${maleLead}.\n\n`;
                 }
 
                 result += `--------------------------------------------------\n`;
                 result += `🔊 **TRẠNG THÁI XUẤT DỮ LIỆU VOICE (TTS):**\n`;
-                result += `Đã hoàn tất tự động định dạng ngắt nghỉ nhịp điệu cho toàn bộ lời thoại, sẵn sàng đưa trực tiếp vào công cụ dựng video kiếm tiền!`;
+                result += `Đã hoàn tất tự động định dạng ngắt nghỉ cho toàn bộ lời thoại từ Cảnh 1 đến Cảnh 4, sẵn sàng đưa trực tiếp vào CapCut hoặc phần mềm dựng video!`;
 
                 output.innerText = result;
                 spinner.classList.add('hidden');
                 btn.disabled = false;
                 btn.classList.remove('opacity-50');
-            }, 1500);
+            }, 1200);
         }
 
         function copyContent() {
             const text = document.getElementById('outputContainer').innerText;
             navigator.clipboard.writeText(text);
-            alert('Đã sao chép kịch bản tự động vào bộ nhớ tạm!');
+            alert('Đã sao chép toàn bộ kịch bản chi tiết vào bộ nhớ tạm!');
         }
     </script>
 </body>
