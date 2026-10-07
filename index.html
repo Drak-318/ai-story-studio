@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Story & Script Studio - Kênh Kiếm Tiền YouTube/TikTok</title>
+    <!-- Tailwind CSS CDN cho giao diện đẹp hiện đại -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-slate-800 border-b border-slate-700 px-6 py-4 flex justify-between items-center shadow-md">
+        <div class="flex items-center space-x-3">
+            <span class="bg-indigo-600 text-white font-bold p-2 rounded-lg text-lg">🎬</span>
+            <div>
+                <h1 class="text-xl font-bold tracking-wide">AI Story & Script Studio</h1>
+                <p class="text-xs text-slate-400">Hệ thống sáng tạo kịch bản video độc quyền chống Reused Content</p>
+            </div>
+        </div>
+        <div class="text-xs bg-indigo-900/50 text-indigo-300 border border-indigo-700 px-3 py-1.5 rounded-full">
+            Trạng thái: Sẵn sàng sản xuất
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 p-6 max-w-[1600px] w-full mx-auto">
+        
+        <!-- SIDEBAR: Cấu hình đầu vào (Bên trái) -->
+        <section class="lg:col-span-4 bg-slate-800/80 backdrop-blur border border-slate-700 rounded-2xl p-6 flex flex-col space-y-5 shadow-xl">
+            <h2 class="text-lg font-semibold text-indigo-400 border-b border-slate-700 pb-3 flex items-center gap-2">
+                ⚙️ Thiết lập nội dung
+            </h2>
+
+            <!-- Chọn thể loại -->
+            <div>
+                <label class="block text-sm font-medium text-slate-300 mb-2">1. Thể loại truyện</label>
+                <select id="genreSelect" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-indigo-500 transition">
+                    <option value="hoc-duong">🏫 Học đường (Trong sáng, tâm lý tuổi trẻ)</option>
+                    <option value="cong-so">💼 Công sở (Sắc sảo, đấu đá ngầm, KPI)</option>
+                    <option value="hon-nhan">💔 Hôn nhân & Tiểu tam (Cao trào, gia đình, trả thù)</option>
+                    <option value="18-plus">🔥 18+ / Romance trưởng thành (Gợi cảm, nội tâm)</option>
+                    <option value="xuyen-khong">⏳ Xuyên không / Trọng sinh (Hóm hỉnh, sảng văn)</option>
+                    <option value="dam-my">🌸 Đam mỹ (Tinh tế, độc quyền, che chở)</option>
+                    <option value="huyen-huyen">⚡ Huyền huyễn / Dị năng (Kỳ ảo, hệ thống sức mạnh)</option>
+                </select>
+            </div>
+
+            <!-- Chọn độ dài -->
+            <div>
+                <label class="block text-sm font-medium text-slate-300 mb-2">2. Định dạng & Độ dài</label>
+                <select id="lengthSelect" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-indigo-500 transition">
+                    <option value="ngan">📜 Truyện ngắn (One-shot hoàn chỉnh - làm Short/Reels 1 tập)</option>
+                    <option value="dai">📖 Truyện dài (Series nhiều tập - Viết phần 1 & Gợi ý ngã rẽ)</option>
+                </select>
+            </div>
+
+            <!-- Khung nhập ý tưởng thô -->
+            <div class="flex-1 flex flex-col">
+                <label class="block text-sm font-medium text-slate-300 mb-2">3. Ý tưởng thô ban đầu của bạn</label>
+                <textarea id="ideaInput" rows="6" placeholder="Nhập đại ý, bối cảnh hoặc một câu mở đầu bất kỳ trong đầu bạn... (Ví dụ: Chồng cũ đem tiểu tam vào showroom xe hơi khinh thường vợ cũ, ai ngờ vợ cũ là chủ tịch)." class="w-full flex-1 bg-slate-900 border border-slate-700 rounded-xl p-4 text-slate-200 focus:outline-none focus:border-indigo-500 transition resize-none text-sm"></textarea>
+            </div>
+
+            <!-- Nút thực thi -->
+            <button onclick="generateStory()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3.5 rounded-xl transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
+                ✨ Tiến hành biên tập kịch bản
+            </button>
+        </section>
+
+        <!-- PREVIEW & OUTPUT: Hiển thị kết quả (Bên phải) -->
+        <section class="lg:col-span-8 bg-slate-800/80 backdrop-blur border border-slate-700 rounded-2xl p-6 flex flex-col shadow-xl">
+            <div class="flex justify-between items-center border-b border-slate-700 pb-3 mb-4">
+                <h2 class="text-lg font-semibold text-emerald-400 flex items-center gap-2">
+                    📄 Kết quả kịch bản sản xuất
+                </h2>
+                <div class="flex gap-2">
+                    <button onclick="copyContent()" class="bg-slate-700 hover:bg-slate-600 text-xs px-3 py-1.5 rounded-lg transition">Sao chép</button>
+                    <button onclick="clearOutput()" class="bg-red-900/40 hover:bg-red-900/60 text-red-300 text-xs px-3 py-1.5 rounded-lg transition border border-red-700/50">Xóa trắng</button>
+                </div>
+            </div>
+
+            <!-- Khung chứa nội dung xuất ra -->
+            <div id="outputContainer" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl p-6 overflow-y-auto max-h-[650px] text-slate-300 text-sm leading-relaxed whitespace-pre-line">
+                <div class="text-slate-500 text-center mt-32">
+                    <p class="text-base mb-2">Chưa có kịch bản nào được tạo.</p>
+                    <p class="text-xs">Hãy chọn thể loại, nhập ý tưởng thô ở bên trái và bấm <span class="text-indigo-400 font-semibold">"Tiến hành biên tập kịch bản"</span> để bắt đầu!</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Script giả lập cơ chế sinh nội dung thông minh ngay trên Web App -->
+    <script>
+        function generateStory() {
+            const genre = document.getElementById('genreSelect').value;
+            const lengthType = document.getElementById('lengthSelect').value;
+            const idea = document.getElementById('ideaInput').value.trim();
+            const output = document.getElementById('outputContainer');
+
+            if (!idea) {
+                alert('Vui lòng nhập ý tưởng thô ban đầu của bạn!');
+                return;
+            }
+
+            output.innerHTML = `<div class="text-indigo-400 text-center mt-32 animate-pulse">⏳ AI đang phân tích thể loại và biên tập kịch bản độc quyền cho bạn...</div>`;
+
+            setTimeout(() => {
+                let resultText = "";
+                if (lengthType === 'ngan') {
+                    resultText = `🎯 **KẾT QUẢ: TRUYỆN NGẮN (ONE-SHOT CHO SHORTS/REELS)**\n`;
+                    resultText += `📌 Thể loại: [${genre.toUpperCase()}]\n`;
+                    resultText += `💡 Ý tưởng gốc: "${idea}"\n\n`;
+                    resultText += `--------------------------------------------------\n\n`;
+                    resultText += `[00:00 - 00:15] **HOOK (Mở đầu giật gân):**\n`;
+                    resultText += `Không ai ngờ được rằng, người phụ nữ vừa bị ném ánh khinh bỉ vào mặt vài giây trước lại chính là người nắm giữ sinh mệnh tài chính của cả cái trung tâm thương mại xa hoa này...\n\n`;
+                    resultText += `[00:15 - 01:30] **CỐT TRUYỆN CHÍNH & CAO TRÀO:**\n`;
+                    resultText += `Dựa trên ý tưởng "${idea}", câu chuyện đẩy cao trào khi nhân vật nam chính/phản diện bắt đầu lộ rõ vẻ hống hách, dùng lời lẽ cay nghiệt để hạ nhục người đối diện. Nhưng nhịp điệu giọng đọc lúc này cần trầm xuống, dồn nén cảm xúc trước khi cú "twist" xuất hiện. Nhân vật bước đến quầy thanh toán, chiếc thẻ đen quyền lực được rút ra, kèm theo câu nói nhẹ nhàng nhưng lạnh ngách khiến cả không gian chết lặng...\n\n`;
+                    resultText += `[01:30 - 02:00] **CÁI KẾT (Cliffhanger/Bài học nhân sinh):**\n`;
+                    resultText += `Đời người đôi khi ngắn ngủi thế đấy, đừng bao giờ đánh giá thấp bất kỳ ai chỉ vì bề ngoài của họ. Nhớ bấm đăng ký kênh để đón xem tập tiếp theo nhé!\n\n`;
+                    resultText += `✨ **Gợi ý Text Overlay (Chữ chạy trên video):** "Đừng bao giờ nhìn mặt mà bắt hình dong!"`;
+                } else {
+                    resultText = `📖 **KẾT QUẢ: TRUYỆN DÀI (PHẦN 1 - SERIES NHIỀU TẬP)**\n`;
+                    resultText += `📌 Thể loại: [${genre.toUpperCase()}]\n`;
+                    resultText += `💡 Ý tưởng gốc: "${idea}"\n\n`;
+                    resultText += `--------------------------------------------------\n\n`;
+                    resultText += `**PHẦN 1: KHỞI ĐẦU VÀ SỰ KIỆN KHƠI MÀO**\n`;
+                    resultText += `Mọi chuyện bắt đầu từ một buổi chiều tại bối cảnh chính của câu chuyện. Dựa vào ý tưởng "${idea}", phân đoạn này tập trung khắc họa sâu sắc hoàn cảnh trớ trêu của nhân vật chính. Sự áp bức, hiểu lầm hoặc thử thách được đẩy lên đến đỉnh điểm ở cuối phần 1 khi một cánh cửa bí mật hoặc một cuộc gọi định mệnh xuất hiện...\n\n`;
+                    resultText += `--------------------------------------------------\n`;
+                    resultText += `🔀 **CÁC HƯỚNG ĐI XUẤT BẢN TIẾP THEO (ĐỂ BẠN LỰA CHỌN PHẦN 2):**\n`;
+                    resultText += `1️⃣ **Hướng A (Trả thù trực diện):** Nhân vật chính quyết định lật bài ngửa ngay lập tức, tung chứng cứ khiến đối phương bẽ mặt công khai.\n`;
+                    resultText += `2️⃣ **Hướng B (Nhẫn nhịn chờ thời):** Giấu mình ẩn danh, tiếp tục chơi trò mèo vờn chuột để gom đủ bằng chứng triệt phá toàn bộ đường dây.\n`;
+                    resultText += `3️⃣ **Hướng C (Xuất hiện nhân vật thứ ba):** Một đồng minh bất ngờ bước ra từ quá khứ, đưa ra một giao dịch mà nhân vật chính khó lòng từ chối.\n\n`;
+                    resultText += `💡 *Lời khuyên cho bạn:* Hãy chọn một trong 3 hướng trên (hoặc tự gõ thêm ý tưởng cá nhân của bạn) rồi gửi lại vào khung chat để AI viết tiếp Phần 2 chuẩn xác nhất!`;
+                }
+                output.innerText = resultText;
+            }, 1000);
+        }
+
+        function copyContent() {
+            const text = document.getElementById('outputContainer').innerText;
+            navigator.clipboard.writeText(text);
+            alert('Đã sao chép kịch bản vào bộ nhớ tạm!');
+        }
+
+        function clearOutput() {
+            document.getElementById('outputContainer').innerHTML = `
+                <div class="text-slate-500 text-center mt-32">
+                    <p class="text-base mb-2">Chưa có kịch bản nào được tạo.</p>
+                    <p class="text-xs">Hãy chọn thể loại, nhập ý tưởng thô ở bên trái và bấm <span class="text-indigo-400 font-semibold">"Tiến hành biên tập kịch bản"</span> để bắt đầu!</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
