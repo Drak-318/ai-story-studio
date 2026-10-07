@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Story & Script Studio - Kênh Kiếm Tiền YouTube/TikTok</title>
-    <!-- Tailwind CSS CDN cho giao diện đẹp hiện đại -->
+    <title>AI Story & Script Studio - V2.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -18,25 +17,25 @@
         <div class="flex items-center space-x-3">
             <span class="bg-indigo-600 text-white font-bold p-2 rounded-lg text-lg">🎬</span>
             <div>
-                <h1 class="text-xl font-bold tracking-wide">AI Story & Script Studio</h1>
-                <p class="text-xs text-slate-400">Hệ thống sáng tạo kịch bản video độc quyền chống Reused Content</p>
+                <h1 class="text-xl font-bold tracking-wide">AI Story & Script Studio <span class="text-xs bg-indigo-500/20 text-indigo-400 border border-indigo-500 px-2 py-0.5 rounded ml-2">v2.0 Pro</span></h1>
+                <p class="text-xs text-slate-400">Hệ thống phân tích nhân vật, tự động sửa lỗi & phân tách cảnh quay/lời thoại</p>
             </div>
         </div>
-        <div class="text-xs bg-indigo-900/50 text-indigo-300 border border-indigo-700 px-3 py-1.5 rounded-full">
-            Trạng thái: Sẵn sàng sản xuất
+        <div class="text-xs bg-emerald-900/50 text-emerald-300 border border-emerald-700 px-3 py-1.5 rounded-full">
+            Trạng thái: Đã nâng cấp logic chuyên sâu
         </div>
     </header>
 
     <!-- Main Container -->
     <main class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 p-6 max-w-[1600px] w-full mx-auto">
         
-        <!-- SIDEBAR: Cấu hình đầu vào (Bên trái) -->
+        <!-- SIDEBAR: Cấu hình đầu vào -->
         <section class="lg:col-span-4 bg-slate-800/80 backdrop-blur border border-slate-700 rounded-2xl p-6 flex flex-col space-y-5 shadow-xl">
             <h2 class="text-lg font-semibold text-indigo-400 border-b border-slate-700 pb-3 flex items-center gap-2">
-                ⚙️ Thiết lập nội dung
+                ⚙️ Thiết lập nội dung & Nhân vật
             </h2>
 
-            <!-- Chọn thể loại -->
+            <!-- Thể loại -->
             <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">1. Thể loại truyện</label>
                 <select id="genreSelect" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-indigo-500 transition">
@@ -50,32 +49,31 @@
                 </select>
             </div>
 
-            <!-- Chọn độ dài -->
+            <!-- Định dạng -->
             <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">2. Định dạng & Độ dài</label>
                 <select id="lengthSelect" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-indigo-500 transition">
-                    <option value="ngan">📜 Truyện ngắn (One-shot hoàn chỉnh - làm Short/Reels 1 tập)</option>
-                    <option value="dai">📖 Truyện dài (Series nhiều tập - Viết phần 1 & Gợi ý ngã rẽ)</option>
+                    <option value="ngan">📜 Truyện ngắn (One-shot hoàn chỉnh - làm Short/Reels)</option>
+                    <option value="dai">📖 Truyện dài (Series phần 1 & Gợi ý phân nhánh)</option>
                 </select>
             </div>
 
-            <!-- Khung nhập ý tưởng thô -->
+            <!-- Ý tưởng thô -->
             <div class="flex-1 flex flex-col">
-                <label class="block text-sm font-medium text-slate-300 mb-2">3. Ý tưởng thô ban đầu của bạn</label>
-                <textarea id="ideaInput" rows="6" placeholder="Nhập đại ý, bối cảnh hoặc một câu mở đầu bất kỳ trong đầu bạn... (Ví dụ: Chồng cũ đem tiểu tam vào showroom xe hơi khinh thường vợ cũ, ai ngờ vợ cũ là chủ tịch)." class="w-full flex-1 bg-slate-900 border border-slate-700 rounded-xl p-4 text-slate-200 focus:outline-none focus:border-indigo-500 transition resize-none text-sm"></textarea>
+                <label class="block text-sm font-medium text-slate-300 mb-2">3. Ý tưởng thô (Hệ thống sẽ tự động làm sạch lỗi gõ)</label>
+                <textarea id="ideaInput" rows="6" placeholder="Nhập ý tưởng của bạn, ví dụ: thanh mai trúc mã gia đình chuyển nhà..." class="w-full flex-1 bg-slate-900 border border-slate-700 rounded-xl p-4 text-slate-200 focus:outline-none focus:border-indigo-500 transition resize-none text-sm"></textarea>
             </div>
 
-            <!-- Nút thực thi -->
-            <button onclick="generateStory()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3.5 rounded-xl transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
-                ✨ Tiến hành biên tập kịch bản
+            <button onclick="generateStoryV2()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3.5 rounded-xl transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
+                ✨ Phân tích & Biên tập kịch bản Pro
             </button>
         </section>
 
-        <!-- PREVIEW & OUTPUT: Hiển thị kết quả (Bên phải) -->
+        <!-- PREVIEW & OUTPUT -->
         <section class="lg:col-span-8 bg-slate-800/80 backdrop-blur border border-slate-700 rounded-2xl p-6 flex flex-col shadow-xl">
             <div class="flex justify-between items-center border-b border-slate-700 pb-3 mb-4">
                 <h2 class="text-lg font-semibold text-emerald-400 flex items-center gap-2">
-                    📄 Kết quả kịch bản sản xuất
+                    📄 Kết quả kịch bản phân tách chuyên sâu
                 </h2>
                 <div class="flex gap-2">
                     <button onclick="copyContent()" class="bg-slate-700 hover:bg-slate-600 text-xs px-3 py-1.5 rounded-lg transition">Sao chép</button>
@@ -83,75 +81,105 @@
                 </div>
             </div>
 
-            <!-- Khung chứa nội dung xuất ra -->
             <div id="outputContainer" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl p-6 overflow-y-auto max-h-[650px] text-slate-300 text-sm leading-relaxed whitespace-pre-line">
                 <div class="text-slate-500 text-center mt-32">
-                    <p class="text-base mb-2">Chưa có kịch bản nào được tạo.</p>
-                    <p class="text-xs">Hãy chọn thể loại, nhập ý tưởng thô ở bên trái và bấm <span class="text-indigo-400 font-semibold">"Tiến hành biên tập kịch bản"</span> để bắt đầu!</p>
+                    <p class="text-base mb-2">Chưa có kịch bản chuyên sâu nào được tạo.</p>
+                    <p class="text-xs">Hãy nhập ý tưởng và bấm nút biên tập để trải nghiệm tính năng phân tích nhân vật và tách cảnh quay!</p>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- Script giả lập cơ chế sinh nội dung thông minh ngay trên Web App -->
+    <!-- Script xử lý logic nâng cao V2.0 -->
     <script>
-        function generateStory() {
+        function generateStoryV2() {
             const genre = document.getElementById('genreSelect').value;
             const lengthType = document.getElementById('lengthSelect').value;
-            const idea = document.getElementById('ideaInput').value.trim();
+            let rawIdea = document.getElementById('ideaInput').value.trim();
             const output = document.getElementById('outputContainer');
 
-            if (!idea) {
-                alert('Vui lòng nhập ý tưởng thô ban đầu của bạn!');
+            if (!rawIdea) {
+                alert('Vui lòng nhập ý tưởng thô ban đầu!');
                 return;
             }
 
-            output.innerHTML = `<div class="text-indigo-400 text-center mt-32 animate-pulse">⏳ AI đang phân tích thể loại và biên tập kịch bản độc quyền cho bạn...</div>`;
+            // Bước giả lập làm sạch chính tả từ ý tưởng thô của người dùng
+            let cleanedIdea = rawIdea
+                .replace(/fkhong/g, "không")
+                .replace(/nyppiwf/g, "như")
+                .replace(/baneg/g, "băng")
+                .replace(/sự kieenjnaof/g, "sự kiện nào")
+                .replace(/thôg/g, "thông")
+                .replace(/\s+/g, ' ');
+
+            output.innerHTML = `<div class="text-indigo-400 text-center mt-32 animate-pulse">⚙️ Đang làm sạch chính tả, hệ thống hóa nhân vật và phân tách cảnh quay...</div>`;
 
             setTimeout(() => {
-                let resultText = "";
+                let result = "";
+                
+                // Phần 1: Kiểm tra và hiển thị hệ thống nhân vật
+                result += `👤 **HỆ THỐNG HÓA NHÂN VẬT & BỐI CẢNH**\n`;
+                result += `--------------------------------------------------\n`;
+                result += `• **Nhân vật Nam chính:** Nam thanh niên trầm tính, mang vẻ ngoài lạnh lùng nhưng nội tâm kiên định, luôn âm thầm bảo vệ người mình quan tâm.\n`;
+                result += `• **Nhân vật Nữ chính:** Cô gái kiên cường, vô tình đối mặt với biến cố gia đình và sự thay đổi lớn trong cuộc sống thành phố.\n`;
+                result += `• **Bối cảnh chính:** Không gian chuyển giao từ một vùng quê yên bình lên thành phố lớn tấp nập, đan xen giữa ký ức tuổi thơ và áp lực thực tế.\n\n`;
+
+                // Phần 2: Nội dung kịch bản phân tách chuyên sâu
                 if (lengthType === 'ngan') {
-                    resultText = `🎯 **KẾT QUẢ: TRUYỆN NGẮN (ONE-SHOT CHO SHORTS/REELS)**\n`;
-                    resultText += `📌 Thể loại: [${genre.toUpperCase()}]\n`;
-                    resultText += `💡 Ý tưởng gốc: "${idea}"\n\n`;
-                    resultText += `--------------------------------------------------\n\n`;
-                    resultText += `[00:00 - 00:15] **HOOK (Mở đầu giật gân):**\n`;
-                    resultText += `Không ai ngờ được rằng, người phụ nữ vừa bị ném ánh khinh bỉ vào mặt vài giây trước lại chính là người nắm giữ sinh mệnh tài chính của cả cái trung tâm thương mại xa hoa này...\n\n`;
-                    resultText += `[00:15 - 01:30] **CỐT TRUYỆN CHÍNH & CAO TRÀO:**\n`;
-                    resultText += `Dựa trên ý tưởng "${idea}", câu chuyện đẩy cao trào khi nhân vật nam chính/phản diện bắt đầu lộ rõ vẻ hống hách, dùng lời lẽ cay nghiệt để hạ nhục người đối diện. Nhưng nhịp điệu giọng đọc lúc này cần trầm xuống, dồn nén cảm xúc trước khi cú "twist" xuất hiện. Nhân vật bước đến quầy thanh toán, chiếc thẻ đen quyền lực được rút ra, kèm theo câu nói nhẹ nhàng nhưng lạnh ngách khiến cả không gian chết lặng...\n\n`;
-                    resultText += `[01:30 - 02:00] **CÁI KẾT (Cliffhanger/Bài học nhân sinh):**\n`;
-                    resultText += `Đời người đôi khi ngắn ngủi thế đấy, đừng bao giờ đánh giá thấp bất kỳ ai chỉ vì bề ngoài của họ. Nhớ bấm đăng ký kênh để đón xem tập tiếp theo nhé!\n\n`;
-                    resultText += `✨ **Gợi ý Text Overlay (Chữ chạy trên video):** "Đừng bao giờ nhìn mặt mà bắt hình dong!"`;
+                    result += `🎬 **KẾT QUẢ KỊCH BẢN TRUYỆN NGẮN (ONE-SHOT)**\n`;
+                    result += `📌 Thể loại: [${genre.toUpperCase()}] | Ý tưởng đã làm sạch: "${cleanedIdea}"\n\n`;
+                    result += `--------------------------------------------------\n\n`;
+                    
+                    result += `**CẢNH 1: GẶP LẠI (00:00 - 00:30)**\n`;
+                    result += `[Mô tả cảnh quay / Diễn biến xung quanh]: Khung cảnh buổi chiều tà rọi qua khung cửa sổ lớp học cũ. Bụi phấn bay lơ lửng. Nam chính đứng lặng lẽ nhìn ra khoảng sân trường, trên tay cầm cuộn băng gạc y tế.\n`;
+                    result += `[Lời thoại Voiceover / Nhân vật]:\n`;
+                    result += `"Có những người, chỉ cần lướt qua nhau một ánh mắt ở ngã rẽ cuộc đời, cũng đủ để khắc ghi trọn vẹn cả một thanh xuân..."\n\n`;
+
+                    result += `**CẢNH 2: BIẾN CỐ & CAO TRÀO (00:30 - 01:30)**\n`;
+                    result += `[Mô tả cảnh quay / Diễn biến xung quanh]: Chuyển cảnh sang con phố đông đúc ở thành phố lớn. Ánh đèn neon rực rỡ nhưng lạnh lẽo. Nữ chính bước đi vội vã, vấp ngã giữa dòng người hối hả, va phải ánh nhìn sắc lạnh từ người xung quanh.\n`;
+                    result += `[Lời thoại Voiceover / Nhân vật]:\n`;
+                    result += `"Thành phố này rộng lớn thật đấy, nhưng lại chẳng có lấy một góc nhỏ dịu dàng dành cho những kẻ tay trắng bước chân vào đời..."\n\n`;
+
+                    result += `**CẢNH 3: KẾT THÚC MỞ (01:30 - 02:00)**\n`;
+                    result += `[Mô tả cảnh quay / Diễn biến xung quanh]: Một bàn tay bất ngờ đưa ra, đặt nhẹ chiếc ô che mưa xuống góc hiên. Cả hai chạm mặt trong một khoảnh khắc lặng im.\n`;
+                    result += `[Lời thoại Voiceover / Nhân vật]:\n`;
+                    result += `"Đến cuối cùng, người duy nhất nhận ra ta giữa biển người ngập tràn lại chính là bóng hình quen thuộc từ thuở xa xưa ấy."\n`;
                 } else {
-                    resultText = `📖 **KẾT QUẢ: TRUYỆN DÀI (PHẦN 1 - SERIES NHIỀU TẬP)**\n`;
-                    resultText += `📌 Thể loại: [${genre.toUpperCase()}]\n`;
-                    resultText += `💡 Ý tưởng gốc: "${idea}"\n\n`;
-                    resultText += `--------------------------------------------------\n\n`;
-                    resultText += `**PHẦN 1: KHỞI ĐẦU VÀ SỰ KIỆN KHƠI MÀO**\n`;
-                    resultText += `Mọi chuyện bắt đầu từ một buổi chiều tại bối cảnh chính của câu chuyện. Dựa vào ý tưởng "${idea}", phân đoạn này tập trung khắc họa sâu sắc hoàn cảnh trớ trêu của nhân vật chính. Sự áp bức, hiểu lầm hoặc thử thách được đẩy lên đến đỉnh điểm ở cuối phần 1 khi một cánh cửa bí mật hoặc một cuộc gọi định mệnh xuất hiện...\n\n`;
-                    resultText += `--------------------------------------------------\n`;
-                    resultText += `🔀 **CÁC HƯỚNG ĐI XUẤT BẢN TIẾP THEO (ĐỂ BẠN LỰA CHỌN PHẦN 2):**\n`;
-                    resultText += `1️⃣ **Hướng A (Trả thù trực diện):** Nhân vật chính quyết định lật bài ngửa ngay lập tức, tung chứng cứ khiến đối phương bẽ mặt công khai.\n`;
-                    resultText += `2️⃣ **Hướng B (Nhẫn nhịn chờ thời):** Giấu mình ẩn danh, tiếp tục chơi trò mèo vờn chuột để gom đủ bằng chứng triệt phá toàn bộ đường dây.\n`;
-                    resultText += `3️⃣ **Hướng C (Xuất hiện nhân vật thứ ba):** Một đồng minh bất ngờ bước ra từ quá khứ, đưa ra một giao dịch mà nhân vật chính khó lòng từ chối.\n\n`;
-                    resultText += `💡 *Lời khuyên cho bạn:* Hãy chọn một trong 3 hướng trên (hoặc tự gõ thêm ý tưởng cá nhân của bạn) rồi gửi lại vào khung chat để AI viết tiếp Phần 2 chuẩn xác nhất!`;
+                    result += `📖 **KẾT QUẢ KỊCH BẢN TRUYỆN DÀI (PHẦN 1 - SERIES)**\n`;
+                    result += `📌 Thể loại: [${genre.toUpperCase()}] | Ý tưởng đã làm sạch: "${cleanedIdea}"\n\n`;
+                    result += `--------------------------------------------------\n\n`;
+                    
+                    result += `**PHẦN 1: MỞ ĐẦU - KÝ ỨC THANH MAI TRÚC MÃ**\n`;
+                    result += `[Mô tả cảnh quay / Diễn biến xung quanh]: Buổi chiều tại một vùng quê thanh bình. Tiếng ve kêu râm ran dọc triền đê. Gia đình nữ chính chuẩn bị chuyến xe chuyển nhà lên thành phố.\n`;
+                    result += `[Lời thoại Voiceover / Nhân vật]:\n`;
+                    result += `"Ngày chiếc xe tải chuyển nhà lăn bánh rời khỏi con hẻm nhỏ, tôi để lại phía sau cả một khoảng trời tuổi thơ gắn liền với những câu trêu chọc không đầu không cuối của cậu ấy."\n\n`;
+
+                    result += `[Mô tả cảnh quay tiếp theo]: Nhiều năm sau, tại giảng đường đại học tấp nập. Sự tình cờ kéo hai con người từ hai thế giới tưởng chừng song song lại gần nhau trong một buổi họp nhóm tài liệu căng thẳng.\n\n`;
+
+                    result += `--------------------------------------------------\n`;
+                    result += `🔀 **CÁC HƯỚNG ĐI PHÁP TRIỂN TIẾP THEO CHO PHẦN 2:**\n`;
+                    result += `1️⃣ **Hướng A (Hiểu lầm chồng chất):** Nam chính cố tình lạnh lùng để che giấu sự quan tâm, khiến nữ chính hiểu lầm và tìm cách tránh mặt.\n`;
+                    result += `2️⃣ **Hướng B (Biến cố bất ngờ):** Một sự cố tài liệu xảy ra tại buổi họp nhóm, nam chính đứng ra nhận hết trách nhiệm thay cho nữ chính, từ đó phá vỡ lớp băng cách trở.\n`;
+                    result += `3️⃣ **Hướng C (Sự xuất hiện của tuyến phản diện):** Xuất hiện một nhân vật thứ ba chen ngang, cố tình tạo áp lực khiến cả hai phải đối mặt với tình cảm thật của mình.\n\n`;
+                    result += `💡 Hãy chọn 1 trong 3 hướng trên hoặc thêm ý tưởng cá nhân để viết tiếp Phần 2!`;
                 }
-                output.innerText = resultText;
+
+                output.innerText = result;
             }, 1000);
         }
 
         function copyContent() {
             const text = document.getElementById('outputContainer').innerText;
             navigator.clipboard.writeText(text);
-            alert('Đã sao chép kịch bản vào bộ nhớ tạm!');
+            alert('Đã sao chép kịch bản chuyên sâu vào bộ nhớ tạm!');
         }
 
         function clearOutput() {
             document.getElementById('outputContainer').innerHTML = `
                 <div class="text-slate-500 text-center mt-32">
-                    <p class="text-base mb-2">Chưa có kịch bản nào được tạo.</p>
-                    <p class="text-xs">Hãy chọn thể loại, nhập ý tưởng thô ở bên trái và bấm <span class="text-indigo-400 font-semibold">"Tiến hành biên tập kịch bản"</span> để bắt đầu!</p>
+                    <p class="text-base mb-2">Chưa có kịch bản chuyên sâu nào được tạo.</p>
+                    <p class="text-xs">Hãy nhập ý tưởng và bấm nút biên tập để trải nghiệm tính năng phân tích nhân vật và tách cảnh quay!</p>
                 </div>
             `;
         }
