@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Story & Script Studio - Autonomous v4.1 Pro</title>
+    <title>AI Story & Script Studio - Outline Engine v6.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -23,121 +23,101 @@
 
     <!-- Header Control Panel -->
     <header class="bg-slate-900 border-b border-slate-800 px-6 py-3 shadow-md">
-        <div class="flex justify-between items-center mb-3">
+        <div class="flex justify-between items-center mb-2">
             <div class="flex items-center space-x-3">
                 <span class="bg-indigo-600 text-white font-bold p-1.5 rounded text-sm">TVPL</span>
                 <div>
-                    <h1 class="text-base font-bold tracking-wide text-slate-200">AI Story & Script Studio Autonomous Pro</h1>
-                    <p class="text-xs text-slate-400">Hệ thống mở rộng quy mô, phân cảnh chi tiết & Quản lý nhân vật phụ v4.1</p>
+                    <h1 class="text-base font-bold tracking-wide text-slate-200">AI Story & Script Studio - Outline Engine v6.0</h1>
+                    <p class="text-xs text-slate-400">Hệ thống kiểm soát dàn ý xương sống & Điều hướng logic từng chương</p>
                 </div>
             </div>
             <div class="text-xs text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded border border-emerald-800 flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Trạng thái: Sẵn sàng mở rộng cốt truyện
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Trạng thái: Quản lý theo Dàn ý Chương
             </div>
         </div>
-
-        <nav class="flex flex-wrap gap-1 border-t border-slate-800 pt-2 text-xs">
-            <button class="px-3 py-1.5 bg-indigo-600 text-white font-medium rounded transition">Trang chủ / Sản xuất tự động</button>
-            <button onclick="alert('Hệ thống tự động tích hợp đa tuyến nhân vật và phân cảnh chi tiết!')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded transition">Cấu hình Đa nhân vật & Cảnh</button>
-        </nav>
     </header>
 
     <!-- Main Workspace -->
     <main class="flex-1 p-6 max-w-[1700px] w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <!-- CỘT TRÁI: THIẾT LẬP (6 Cột) -->
-        <section class="lg:col-span-6 bg-slate-900 border border-slate-800 rounded-xl p-5 flex flex-col space-y-4 shadow-xl">
+        <!-- CỘT TRÁI: THIẾT LẬP THAM SỐ (5 Cột) -->
+        <section class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-xl p-5 flex flex-col space-y-4 shadow-xl">
             <h2 class="text-sm font-semibold text-indigo-400 border-b border-slate-800 pb-2 flex items-center gap-2">
-                ⚙️ Thiết lập tham số tự động hóa nâng cao
+                ⚙️ Thiết lập tham số cốt truyện
             </h2>
 
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-xs font-medium text-slate-400 mb-1">Thể loại truyện</label>
-                    <select id="genreSelect" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 outline-none">
-                        <option value="hon-nhan">💔 Hôn nhân & Tiểu tam (Cao trào, trả thù)</option>
-                        <option value="hoc-duong">🏫 Học đường trong sáng</option>
-                        <option value="cong-so">💼 Công sở đấu đá KPI</option>
-                        <option value="18-plus">🔥 Romance trưởng thành</option>
-                        <option value="xuyen-khong">⏳ Xuyên không sảng văn</option>
-                        <option value="huyen-huyen">⚡ Huyền huyễn dị năng</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-slate-400 mb-1">Quy mô dung lượng mục tiêu</label>
-                    <select id="targetLength" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 outline-none">
-                        <option value="5000">Mức chuẩn (~5,000 từ - Chi tiết)</option>
-                        <option value="7500">Mức mở rộng (~7,500 từ - Đa tuyến)</option>
-                        <option value="10000">Mức trường ca (~10,000 từ - Toàn tập)</option>
-                    </select>
-                </div>
+            <div>
+                <label class="block text-xs font-medium text-slate-400 mb-1">Thể loại truyện</label>
+                <select id="genreSelect" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 outline-none">
+                    <option value="hon-nhan">💔 Hôn nhân & Tiểu tam (Cao trào, trả thù)</option>
+                    <option value="hoc-duong">🏫 Học đường trong sáng</option>
+                    <option value="cong-so">💼 Công sở đấu đá KPI</option>
+                    <option value="xuyen-khong">⏳ Xuyên không sảng văn</option>
+                </select>
             </div>
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-2 gap-3">
                 <div>
                     <label class="block text-xs font-medium text-slate-400 mb-1">Tên Nam chính</label>
-                    <input type="text" id="maleLead" value="Minh Khang" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 outline-none">
+                    <input type="text" id="maleLead" value="Minh Khang" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-slate-400 mb-1">Tên Nữ chính</label>
-                    <input type="text" id="femaleLead" value="Nhã An" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 outline-none">
+                    <input type="text" id="femaleLead" value="Nhã An" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 outline-none">
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-2 gap-3">
                 <div>
-                    <label class="block text-xs font-medium text-slate-400 mb-1">Nhân vật phụ số 1 (Phản diện / Tiểu tam)</label>
-                    <input type="text" id="subChar1" value="Hải Yến (Tiểu tam mưu mô)" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 outline-none">
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Nhân vật phụ 1 (Phản diện)</label>
+                    <input type="text" id="subChar1" value="Hải Yến (Tiểu tam)" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 outline-none">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-slate-400 mb-1">Nhân vật phụ số 2 (Đồng minh / Bạn thân)</label>
-                    <input type="text" id="subChar2" value="Gia Hân (Bạn thân tri kỷ)" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 outline-none">
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Nhân vật phụ 2 (Đồng minh)</label>
+                    <input type="text" id="subChar2" value="Gia Hân (Bạn thân)" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 outline-none">
                 </div>
-            </div>
-
-            <div>
-                <label class="block text-xs font-medium text-slate-400 mb-1">Thiết lập tính cách & Quan hệ chính</label>
-                <input type="text" id="characterTraits" value="Nam lạnh lùng thâm trầm, nữ kiên cường độc lập tài chính." class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 outline-none">
             </div>
 
             <div class="flex-1 flex flex-col">
                 <label class="block text-xs font-medium text-slate-400 mb-1">Ý tưởng thô ban đầu</label>
-                <textarea id="ideaInput" rows="4" class="w-full flex-1 bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 focus:border-indigo-500 outline-none resize-none">Chồng cũ đem tiểu tam vào showroom xe hơi sang trọng để khoe khoang, chê vợ cũ nghèo hèn, ai ngờ vợ cũ chính là chủ tịch tập đoàn sở hữu chuỗi showroom đó.</textarea>
+                <textarea id="ideaInput" rows="5" class="w-full flex-1 bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 outline-none resize-none">Chồng cũ đem tiểu tam vào showroom xe hơi sang trọng để khoe khoang, chê vợ cũ nghèo hèn, ai ngờ vợ cũ chính là chủ tịch tập đoàn sở hữu chuỗi showroom đó.</textarea>
             </div>
 
-            <button onclick="runAutonomousEngine()" id="actionBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 rounded-lg text-xs transition shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2">
-                🚀 Chạy tạo kịch bản chi tiết & Mở rộng phân cảnh
+            <button onclick="generateOutlineSystem()" id="actionBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 rounded-lg text-xs transition shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2">
+                🚀 Khởi tạo Dàn ý Xương sống & Phân tách Chương
             </button>
         </section>
 
-        <!-- CỘT PHẢI: KẾT QUẢ VÀ HỆ THỐNG NHÂN VẬT (6 Cột) -->
-        <section class="lg:col-span-6 flex flex-col space-y-4">
+        <!-- CỘT PHẢI: QUẢN LÝ DÀN Ý & HIỂN THỊ CHI TIẾT (7 Cột) -->
+        <section class="lg:col-span-7 flex flex-col space-y-4">
             
+            <!-- Box 1: Dàn ý xương sống (Mục lục điều hướng) -->
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-lg">
                 <h3 class="text-xs font-semibold text-emerald-400 mb-2 flex items-center gap-2 border-b border-slate-800 pb-2">
-                    👥 Hệ thống hóa toàn bộ nhân vật (Chính & Phụ)
+                    📋 Dàn ý Xương sống (Bấm vào từng chương để xem AI triển khai nội dung)
                 </h3>
-                <div id="characterTracker" class="text-xs text-slate-300 space-y-1">
-                    <p class="text-slate-500 italic">Đang chờ thực thi từ bảng điều khiển bên trái...</p>
+                <div id="outlineContainer" class="flex flex-wrap gap-2 text-xs">
+                    <span class="text-slate-500 italic">Chưa có dàn ý. Hãy bấm khởi tạo ở bảng điều khiển bên trái.</span>
                 </div>
             </div>
 
+            <!-- Box 2: Chi tiết nội dung chương được chọn -->
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex-1 flex flex-col shadow-lg">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-2 mb-3">
-                    <h3 class="text-xs font-semibold text-amber-400 flex items-center gap-2">
-                        📄 Kịch bản Chi tiết & Lời thoại Voice (Cảnh 1 đến Cảnh 4)
+                    <h3 id="activeChapterTitle" class="text-xs font-semibold text-amber-400 flex items-center gap-2">
+                        📄 Chi tiết Nội dung Chương / Cảnh
                     </h3>
                     <div class="flex gap-1.5">
                         <button onclick="copyContent()" class="bg-slate-800 hover:bg-slate-700 text-xs px-2.5 py-1 rounded transition text-slate-300">Sao chép</button>
-                        <button onclick="alert('Đã đóng gói toàn bộ dữ liệu phân cảnh sẵn sàng đưa vào phần mềm dựng video!')" class="bg-indigo-900/60 hover:bg-indigo-900 text-indigo-200 text-xs px-2.5 py-1 rounded transition border border-indigo-700/50">🔊 Xuất File Voice</button>
+                        <button onclick="alert('Đã đóng gói dữ liệu chương sẵn sàng xuất bản!')" class="bg-indigo-900/60 hover:bg-indigo-900 text-indigo-200 text-xs px-2.5 py-1 rounded transition border border-indigo-700/50">🔊 Xuất Voice</button>
                     </div>
                 </div>
 
-                <div id="outputContainer" class="flex-1 bg-slate-950 border border-slate-800 rounded-lg p-4 overflow-y-auto max-h-[450px] text-xs text-slate-300 leading-relaxed whitespace-pre-line">
-                    <div class="text-slate-500 text-center mt-24">
+                <div id="outputContainer" class="flex-1 bg-slate-950 border border-slate-800 rounded-lg p-4 overflow-y-auto max-h-[420px] text-xs text-slate-300 leading-relaxed whitespace-pre-line">
+                    <div class="text-slate-500 text-center mt-20">
                         <div class="loader mx-auto mb-3 hidden" id="spinner"></div>
-                        <p class="mb-1">Hệ thống mở rộng quy mô sẵn sàng.</p>
-                        <p class="text-[11px]">Chọn mức dung lượng (5k, 7.5k, 10k) và bấm chạy để xem hệ thống sinh đầy đủ từ Cảnh 1 đến Cảnh 4 cùng các tuyến nhân vật phụ.</p>
+                        <p class="mb-1">Hệ thống Dàn ý v6.0 sẵn sàng.</p>
+                        <p class="text-[11px]">Chọn một chương ở khung dàn ý phía trên để kiểm soát chi tiết những gì AI đang viết và duy trì tính nhất quán.</p>
                     </div>
                 </div>
             </div>
@@ -146,16 +126,16 @@
 
     </main>
 
-    <!-- Script xử lý v4.1 -->
+    <!-- Script xử lý v6.0 Outline Engine -->
     <script>
-        function runAutonomousEngine() {
-            const genre = document.getElementById('genreSelect').value;
-            const targetLength = document.getElementById('targetLength').value;
+        // Dữ liệu lưu trữ các chương sau khi khởi tạo
+        let globalStoryData = {};
+
+        function generateOutlineSystem() {
             const maleLead = document.getElementById('maleLead').value.trim() || "Minh Khang";
             const femaleLead = document.getElementById('femaleLead').value.trim() || "Nhã An";
-            const subChar1 = document.getElementById('subChar1').value.trim() || "Hải Yến (Tiểu tam)";
-            const subChar2 = document.getElementById('subChar2').value.trim() || "Gia Hân (Bạn thân)";
-            const traits = document.getElementById('characterTraits').value;
+            const subChar1 = document.getElementById('subChar1').value.trim() || "Hải Yến";
+            const subChar2 = document.getElementById('subChar2').value.trim() || "Gia Hân";
             const rawIdea = document.getElementById('ideaInput').value.trim();
 
             if(!rawIdea) {
@@ -163,63 +143,83 @@
                 return;
             }
 
+            const outlineBox = document.getElementById('outlineContainer');
             const output = document.getElementById('outputContainer');
-            const tracker = document.getElementById('characterTracker');
             const spinner = document.getElementById('spinner');
             const btn = document.getElementById('actionBtn');
 
             btn.disabled = true;
-            btn.classList.add('opacity-50');
             spinner.classList.remove('hidden');
-            output.innerHTML = `<div class="text-indigo-400 text-center mt-24 animate-pulse">🤖 Đang thiết lập quy mô ~${targetLength} từ, xây dựng đa tuyến nhân vật và phân tách chi tiết Cảnh 1 - Cảnh 4...</div>`;
+            outlineBox.innerHTML = `<span class="text-indigo-400 animate-pulse"> đang xây dựng cấu trúc dàn ý xương sống toàn mạch truyện...</span>`;
 
             setTimeout(() => {
-                // Cập nhật bảng nhân vật chi tiết
-                tracker.innerHTML = `
-                    • **Nam chính:** <span class="text-indigo-300 font-semibold">${maleLead}</span> (${traits})\n
-                    • **Nữ chính:** <span class="text-pink-300 font-semibold">${femaleLead}</span> (Chủ tịch ẩn danh, kiên cường)\n
-                    • **Nhân vật phụ 1:** <span class="text-red-300 font-semibold">${subChar1}</span>\n
-                    • **Nhân vật phụ 2:** <span class="text-emerald-300 font-semibold">${subChar2}</span>\n
-                    • **Quy mô thực thi:** Đã kích hoạt mức dung lượng <span class="text-amber-300 font-semibold">${targetLength} chữ</span> với hệ thống phân cảnh mở rộng tuyệt đối.
-                `;
+                // Tạo dữ liệu giả lập cho 4 chương chuẩn mực giữ vững logic từ đầu đến cuối
+                globalStoryData = {
+                    chapter1: {
+                        title: "Chương 1: Mở đầu & Thử thách ban đầu",
+                        summary: "Thiết lập bối cảnh showroom sang trọng. Phản diện và " + subChar1 + " xuất hiện hống hách, dùng lời lẽ hạ nhục " + femaleLead + " dựa trên ý tưởng: " + rawIdea,
+                        content: `🎬 **${("Chương 1: Mở đầu & Thử thách ban đầu").toUpperCase()}**\n\n` +
+                                 `📌 **Mục đích kiểm soát của AI:** Thiết lập không gian đối lập rõ rệt giữa vẻ ngoài hào nhoáng và sự khinh miệt ban đầu.\n\n` +
+                                 `[Diễn biến chi tiết]: Dưới ánh đèn rọi của showroom, ${subChar1} cười khẩy, buông lời miệt thị ${femaleLead} vì tưởng cô chỉ là kẻ nghèo hèn bước nhầm chỗ.\n` +
+                                 `• ${subChar1}: "Loại như cô cả đời chỉ dám đứng ngoài ngó, đừng mong bước chân vào đây làm bẩn sàn!"\n` +
+                                 `• ${femaleLead} (điềm tĩnh): "Mắt nhìn người kém cỏi như cô, hôm nay sẽ phải trả giá bằng sự bẽ bàng."`
+                    },
+                    chapter2: {
+                        title: "Chương 2: Bước ngoặt lật ngược",
+                        summary: "Sự xuất hiện của thẻ đen quyền lực, " + femaleLead + " tuyên bố quyền sở hữu toàn bộ hệ thống trước sự ngỡ ngàng của kẻ phản diện.",
+                        content: `🎬 **${("Chương 2: Bước ngoặt lật ngược").toUpperCase()}**\n\n` +
+                                 `📌 **Mục đích kiểm soát của AI:** Đẩy cao trào đầu tiên, đập tan sự kiêu ngạo của đối phương bằng thực lực tài chính ẩn giấu.\n\n` +
+                                 `[Diễn biến chi tiết]: Quản lý cấp cao lập tức chạy ra cúi đầu chào đón chủ tịch thực sự. Chiếc thẻ quyền lực được đặt xuống.\n` +
+                                 `• ${femaleLead}: "Đuổi những kẻ không có tư cách này ra ngoài. Từ nay cửa hàng vĩnh viễn từ chối phục vụ họ!"`
+                    },
+                    chapter3: {
+                        title: "Chương 3: Sự hậu thuẫn từ đồng minh",
+                        summary: "Nhân vật phụ " + subChar2 + " và nam chính " + maleLead + " bước ra từ khu vực VIP, bóc trần toàn bộ sai phạm pháp lý của đối phương.",
+                        content: `🎬 **${("Chương 3: Sự hậu thuẫn từ đồng minh").toUpperCase()}**\n\n` +
+                                 `📌 **Mục đích kiểm soát của AI:** Mở rộng tuyến nhân vật, củng cố mối quan hệ đồng minh và khép chặt gọng kìm pháp lý.\n\n` +
+                                 `[Diễn biến chi tiết]: ${subChar2} mang hồ sơ pháp lý đến, trong khi ${maleLead} lạnh lùng nhìn thẳng vào kẻ phản diện.\n` +
+                                 `• ${maleLead}: "Kẻ không có mắt như anh, từ nay đừng mong đứng vững trong giới kinh doanh này nữa."`
+                    },
+                    chapter4: {
+                        title: "Chương 4: Cái kết toàn diện & Thức tỉnh",
+                        summary: "Kẻ phản diện sụp đổ hoàn toàn. " + maleLead + " và " + femaleLead + " bước lên đỉnh cao quyền lực, đảm bảo tính nhất quán trọn vẹn.",
+                        content: `🎬 **${("Chương 4: Cái kết toàn diện & Thức tỉnh").toUpperCase()}**\n\n` +
+                                 `📌 **Mục đích kiểm soát của AI:** Hoàn tất mạch truyện, đảm bảo logic không bị gãy đoạn ở phần kết.\n\n` +
+                                 `[Diễn biến chi tiết]: Mọi âm mưu bị phơi bày dưới ánh sáng công luận. Khép lại chương truyện đầy sảng khoái và mở ra tương lai vững chắc cho cặp đôi chính.`
+                    }
+                };
 
-                // Xây dựng nội dung kịch bản mở rộng theo đúng scale lựa chọn
-                let result = `🎬 **KỊCH BẢN CHI TIẾT & MỞ RỘNG (QUY MÔ ${targetLength} TỪ)**\n`;
-                result += `📌 Thể loại: [${genre.toUpperCase()}] | Trọng tâm: ${maleLead} & ${femaleLead}\n`;
-                result += `--------------------------------------------------\n\n`;
-
-                result += `**CẢNH 1: KHỞI ĐẦU & SỰ KIỆN KHOE KHOANG (Mở rộng bối cảnh)**\n`;
-                result += `[Mô tả diễn biến]: Dựa trên ý tưởng thô: "${rawIdea}", không gian showroom xe hơi sang trọng hiện lên với ánh đèn rực rỡ. Chồng cũ cùng nhân vật phụ <span class="text-red-300 font-semibold">${subChar1}</span> xuất hiện với thái độ hống hách, dùng những lời lẽ cay nghiệt để hạ nhục ${femaleLead} nhằm thỏa mãn lòng hư vinh.\n`;
-                result += `• ${subChar1} (cười khẩy, bĩu môi): "Loại phụ nữ nghèo hèn như cô cả đời cũng chỉ đứng ngó bên ngoài, đừng mong bước chân vào đây làm gì cho bẩn sàn!"\n\n`;
-
-                result += `**CẢNH 2: BƯỚC NGOẶT & SỰ XUẤT HIỆN CỦA QUYỀN LỰC**\n`;
-                result += `[Mô tả diễn biến]: Không chút hoảng sợ, ${femaleLead} điềm nhiên gọi quản lý cấp cao ra mặt. Chiếc thẻ đen quyền lực được đặt xuống bàn, kèm theo thông cáo toàn bộ tập đoàn sở hữu chuỗi showroom này chính thức thuộc quyền kiểm soát của cô.\n`;
-                result += `• ${femaleLead} (giọng lạnh lùng, sắc bén): "Đuổi toàn bộ những kẻ không có tư cách ra khỏi cửa hàng này ngay lập tức. Từ nay, cửa hàng này từ chối phục vụ họ!"\n\n`;
-
-                result += `**CẢNH 3: SỰ HẬU THUẪN ĐẾN TỪ NAM CHÍNH & ĐỒNG MINH**\n`;
-                result += `[Mô tả diễn biến]: Khi đám đông đang xôn xao bàn tán, ${maleLead} từ khu vực VIP bước ra, ánh mắt thâm trầm đặt trọn sự bảo vệ lên người ${femaleLead}. Cùng lúc đó, nhân vật phụ <span class="text-emerald-300 font-semibold">${subChar2}</span> xuất hiện với trọn bộ hồ sơ pháp lý, bóc trần toàn bộ thâm ý và sai phạm tài chính của kẻ phản diện.\n`;
-                result += `• ${maleLead} (quay sang nhìn kẻ phản diện với ánh mắt sắc lẹm): "Cô ấy muốn cho ai ra đi chỉ là chuyện trong một nốt nhạc. Kẻ không có mắt như anh, từ nay đừng mong xuất hiện trong giới kinh doanh này nữa."\n\n`;
-
-                if(targetLength >= 7500) {
-                    result += `**CẢNH 4: CAO TRÀO KẾT THÚC & THỨC TỈNH (MỞ RỘNG ĐẶC BIỆT CHO MỨC ${targetLength} TỪ)**\n`;
-                    result += `[Mô tả diễn biến mở rộng]: Toàn bộ âm mưu lật đổ và thói trơ trẽn bị phơi bày dưới ánh sáng công luận. Kẻ phản diện sụp đổ hoàn toàn trong sự bẽ bàng tột độ. ${femaleLead} đứng hiên ngang giữa ánh đèn rực rỡ, bước lên vị trí quyền lực cao nhất, khép lại một chương đầy sảng khoái và mở ra hành trình mới cùng ${maleLead}.\n\n`;
+                // Render danh sách dàn ý ra giao diện dưới dạng các nút bấm mục lục
+                let outlineHtml = "";
+                for (let key in globalStoryData) {
+                    let chap = globalStoryData[key];
+                    outlineHtml += `<button onclick="loadChapter('${key}')" class="bg-slate-800 hover:bg-indigo-600/60 border border-slate-700 text-slate-200 px-3 py-2 rounded-lg text-left transition flex flex-col gap-1 w-full sm:w-[48%]">
+                        <span class="font-semibold text-indigo-300">${chap.title}</span>
+                        <span class="text-[11px] text-slate-400 line-clamp-1">👉 ${chap.summary}</span>
+                    </button>`;
                 }
+                outlineBox.innerHTML = outlineHtml;
 
-                result += `--------------------------------------------------\n`;
-                result += `🔊 **TRẠNG THÁI XUẤT DỮ LIỆU VOICE (TTS):**\n`;
-                result += `Đã hoàn tất tự động định dạng ngắt nghỉ cho toàn bộ lời thoại từ Cảnh 1 đến Cảnh 4, sẵn sàng đưa trực tiếp vào CapCut hoặc phần mềm dựng video!`;
+                // Mặc định load sẵn Chương 1 khi vừa khởi tạo xong
+                loadChapter('chapter1');
 
-                output.innerText = result;
                 spinner.classList.add('hidden');
                 btn.disabled = false;
-                btn.classList.remove('opacity-50');
-            }, 1200);
+            }, 1000);
+        }
+
+        function loadChapter(chapterKey) {
+            const chap = globalStoryData[chapterKey];
+            if(!chap) return;
+
+            document.getElementById('activeChapterTitle').innerText = "📄 Đang xem: " + chap.title;
+            document.getElementById('outputContainer').innerText = chap.content;
         }
 
         function copyContent() {
             const text = document.getElementById('outputContainer').innerText;
             navigator.clipboard.writeText(text);
-            alert('Đã sao chép toàn bộ kịch bản chi tiết vào bộ nhớ tạm!');
+            alert('Đã sao chép nội dung chương hiện tại vào bộ nhớ tạm!');
         }
     </script>
 </body>
