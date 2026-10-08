@@ -1,406 +1,51 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Master Novel Studio - v18.0 Live Gemini AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .page-view { display: none; }
-        .page-view.active { display: block; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Ultimate Master Novel Studio v19.0</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Inter',sans-serif}
+.page-view{display:none}.page-view.active{display:block}
+</style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
 
-    <!-- Header & Menu điều hướng -->
-    <header class="bg-slate-900 border-b border-slate-800 px-6 py-3 shadow-md sticky top-0 z-50">
-        <div class="flex justify-between items-center max-w-[1700px] mx-auto">
-            <div class="flex items-center space-x-3">
-                <span class="bg-indigo-600 text-white font-bold p-1.5 rounded text-sm">TVPL</span>
-                <div>
-                    <h1 class="text-base font-bold tracking-wide text-slate-200">AI Master Novel Studio v18.0</h1>
-                    <p class="text-xs text-slate-400">Kết nối trực tiếp Gemini AI & Giao diện Song song chuyên nghiệp</p>
-                </div>
-            </div>
+<!-- HEADER & ĐIỀU HƯỚNG -->
+<header class="bg-slate-900 border-b border-slate-800 px-6 py-3 shadow-md sticky top-0 z-50">
+  <div class="flex justify-between items-center max-w-[1700px] mx-auto flex-wrap gap-2">
+    <div class="flex items-center space-x-3">
+      <span class="bg-indigo-600 text-white font-bold p-1.5 rounded text-sm">TVPL</span>
+      <div>
+        <h1 class="text-base font-bold text-slate-200">AI Ultimate Master Novel Studio v19.0</h1>
+        <p class="text-xs text-slate-400">Hệ thống sáng tác tiểu thuyết toàn diện · Đa dự án · Bộ nhớ nối mạch · AI Kép</p>
+      </div>
+    </div>
+    <nav class="flex gap-1.5 text-xs">
+      <button onclick="switchPage('home')" id="nav-home" class="px-3 py-1.5 bg-indigo-600 text-white font-medium rounded-lg transition cursor-pointer">1. Thiết lập & Ý tưởng</button>
+      <button onclick="switchPage('bible')" id="nav-bible" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition cursor-pointer">2. Hồ sơ & Bộ nhớ</button>
+      <button onclick="switchPage('outline')" id="nav-outline" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition cursor-pointer">3. Mục lục Cây thư mục</button>
+      <button onclick="switchPage('reader')" id="nav-reader" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition cursor-pointer">4. Đọc & Sửa chương</button>
+    </nav>
+  </div>
+</header>
 
-            <nav class="flex gap-1.5 text-xs">
-                <button onclick="switchPage('home')" id="nav-home" class="px-3 py-1.5 bg-indigo-600 text-white font-medium rounded-lg transition cursor-pointer">🏠 1. Cài đặt & Dàn ý</button>
-                <button onclick="switchPage('bible')" id="nav-bible" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition cursor-pointer">🛡️ 2. Hồ sơ truyện (Bible)</button>
-                <button onclick="switchPage('outline')" id="nav-outline" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition cursor-pointer">📚 3. Cây mục lục</button>
-                <button onclick="switchPage('reader')" id="nav-reader" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition cursor-pointer">📖 4. Đọc & Sửa truyện</button>
-            </nav>
-        </div>
-    </header>
+<main class="flex-1 p-6 max-w-[1700px] w-full mx-auto">
 
-    <!-- Main Container -->
-    <main class="flex-1 p-6 max-w-[1700px] w-full mx-auto space-y-6">
-        
-        <!-- ================= TRANG 1: CÀI ĐẶT API KEY & DÀN Ý ================= -->
-        <div id="page-home" class="page-view active grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div class="lg:col-span-8 bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl space-y-4">
-                <h2 class="text-sm font-semibold text-indigo-400 border-b border-slate-800 pb-2">🔑 Bước 1: Nhập Gemini API Key & Cấu hình Tác phẩm</h2>
-                
-                <!-- Ô nhập API Key -->
-                <div class="bg-indigo-950/40 border border-indigo-900/60 rounded-xl p-4 space-y-2">
-                    <label class="block text-xs font-semibold text-indigo-300">Google Gemini API Key (Lấy miễn phí tại aistudio.google.com)</label>
-                    <div class="flex gap-2">
-                        <input type="password" id="apiKeyInput" placeholder="Dán mã API Key của bạn vào đây (ví dụ: AIzaSy...)" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 outline-none focus:border-indigo-500 font-mono">
-                        <button onclick="saveApiKey()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg text-xs font-medium cursor-pointer shrink-0">Lưu Key</button>
-                    </div>
-                    <p class="text-[11px] text-slate-400">Key của bạn được lưu an toàn trên trình duyệt, dùng để gọi trực tiếp đến AI viết truyện.</p>
-                </div>
+<!-- TRANG 1: THIẾT LẬP & Ý TƯỞNG -->
+<div id="page-home" class="page-view active grid grid-cols-1 lg:grid-cols-12 gap-6">
+  <div class="lg:col-span-8 bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-4 shadow-xl">
+    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+      <h2 class="text-sm font-semibold text-indigo-400">Bước 1: Khởi tạo tác phẩm & Ý tưởng cốt lõi</h2>
+      <div class="flex items-center gap-2">
+        <label class="text-xs text-slate-400">Chọn dự án:</label>
+        <select id="projectSelector" onchange="switchProject(this.value)" class="bg-slate-950 border border-slate-800 rounded-lg px-2 py-1 text-xs text-indigo-300 outline-none"></select>
+        <button onclick="createNewProject()" class="text-xs bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded-lg text-slate-300">+ Truyện mới</button>
+      </div>
+    </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">Tên tác phẩm</label>
-                        <input type="text" id="storyTitleInput" value="Khách sạn Biển Lặng" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 outline-none focus:border-indigo-500">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">Giọng văn & Phong cách</label>
-                        <input type="text" id="styleInput" value="Nhẹ nhàng, sâu lắng, miêu tả chi tiết giác quan, đối thoại sắc sảo" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 outline-none focus:border-indigo-500">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-medium text-slate-400 mb-1">Hồ sơ nhân vật (Story Bible - Giữ nhất quán)</label>
-                    <textarea id="charBibleInput" rows="2" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 outline-none resize-none focus:border-indigo-500">Linh (27 tuổi, nhân viên văn phòng Sài Gòn, bướng bỉnh, sợ bị bỏ rơi). Khải (31 tuổi, quản lý khách sạn lạnh lùng tại Vũng Lặng).</textarea>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-medium text-slate-400 mb-1">Dán Dàn ý các chương (Mỗi dòng một chương)</label>
-                    <textarea id="ideaPromptInput" rows="7" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 outline-none resize-y leading-relaxed focus:border-indigo-500 font-mono">Chương 1: Linh nhận thông báo thừa kế khi đang bị sếp mắng. Cô tưởng là lừa đảo.
-Chương 2: Cô đến thị trấn biển, thấy khách sạn cũ kỹ, vắng khách. Lần đầu gặp Khải, anh tỏ rõ sự không chào đón.
-Chương 3: Luật thừa kế: phải làm chủ đủ một năm, không được bán. Linh định ở vài hôm rồi về.
-Chương 4: Chị Hạnh và các nhân viên kể về bà Ngọc. Linh nhận ra mọi người biết bà rõ hơn cô tưởng.</textarea>
-                </div>
-
-                <button onclick="initNovelProject()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-3 rounded-lg text-xs transition shadow-lg shadow-emerald-600/20 cursor-pointer">
-                    🚀 Khởi tạo Tác phẩm & Sẵn sàng gọi AI viết văn
-                </button>
-            </div>
-
-            <div class="lg:col-span-4 bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl flex flex-col justify-between">
-                <div>
-                    <h3 class="text-xs font-semibold text-emerald-400 mb-3 border-b border-slate-800 pb-2">💡 Hướng dẫn Live AI v18.0</h3>
-                    <ul class="text-xs text-slate-300 space-y-2.5 list-disc pl-4 leading-relaxed">
-                        <li><strong>Bước 1:</strong> Nhập Gemini API Key của bạn vào ô trên.</li>
-                        <li><strong>Bước 2:</strong> Kiểm tra dàn ý chương và bấm Khởi tạo.</li>
-                        <li><strong>Bước 3:</strong> Vào mục <strong>Đọc & Sửa truyện</strong>, chọn từng chương và bấm nút <strong>"✨ Gọi AI viết chương này"</strong> để AI sinh ra nội dung văn học thực thụ!</li>
-                    </ul>
-                </div>
-                <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 text-center">
-                    <p class="text-xs text-slate-400 mb-2">Đã cài đặt xong Key?</p>
-                    <button onclick="switchPage('reader')" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg font-medium transition cursor-pointer">Chuyển đến Giao diện Đọc & Sửa ➔</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= TRANG 2: HỒ SƠ TRUYỆN (BIBLE) ================= -->
-        <div id="page-bible" class="page-view space-y-4">
-            <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl space-y-4">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                    <h2 class="text-sm font-bold text-indigo-400">🛡️ Hồ sơ Truyện ("Kinh thánh truyện" duy trì tính nhất quán)</h2>
-                    <button onclick="switchPage('home')" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-slate-300 cursor-pointer">⬅️ Quay lại cài đặt</button>
-                </div>
-                <div id="bibleViewContent" class="bg-slate-950 border border-slate-800 p-5 rounded-xl text-xs text-slate-300 whitespace-pre-line leading-relaxed">
-                    Chưa có dữ liệu.
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= TRANG 3: CÂY MỤC LỤC CHUẨN SÁCH ================= -->
-        <div id="page-outline" class="page-view space-y-4">
-            <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-3 mb-4">
-                    <h2 id="outlineBookTitle" class="text-sm font-bold text-emerald-400">📚 Mục lục tác phẩm</h2>
-                    <button onclick="switchPage('home')" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-slate-300 cursor-pointer">⬅️ Sửa thông tin gốc</button>
-                </div>
-                <div id="treeOutlineContainer" class="space-y-6 max-h-[550px] overflow-y-auto pr-2">
-                    <p class="text-xs text-slate-500 italic">Chưa có dữ liệu.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= TRANG 4: ĐỌC & SỬA TRUYỆN SONG SONG (LIVE AI WRITER) ================= -->
-        <div id="page-reader" class="page-view grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <!-- Cột trái: Danh mục chương (chiếm ~1/5 màn hình) -->
-            <div class="lg:col-span-3 bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl space-y-3">
-                <h3 class="text-xs font-semibold text-indigo-400 border-b border-slate-800 pb-2">📂 Danh mục chương</h3>
-                <div id="readerSidebarTree" class="space-y-1.5 max-h-[520px] overflow-y-auto pr-1 text-xs">
-                    <!-- Sidebar list -->
-                </div>
-            </div>
-
-            <!-- Cột phải: Không gian soạn thảo & Nút gọi AI (chiếm ~4/5 phần còn lại) -->
-            <div class="lg:col-span-9 bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl space-y-4">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-3 flex-wrap gap-2">
-                    <div>
-                        <span id="readerPartBadge" class="text-[10px] text-indigo-400 font-semibold uppercase tracking-wider">Phần I</span>
-                        <h2 id="readerChapterTitle" class="text-sm font-bold text-amber-400">Chương 1</h2>
-                    </div>
-                    <div class="flex gap-2 items-center">
-                        <!-- Nút gọi AI thật -->
-                        <button onclick="callGeminiAIForChapter()" id="aiGenerateBtn" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg cursor-pointer font-medium shadow-md shadow-indigo-600/30 flex items-center gap-1.5">
-                            ✨ Gọi AI viết chương này
-                        </button>
-                        <button onclick="saveEditedChapter()" class="text-xs bg-emerald-700 hover:bg-emerald-600 px-3 py-2 rounded-lg text-white cursor-pointer font-medium">💾 Lưu</button>
-                        <button onclick="copyChapterText()" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-2 rounded-lg text-slate-300 cursor-pointer">📋 Copy</button>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-[11px] font-medium text-slate-400 mb-1">Nội dung văn bản chương (Bạn có thể bấm gọi AI hoặc sửa tay trực tiếp)</label>
-                    <textarea id="readerContentEditor" rows="20" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-5 text-xs text-slate-200 leading-loose outline-none focus:border-indigo-500 font-sans resize-y" placeholder="Bấm 'Gọi AI viết chương này' để bắt đầu sáng tác..."></textarea>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- Script xử lý v18.0 Live Gemini AI -->
-    <script>
-        let masterBook = {
-            title: "Khách sạn Biển Lặng",
-            bible: "",
-            style: "",
-            parts: []
-        };
-
-        let currentActiveChapterId = 1;
-
-        // Tự động khôi phục API Key nếu đã lưu trước đó
-        window.onload = function() {
-            const savedKey = localStorage.getItem('gemini_api_key');
-            if(savedKey) {
-                document.getElementById('apiKeyInput').value = savedKey;
-            }
-            initNovelProject();
-        };
-
-        function saveApiKey() {
-            const key = document.getElementById('apiKeyInput').value.trim();
-            if(!key) {
-                alert('Vui lòng nhập API Key hợp lệ!');
-                return;
-            }
-            localStorage.setItem('gemini_api_key', key);
-            alert('Đã lưu Gemini API Key thành công trên trình duyệt!');
-        }
-
-        function switchPage(pageId) {
-            ['home', 'bible', 'outline', 'reader'].forEach(id => {
-                document.getElementById('page-' + id).classList.remove('active');
-                const navBtn = document.getElementById('nav-' + id);
-                if(navBtn) navBtn.className = "px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition text-xs";
-            });
-
-            document.getElementById('page-' + pageId).classList.add('active');
-            const activeNav = document.getElementById('nav-' + pageId);
-            if(activeNav) activeNav.className = "px-3 py-1.5 bg-indigo-600 text-white font-medium rounded-lg transition text-xs";
-        }
-
-        function initNovelProject() {
-            const rawTitle = document.getElementById('storyTitleInput').value.trim() || "Tác phẩm mới";
-            const storyBible = document.getElementById('charBibleInput').value.trim();
-            const rawOutline = document.getElementById('ideaPromptInput').value.trim();
-
-            masterBook.title = rawTitle;
-            masterBook.bible = storyBible;
-
-            let lines = rawOutline ? rawOutline.split('\n') : [];
-            let chaptersList = [];
-            let counter = 1;
-
-            lines.forEach(line => {
-                let trimmed = line.trim();
-                if(!trimmed) return;
-                chaptersList.push({
-                    id: counter,
-                    outline: trimmed,
-                    title: trimmed.length > 35 ? trimmed.substring(0, 32) + "..." : trimmed
-                });
-                counter++;
-            });
-
-            if(chaptersList.length === 0) {
-                chaptersList = [{ id: 1, outline: "Mở đầu câu chuyện", title: "Chương 1: Mở đầu" }];
-            }
-
-            let generatedChapters = [];
-            chaptersList.forEach(ch => {
-                generatedChapters.push({
-                    id: ch.id,
-                    title: ch.title,
-                    outline: ch.outline,
-                    text: `Chương ${ch.id}: ${ch.outline}\n\n(Chưa có nội dung chi tiết. Bấm nút "✨ Gọi AI viết chương này" phía trên để AI tự động sáng tác văn bản chất lượng cao cho chương này.)`
-                });
-            });
-
-            masterBook.parts = [{
-                partName: "Phần 1: Diễn Biến Chính",
-                chapters: generatedChapters
-            }];
-
-            document.getElementById('bibleViewContent').innerText = `✨ HỒ SƠ NHÂN VẬT & CỐT TRUYỆN:\n${storyBible}`;
-
-            renderTreeOutline();
-            renderReaderSidebar();
-        }
-
-        // Gọi trực tiếp Google Gemini API để viết chương
-        async function callGeminiAIForChapter() {
-            const apiKey = localStorage.getItem('gemini_api_key') || document.getElementById('apiKeyInput').value.trim();
-            if(!apiKey) {
-                alert('Vui lòng nhập và Lưu Gemini API Key ở trang "1. Cài đặt & Dàn ý" trước khi gọi AI!');
-                switchPage('home');
-                return;
-            }
-
-            let currentChap = null;
-            masterBook.parts.forEach(part => {
-                part.chapters.forEach(ch => {
-                    if(ch.id === currentActiveChapterId) currentChap = ch;
-                });
-            });
-
-            if(!currentChap) return;
-
-            const btn = document.getElementById('aiGenerateBtn');
-            const editor = document.getElementById('readerContentEditor');
-            
-            btn.innerText = "⏳ AI đang sáng tác...";
-            btn.disabled = true;
-            editor.value = "Đang kết nối tới mô hình Gemini AI để viết nội dung chi tiết cho chương này, vui lòng đợi trong giây lát...";
-
-            // Xây dựng câu lệnh Prompt chuyên sâu theo đúng tiêu chuẩn Pro
-            const prompt = `Bạn là một tiểu thuyết gia chuyên nghiệp viết bằng tiếng Việt.
-Hãy viết nội dung hoàn chỉnh cho: CHƯƠNG ${currentChap.id}: "${currentChap.outline}".
-
-HỒ SƠ TRUYỆN (BIBLE):
-${masterBook.bible}
-
-GIỌNG VĂN: ${document.getElementById('styleInput').value}
-NGÔI KỂ: Ngôi thứ ba hạn tri (bám sát cảm xúc nhân vật chính).
-
-QUY TẮC BẮT BUỘC:
-- Độ dài từ 1.200 đến 1.800 chữ.
-- Viết thành các phân cảnh cụ thể, giàu chi tiết giác quan, có hội thoại sắc sảo, hành động và miêu tả tâm lý sâu sắc.
-- Tuyệt đối không tóm tắt, không kể lướt, không viết lời bình luận ngoài truyện.
-- Kết chương bằng một móc câu (cliffhanger) hấp dẫn lôi cuốn người đọc.
-- Chỉ trả về nội dung chương truyện, bắt đầu bằng tiêu đề chương.`;
-
-            try {
-                // Gọi tới endpoint Gemini API (Gemini 1.5 Flash - nhanh và thông minh)
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }]
-                    })
-                });
-
-                const data = await response.json();
-                
-                if(data.candidates && data.candidates[0].content.parts[0].text) {
-                    const aiText = data.candidates[0].content.parts[0].text;
-                    editor.value = aiText;
-                    currentChap.text = aiText;
-                    alert('AI đã hoàn thành sáng tác chương này thành công!');
-                } else {
-                    throw new Error(data.error ? data.error.message : "Lỗi phản hồi từ API");
-                }
-            } catch (error) {
-                alert('Có lỗi khi gọi Gemini API: ' + error.message);
-                editor.value = currentChap.text; // Khôi phục lại nếu lỗi
-            } finally {
-                btn.innerText = "✨ Gọi AI viết chương này";
-                btn.disabled = false;
-            }
-        }
-
-        function renderTreeOutline() {
-            document.getElementById('outlineBookTitle').innerText = "📚 Mục lục: " + masterBook.title;
-            const container = document.getElementById('treeOutlineContainer');
-            let html = "";
-
-            masterBook.parts.forEach((part) => {
-                html += `<div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
-                    <h3 class="text-xs font-bold text-indigo-400 border-b border-slate-800/80 pb-2">📂 ${part.partName}</h3>
-                    <div class="space-y-2 pl-3 border-l border-slate-800">`;
-                
-                part.chapters.forEach(ch => {
-                    html += `<div onclick="openReaderChapter(${ch.id})" class="bg-slate-900/80 hover:bg-indigo-600/30 border border-slate-800 p-3 rounded-lg cursor-pointer transition flex justify-between items-center group">
-                        <span class="text-xs font-semibold text-slate-200 group-hover:text-indigo-300">Chương ${ch.id}: ${ch.title}</span>
-                        <span class="text-[10px] text-indigo-400 bg-indigo-950/60 px-2 py-1 rounded border border-indigo-800">Mở & Viết AI ➔</span>
-                    </div>`;
-                });
-
-                html += `</div></div>`;
-            });
-
-            container.innerHTML = html;
-        }
-
-        function renderReaderSidebar() {
-            const sidebar = document.getElementById('readerSidebarTree');
-            let html = "";
-
-            masterBook.parts.forEach(part => {
-                part.chapters.forEach(ch => {
-                    html += `<button onclick="openReaderChapter(${ch.id})" id="sidebar-btn-${ch.id}" class="w-full text-left px-3 py-2 rounded-lg text-xs text-slate-300 hover:bg-slate-800 transition truncate block">
-                        Chương ${ch.id}: ${ch.title}
-                    </button>`;
-                });
-            });
-
-            sidebar.innerHTML = html;
-            if(masterBook.parts.length > 0 && masterBook.parts[0].chapters.length > 0) {
-                openReaderChapter(masterBook.parts[0].chapters[0].id);
-            }
-        }
-
-        function openReaderChapter(id) {
-            let foundChap = null;
-            let foundPartName = "";
-
-            masterBook.parts.forEach(part => {
-                part.chapters.forEach(ch => {
-                    if(ch.id === id) {
-                        foundChap = ch;
-                        foundPartName = part.partName;
-                    }
-                });
-            });
-
-            if(!foundChap) return;
-
-            currentActiveChapterId = id;
-            document.getElementById('readerPartBadge').innerText = foundPartName;
-            document.getElementById('readerChapterTitle').innerText = `Chương ${foundChap.id}: ${foundChap.title}`;
-            document.getElementById('readerContentEditor').value = foundChap.text;
-
-            switchPage('reader');
-        }
-
-        function saveEditedChapter() {
-            const newText = document.getElementById('readerContentEditor').value;
-            masterBook.parts.forEach(part => {
-                part.chapters.forEach(ch => {
-                    if(ch.id === currentActiveChapterId) {
-                        ch.text = newText;
-                    }
-                });
-            });
-            alert('Đã lưu lại nội dung chỉnh sửa của chương này!');
-        }
-
-        function copyChapterText() {
-            const text = document.getElementById('readerContentEditor').value;
-            navigator.clipboard.writeText(text);
-            alert('Đã sao chép nội dung văn bản chương vào bộ nhớ tạm!');
-        }
-    </script>
-</body>
-</html>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div><label class="block text-xs text-slate-400 mb-1">Tên tác phẩm</label>
+        <input id="storyTitleInput" value="Khách sạn Biển Lặng
