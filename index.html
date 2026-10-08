@@ -81,7 +81,7 @@ Chương 4: Chị Hạnh và các nhân viên kể về bà Ngọc. Linh nhận 
         <option value="gemini">Tự động: khóa Google Gemini (có gói miễn phí)</option>
       </select>
       <input id="apiKey" type="password" onchange="saveCfg()" placeholder="Khóa Gemini (chỉ lưu trên máy bạn)" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs outline-none">
-      <input id="modelName" onchange="saveCfg()" value="gemini-2.0-flash" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs outline-none">
+      <input id="modelName" onchange="saveCfg()" value="gemini-3.8-flash" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs outline-none">
     </div>
     <h3 class="text-xs font-semibold text-emerald-400 border-b border-slate-800 pb-2">Cách hoạt động</h3>
     <ol class="text-xs text-slate-300 space-y-2 list-decimal pl-4 leading-relaxed">
@@ -196,14 +196,14 @@ let _toastT;
 function msg(t) { const e = $('toast'); e.textContent = t; e.classList.remove('hidden'); clearTimeout(_toastT); _toastT = setTimeout(() => e.classList.add('hidden'), 6000); }
 
 // Gọi AI: chế độ thủ công hoặc gọi thẳng Google Gemini bằng khóa của chính bạn
-const cfg = () => { try { return JSON.parse(localStorage.getItem(KEY + 'cfg') || '{}'); } catch (e) { return {}; } };
+const cfg = () => { try { const c = JSON.parse(localStorage.getItem(KEY + 'cfg') || '{}'); if (c.model === 'gemini-2.0-flash') c.model = 'gemini-3.8-flash'; return c; } catch (e) { return {}; } };
 function saveCfg() { localStorage.setItem(KEY + 'cfg', JSON.stringify({ provider: $('provider').value, key: $('apiKey').value.trim(), model: $('modelName').value.trim() })); }
 
 async function callAI(prompt, max = 6000, temp = 0.9) {
   const c = cfg();
   if ((c.provider || 'manual') === 'manual') return manualAI(prompt);
   if (!c.key) throw new Error('Chưa nhập khóa Gemini ở trang 1.');
-  const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${c.model || 'gemini-2.0-flash'}:generateContent?key=${encodeURIComponent(c.key)}`, {
+  const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${c.model || 'gemini-3.8-flash'}:generateContent?key=${encodeURIComponent(c.key)}`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { maxOutputTokens: max, temperature: temp } })
   });
@@ -401,7 +401,7 @@ try {
     renderAll();
   }
 } catch (e) {}
-try { const c = cfg(); $('provider').value = c.provider || 'manual'; $('apiKey').value = c.key || ''; $('modelName').value = c.model || 'gemini-2.0-flash'; } catch (e) {}
+try { const c = cfg(); $('provider').value = c.provider || 'manual'; $('apiKey').value = c.key || ''; $('modelName').value = c.model || 'gemini-3.8-flash'; } catch (e) {}
 </script>
 </body>
 </html>
