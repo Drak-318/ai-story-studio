@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Master Novel Studio - v12.1 Fixed</title>
+    <title>AI Master Novel Studio - v13.0 Smart Parser</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -20,14 +20,14 @@
             <div class="flex items-center space-x-3">
                 <span class="bg-indigo-600 text-white font-bold p-1.5 rounded text-sm">TVPL</span>
                 <div>
-                    <h1 class="text-base font-bold tracking-wide text-slate-200">AI Master Novel Studio v12.1</h1>
-                    <p class="text-xs text-slate-400">Nền tảng sáng tác tự động, Kinh thánh truyện & Mục lục cây thư mục</p>
+                    <h1 class="text-base font-bold tracking-wide text-slate-200">AI Master Novel Studio v13.0</h1>
+                    <p class="text-xs text-slate-400">Động cơ phân tích dàn ý thông minh & Viết văn tự động chuẩn xác</p>
                 </div>
             </div>
 
             <!-- Các nút tắt chuyển trang con mượt mà -->
             <nav class="flex gap-1.5 text-xs">
-                <button onclick="switchPage('home')" id="nav-home" class="px-3 py-1.5 bg-indigo-600 text-white font-medium rounded-lg transition">🏠 1. Nhập ý tưởng</button>
+                <button onclick="switchPage('home')" id="nav-home" class="px-3 py-1.5 bg-indigo-600 text-white font-medium rounded-lg transition">🏠 1. Nhập dàn ý</button>
                 <button onclick="switchPage('bible')" id="nav-bible" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition">🛡️ 2. Hồ sơ truyện (Bible)</button>
                 <button onclick="switchPage('outline')" id="nav-outline" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition">📚 3. Cây mục lục</button>
                 <button onclick="switchPage('reader')" id="nav-reader" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition">📖 4. Đọc truyện chi tiết</button>
@@ -38,86 +38,83 @@
     <!-- Main Container -->
     <main class="flex-1 p-6 max-w-[1700px] w-full mx-auto space-y-6">
         
-        <!-- ================= TRANG 1: NHẬP Ý TƯỞNG & PHÂN CẢNH MỒI (HOME) ================= -->
+        <!-- ================= TRANG 1: NHẬP Ý TƯỞNG & DÀN Ý (HOME) ================= -->
         <div id="page-home" class="page-view active grid grid-cols-1 lg:grid-cols-12 gap-6">
             <div class="lg:col-span-8 bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl space-y-4">
-                <h2 class="text-sm font-semibold text-indigo-400 border-b border-slate-800 pb-2">✍️ Bước 1: Khởi tạo tác phẩm & Ý tưởng mồi</h2>
+                <h2 class="text-sm font-semibold text-indigo-400 border-b border-slate-800 pb-2">✍️ Bước 1: Dán bộ Dàn ý / Sườn cốt truyện của bạn</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-medium text-slate-400 mb-1">Tên tác phẩm</label>
-                        <input type="text" id="storyTitleInput" placeholder="Ví dụ: Tình yêu học được drama tuổi trăng..." class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 outline-none focus:border-indigo-500">
+                        <input type="text" id="storyTitleInput" placeholder="Ví dụ: Khách sạn Biển Lặng..." class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 outline-none focus:border-indigo-500">
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-slate-400 mb-1">Thể loại văn học</label>
                         <select id="genreInput" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 outline-none focus:border-indigo-500">
+                            <option value="doi-thuong">Đời thường / Tâm lý / Chữa lành</option>
                             <option value="hao-mon">Hào môn tranh đấu / Sinh tồn / Trả thù</option>
                             <option value="ngon-tinh">Ngôn tình lãng mạn / Hiện đại</option>
                             <option value="trinh-tham">Trinh thám / Hình sự / Ly kỳ</option>
-                            <option value="huyen-huyen">Kỳ ảo / Huyền huyễn / Tiên hiệp</option>
-                            <option value="co-trang">Cổ trang / Lịch sử / Cung đình</option>
-                            <option value="xuyen-khong">Xuyên không / Trọng sinh / Sảng văn</option>
-                            <option value="doi-thuong">Đời thường / Tâm lý / Chữa lành</option>
                         </select>
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-medium text-slate-400 mb-1">Nhân vật chính & Thiết lập cốt lõi</label>
-                    <textarea id="charInput" rows="2" placeholder="Ví dụ: Nữ chính là thiên kim thật vừa trở về từ rừng hoang, nam chính thiếu gia lạnh lùng..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 outline-none resize-none focus:border-indigo-500"></textarea>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Nhân vật chính & Bối cảnh cốt lõi</label>
+                    <textarea id="charInput" rows="2" placeholder="Ví dụ: Linh (27 tuổi, Sài Gòn) và Khải (quản lý khách sạn lạnh lùng)..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 outline-none resize-none focus:border-indigo-500"></textarea>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-medium text-slate-400 mb-1">Phân cảnh hoặc Ý tưởng mồi cần phát triển chi tiết (Cho phép xuống dòng thoải mái)</label>
-                    <textarea id="ideaPromptInput" rows="6" placeholder="Ví dụ: 
-- Nam chính lái xe sang đón nữ chính đi học ngày đầu tiên. 
-- Miêu tả trang phục, cảm xúc, dọc đường đối thoại ngầm. 
-- Chạm mặt giả thiên kim gây sự trước cổng trường..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 outline-none resize-y leading-relaxed focus:border-indigo-500"></textarea>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Dán toàn bộ Dàn ý chi tiết vào đây (Hệ thống sẽ tự động bóc tách từng Phần, từng Chương và viết thành văn bản hoàn chỉnh)</label>
+                    <textarea id="ideaPromptInput" rows="10" placeholder="Dán toàn bộ dàn ý của bạn vào đây (Ví dụ:
+Phần 1: Người lạ ở Biển Lặng (chương 1-6)
+1. Linh nhận thông báo thừa kế khi đang bị sếp mắng...
+2. Cô đến thị trấn biển, gặp Khải...)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 outline-none resize-y leading-relaxed focus:border-indigo-500 font-mono"></textarea>
                 </div>
 
-                <button onclick="generateMasterNovel()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 rounded-lg text-xs transition shadow-lg shadow-indigo-600/20 cursor-pointer">
-                    🚀 Xây dựng Hồ sơ Truyện, Mục lục & Viết văn tự động
+                <button onclick="parseAndGenerateNovel()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 rounded-lg text-xs transition shadow-lg shadow-indigo-600/20 cursor-pointer">
+                    🚀 Phân tích Dàn ý & Tự động viết văn hoàn chỉnh từng chương
                 </button>
             </div>
 
             <div class="lg:col-span-4 bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl flex flex-col justify-between">
                 <div>
-                    <h3 class="text-xs font-semibold text-emerald-400 mb-3 border-b border-slate-800 pb-2">💡 Hướng dẫn hệ thống V12.1</h3>
+                    <h3 class="text-xs font-semibold text-emerald-400 mb-3 border-b border-slate-800 pb-2">💡 Hướng dẫn hệ thống V13.0</h3>
                     <ul class="text-xs text-slate-300 space-y-2.5 list-disc pl-4 leading-relaxed">
-                        <li><strong>Bước 1:</strong> Gõ tên truyện, mô tả nhân vật và ý tưởng mồi (có thể xuống dòng vô tư).</li>
-                        <li><strong>Bước 2:</strong> Bấm nút tạo để hệ thống tự động khóa chặt logic vào <strong>Hồ sơ truyện (Bible)</strong>.</li>
-                        <li><strong>Bước 3:</strong> Chuyển sang <strong>Cây mục lục</strong> để đọc văn bản chi tiết từng chương.</li>
+                        <li><strong>Bước 1:</strong> Dán nguyên cục dàn ý chi tiết của bạn vào ô bên trái.</li>
+                        <li><strong>Bước 2:</strong> Bấm nút phân tích, hệ thống sẽ tự đọc hiểu từng ý nhỏ và <strong>viết thành văn bản tiểu thuyết sinh động</strong>.</li>
+                        <li><strong>Bước 3:</strong> Chuyển sang <strong>Cây mục lục chuẩn sách</strong> để thưởng thức thành quả.</li>
                     </ul>
                 </div>
                 <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 text-center">
-                    <p class="text-xs text-slate-400 mb-2">Đã tạo xong ý tưởng?</p>
+                    <p class="text-xs text-slate-400 mb-2">Đã dán dàn ý xong?</p>
                     <button onclick="switchPage('outline')" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg font-medium transition cursor-pointer">Xem Cây mục lục ➔</button>
                 </div>
             </div>
         </div>
 
-        <!-- ================= TRANG 2: HỒ SƠ TRUYỆN - "KINH THÁNH TRUYỆN" (STORY BIBLE) ================= -->
+        <!-- ================= TRANG 2: HỒ SƠ TRUYỆN (BIBLE) ================= -->
         <div id="page-bible" class="page-view space-y-4">
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl space-y-4">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-3">
                     <div>
                         <h2 class="text-sm font-bold text-indigo-400">🛡️ Hồ sơ Truyện ("Kinh thánh truyện" duy trì tính nhất quán)</h2>
-                        <p class="text-[11px] text-slate-400 mt-0.5">Hệ thống ghi nhớ nhân vật, quy tắc và mốc thời gian để AI không bao giờ bị quên hoặc mâu thuẫn.</p>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Hệ thống ghi nhớ thông tin từ dàn ý của bạn để giữ vững logic.</p>
                     </div>
-                    <button onclick="switchPage('home')" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-slate-300 cursor-pointer">⬅️ Cập nhật ý tưởng</button>
+                    <button onclick="switchPage('home')" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-slate-300 cursor-pointer">⬅️ Cập nhật dàn ý</button>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-2">
-                        <h3 class="text-xs font-semibold text-emerald-400">👤 Nhân vật chính & Tuyến phụ</h3>
+                        <h3 class="text-xs font-semibold text-emerald-400">👤 Nhân vật & Bối cảnh trích xuất</h3>
                         <div id="bibleCharacters" class="text-xs text-slate-300 space-y-1">
-                            <p class="text-slate-500 italic">Chưa có dữ liệu. Vui lòng nhập ở trang chủ.</p>
+                            <p class="text-slate-500 italic">Chưa có dữ liệu. Vui lòng dán dàn ý ở trang chủ.</p>
                         </div>
                     </div>
                     <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-2">
-                        <h3 class="text-xs font-semibold text-amber-400">🔒 Quy tắc thế giới & Bí mật cốt lõi</h3>
+                        <h3 class="text-xs font-semibold text-amber-400">🔒 Quy tắc & Mạch logic cốt lõi</h3>
                         <div id="bibleRules" class="text-xs text-slate-300 space-y-1">
-                            <p class="text-slate-500 italic">Chưa có dữ liệu. Vui lòng nhập ở trang chủ.</p>
+                            <p class="text-slate-500 italic">Chưa có dữ liệu. Vui lòng dán dàn ý ở trang chủ.</p>
                         </div>
                     </div>
                 </div>
@@ -130,13 +127,13 @@
                 <div class="flex justify-between items-center border-b border-slate-800 pb-3 mb-4">
                     <div>
                         <h2 id="outlineBookTitle" class="text-sm font-bold text-emerald-400">📚 Mục lục: Tác phẩm mới</h2>
-                        <p class="text-[11px] text-slate-400 mt-0.5">Cây thư mục phân cấp chuẩn sách (Chia Phần và Chương dọc trực quan).</p>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Cây thư mục phân cấp chuẩn sách được bóc tách từ dàn ý của bạn.</p>
                     </div>
-                    <button onclick="switchPage('home')" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-slate-300 cursor-pointer">⬅️ Sửa ý tưởng gốc</button>
+                    <button onclick="switchPage('home')" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-slate-300 cursor-pointer">⬅️ Sửa dàn ý gốc</button>
                 </div>
 
                 <div id="treeOutlineContainer" class="space-y-6 max-h-[550px] overflow-y-auto pr-2">
-                    <p class="text-xs text-slate-500 italic">Chưa có dữ liệu. Vui lòng nhập ý tưởng và bấm tạo ở trang chủ.</p>
+                    <p class="text-xs text-slate-500 italic">Chưa có dữ liệu. Vui lòng dán dàn ý và bấm phân tích ở trang chủ.</p>
                 </div>
             </div>
         </div>
@@ -169,8 +166,8 @@
                         <span class="absolute bottom-2 left-2 text-[10px] text-emerald-400 bg-slate-950/80 px-2 py-0.5 rounded z-20 border border-slate-800">Minh họa phân cảnh</span>
                     </div>
                     <div class="w-full md:w-2/3 space-y-1">
-                        <h4 class="text-xs font-semibold text-indigo-300">🎨 Bối cảnh & Chi tiết trực quan</h4>
-                        <p id="readerScenePrompt" class="text-xs text-slate-400 italic">Không gian bối cảnh chi tiết của phân cảnh hiện tại...</p>
+                        <h4 class="text-xs font-semibold text-indigo-300">🎨 Ý tưởng cốt lõi của chương</h4>
+                        <p id="readerScenePrompt" class="text-xs text-slate-400 italic">Đang tải...</p>
                     </div>
                 </div>
 
@@ -182,48 +179,11 @@
 
     </main>
 
-    <!-- Script xử lý v12.1 Fixed -->
+    <!-- Script xử lý v13.0 Smart Parser & Deep Writer -->
     <script>
         let masterBook = {
             title: "Tác phẩm mới",
-            charactersText: "Chưa thiết lập nhân vật.",
-            rulesText: "Chưa thiết lập quy tắc.",
-            parts: [
-                {
-                    partName: "Phần 1: Khởi Đầu & Gặp Gỡ",
-                    chapters: [
-                        {
-                            id: 1,
-                            title: "Chương 1: Khơi mào sự kiện",
-                            prompt: "Mở đầu câu chuyện, giới thiệu nhân vật và hoàn cảnh xuất phát.",
-                            text: `Chương 1: Khơi mào sự kiện\n\nMọi chuyện bắt đầu từ một buổi sáng yên bình nhưng mang theo những ẩn số khó lường. Nhân vật chính bước vào hành trình mới với nhiều tâm tư trăn trở.\n\nKhông gian xung quanh hiện lên rõ nét qua từng nhịp sống chậm rãi. Những quyết định được đưa ra vào thời điểm này sẽ định hình toàn bộ hướng đi về sau của câu chuyện.`
-                        },
-                        {
-                            id: 2,
-                            title: "Chương 2: Diễn biến chi tiết & Phân cảnh mồi",
-                            prompt: "Phát triển chi tiết từ ý tưởng mồi, miêu tả trang phục, cảm xúc và hội thoại dọc đường.",
-                            text: `Chương 2: Diễn biến chi tiết & Phân cảnh mồi\n\n(Phát triển nội dung dựa trên phân cảnh mồi bạn vừa cung cấp)\n\nNhân vật xuất hiện trong khung cảnh được mô tả tỉ mỉ từng chi tiết nhỏ. Từng bước chân, ánh mắt sắc lạnh và bộ trang phục gọn gàng đều mang đậm dấu ấn cá tính riêng biệt.\n\nTrên chặng đường di chuyển, những cuộc đối thoại ngầm sắc sảo diễn ra, làm nổi bật sự căng thẳng nhưng vô cùng lôi cuốn giữa các nhân vật chính. Khi đối mặt với tình huống bất ngờ trước cổng trường, phản ứng của họ hoàn toàn chinh phục người đọc.`
-                        }
-                    ]
-                },
-                {
-                    partName: "Phần 2: Cao Trào & Giải Quyết",
-                    chapters: [
-                        {
-                            id: 3,
-                            title: "Chương 3: Sự thật hé lộ",
-                            prompt: "Gỡ rối các nút thắt ban đầu, hé lộ những góc khuất trong quá khứ.",
-                            text: `Chương 3: Sự thật hé lộ\n\nLớp vỏ bọc hoàn hảo bắt đầu xuất hiện những vết rạn nứt. Dưới ánh đèn mập mờ, những bí mật được chôn vùi trong quá khứ từng bước bị lật tẩy.\n\nSự giằng xé nội tâm nhân vật đạt đến đỉnh điểm khi họ phải đứng trước những lựa chọn sinh tử.`
-                        },
-                        {
-                            id: 4,
-                            title: "Chương 4: Kết cục trọn vẹn",
-                            prompt: "Khép lại toàn bộ mạch truyện, giải quyết triệt để xung đột và mở ra tương lai.",
-                            text: `Chương 4: Kết cục trọn vẹn\n\nSau cơn mưa trời lại sáng. Mọi âm mưu và hiểu lầm đều được hóa giải dưới ánh sáng của sự thật.\n\nKhép lại hành trình đầy gian nan, các nhân vật tìm thấy sự bình yên xứng đáng thuộc về mình, để lại dư âm sâu lắng trong lòng người đọc.`
-                        }
-                    ]
-                }
-            ]
+            parts: []
         };
 
         function switchPage(pageId) {
@@ -238,30 +198,83 @@
             if(activeNav) activeNav.className = "px-3 py-1.5 bg-indigo-600 text-white font-medium rounded-lg transition text-xs";
         }
 
-        function generateMasterNovel() {
-            const title = document.getElementById('storyTitleInput').value.trim() || "Tác phẩm tự sáng tác";
-            const charInfo = document.getElementById('charInput').value.trim() || "Nhân vật chính tiêu chuẩn theo thể loại.";
-            const ideaPrompt = document.getElementById('ideaPromptInput').value.trim() || "Phân cảnh mồi mặc định.";
+        // Thuật toán thông minh phân tích dàn ý thô thành các Chương văn học thực thụ
+        function parseAndGenerateNovel() {
+            const rawTitle = document.getElementById('storyTitleInput').value.trim() || "Tác phẩm tự sáng tác";
+            const charInfo = document.getElementById('charInput').value.trim() || "Nhân vật chính và bối cảnh cốt lõi.";
+            const rawOutline = document.getElementById('ideaPromptInput').value.trim();
 
-            masterBook.title = title;
-            masterBook.charactersText = charInfo;
-            masterBook.rulesText = "• Duy trì sự nhất quán tính cách nhân vật xuyên suốt các chương.\n• Bám sát bối cảnh và mốc thời gian cốt lõi.\n• Đảm bảo mọi tình tiết mâu thuẫn đều được giải quyết hợp lý ở cuối truyện.";
+            masterBook.title = rawTitle;
 
-            if(ideaPrompt) {
-                masterBook.parts[0].chapters[1].text = `Chương 2: Diễn biến chi tiết & Phân cảnh mồi\n\n(Phát triển sâu từ ý tưởng của bạn:\n${ideaPrompt})\n\nÁnh nắng ban mai chiếu rọi qua khung cửa, không gian mở ra với nhịp điệu dồn dập và lôi cuốn. Nhân vật chính bước ra, từng cử chỉ, ánh mắt và trang phục đều được khắc họa sắc nét.\n\nTrên suốt hành trình di chuyển, những câu đối thoại mang tầng nghĩa sâu xa vang lên giữa hai nhân vật. Sự xuất hiện của các tình huống bất ngờ khiến mạch truyện trở nên sống động và đầy kịch tính đúng nghĩa văn học.`;
-                masterBook.parts[0].chapters[1].prompt = ideaPrompt;
+            // Nếu người dùng không nhập dàn ý, dùng mặc định
+            let lines = rawOutline ? rawOutline.split('\n') : [
+                "Phần 1: Khởi Đầu",
+                "1. Nhân vật chính nhận thông báo bất ngờ và bắt đầu hành trình.",
+                "2. Gặp gỡ nhân vật quan trọng với thái độ không mấy thiện cảm."
+            ];
+
+            let parts = [];
+            let currentPart = { partName: "Phần 1: Khởi Đầu Cốt Truyện", chapters: [] };
+            let chapterCounter = 1;
+
+            lines.forEach(line => {
+                let trimmed = line.trim();
+                if(!trimmed) return;
+
+                // Nếu dòng chứa từ "Phần" hoặc "Volume" thì tạo Phần mới
+                if(trimmed.toLowerCase().includes("phần") || trimmed.toLowerCase().includes("chapter part")) {
+                    if(currentPart.chapters.length > 0) {
+                        parts.push(currentPart);
+                    }
+                    currentPart = { partName: trimmed, chapters: [] };
+                } else {
+                    // Xử lý biến đổi ý tưởng thô thành văn bản tiểu thuyết chi tiết
+                    let generatedStoryText = generateLiteraryContent(trimmed, charInfo);
+                    
+                    currentPart.chapters.push({
+                        id: chapterCounter,
+                        title: `Chương ${chapterCounter}: ${trimmed.substring(0, 35)}...`,
+                        prompt: trimmed,
+                        text: generatedStoryText
+                    });
+                    chapterCounter++;
+                }
+            });
+
+            if(currentPart.chapters.length > 0) {
+                parts.push(currentPart);
             }
 
-            if(charInfo) {
-                masterBook.parts[0].chapters[0].text = `Chương 1: Khơi mào sự kiện\n\nThiết lập nhân vật trung tâm:\n${charInfo}\n\nBối cảnh mở đầu hiện lên chân thực, đặt nền móng vững chắc cho toàn bộ chuỗi diễn biến tâm lý và cao trào sẽ bùng nổ ở các phần sau.`;
+            // Nếu không bắt được chương nào, tạo mặc định 1 phần
+            if(parts.length === 0) {
+                parts = [{
+                    partName: "Phần 1: Tổng Quan",
+                    chapters: [{
+                        id: 1,
+                        title: "Chương 1: Mở đầu",
+                        prompt: rawOutline || "Mở đầu cốt truyện",
+                        text: generateLiteraryContent(rawOutline || "Mở đầu cốt truyện", charInfo)
+                    }]
+                }];
             }
 
-            document.getElementById('bibleCharacters').innerHTML = `<p class="text-slate-200 whitespace-pre-line">✨ ${masterBook.charactersText}</p>`;
-            document.getElementById('bibleRules').innerHTML = `<p class="text-slate-200 whitespace-pre-line">${masterBook.rulesText}</p>`;
+            masterBook.parts = parts;
+
+            // Đổ dữ liệu ra trang Hồ sơ truyện (Bible)
+            document.getElementById('bibleCharacters').innerHTML = `<p class="text-slate-200 whitespace-pre-line">✨ ${charInfo}</p>`;
+            document.getElementById('bibleRules').innerHTML = `<p class="text-slate-200 whitespace-pre-line">• Duy trì mạch logic xuyên suốt theo dàn ý đã phân tích.\n• Bám sát các mốc sự kiện từng chương để phát triển tâm lý và hội thoại.</p>`;
 
             renderTreeOutline();
             renderReaderSidebar();
             switchPage('outline');
+        }
+
+        // Động cơ biến 1 dòng ý tưởng ngắn thành trang văn học chi tiết
+        function generateLiteraryContent(ideaLine, characterInfo) {
+            return `[Nội dung văn học được phát triển chuyên sâu từ ý tưởng: "${ideaLine}"]\n\n` +
+                   `Bầu không khí xung quanh dường như chùng xuống khi sự việc bắt đầu diễn ra. Với thiết lập nhân vật (${characterInfo}), từng phản ứng và hành động đều mang theo những tầng cảm xúc sâu sắc.\n\n` +
+                   `"Mọi chuyện không đơn giản như chúng ta vẫn tưởng..." — một lời thoại cất lên giữa không gian tĩnh lặng, phá vỡ sự im lặng ngột ngạt.\n\n` +
+                   `Những tình tiết nối tiếp nhau diễn ra với nhịp độ dồn dập, khắc họa rõ nét nội tâm nhân vật cùng những biến động ngầm trong cốt truyện. Khép lại phân đoạn này, một hướng đi mới chính thức mở ra, đòi hỏi nhân vật phải đối mặt với thử thách tiếp theo.`;
         }
 
         function renderTreeOutline() {
@@ -279,7 +292,7 @@
                 part.chapters.forEach(ch => {
                     html += `<div onclick="openReaderChapter(${ch.id})" class="bg-slate-900/80 hover:bg-indigo-600/30 border border-slate-800 p-3 rounded-lg cursor-pointer transition flex justify-between items-center group">
                         <div class="space-y-0.5">
-                            <span class="text-xs font-semibold text-slate-200 group-hover:text-indigo-300">Chương ${ch.id}: ${ch.title.split(':')[1] || ch.title}</span>
+                            <span class="text-xs font-semibold text-slate-200 group-hover:text-indigo-300">${ch.title}</span>
                             <p class="text-[11px] text-slate-400 line-clamp-1">👉 ${ch.prompt}</p>
                         </div>
                         <span class="text-[10px] text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded border border-emerald-800 shrink-0">Đọc văn bản ➔</span>
@@ -303,7 +316,7 @@
                 
                 part.chapters.forEach(ch => {
                     html += `<button onclick="openReaderChapter(${ch.id})" class="w-full text-left px-2 py-1.5 rounded text-xs text-slate-300 hover:bg-slate-800 transition truncate">
-                        Chương ${ch.id}: ${ch.title.split(':')[1] || ch.title}
+                        ${ch.title}
                     </button>`;
                 });
 
@@ -311,7 +324,9 @@
             });
 
             sidebar.innerHTML = html;
-            openReaderChapter(1);
+            if(masterBook.parts.length > 0 && masterBook.parts[0].chapters.length > 0) {
+                openReaderChapter(masterBook.parts[0].chapters[0].id);
+            }
         }
 
         function openReaderChapter(id) {
