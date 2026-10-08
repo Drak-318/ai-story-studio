@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Ultimate Master Novel Studio v19.0</title>
+<title>AI Ultimate Master Novel Studio v19.1 Fixed</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -19,7 +19,7 @@ body{font-family:'Inter',sans-serif}
     <div class="flex items-center space-x-3">
       <span class="bg-indigo-600 text-white font-bold p-1.5 rounded text-sm">TVPL</span>
       <div>
-        <h1 class="text-base font-bold text-slate-200">AI Ultimate Master Novel Studio v19.0</h1>
+        <h1 class="text-base font-bold text-slate-200">AI Ultimate Master Novel Studio v19.1</h1>
         <p class="text-xs text-slate-400">Hệ thống sáng tác tiểu thuyết toàn diện · Đa dự án · Bộ nhớ nối mạch · AI Kép</p>
       </div>
     </div>
@@ -32,7 +32,7 @@ body{font-family:'Inter',sans-serif}
   </div>
 </header>
 
-<main class="flex-1 p-6 max-w-[1700px] w-full mx-auto">
+<main class="flex-1 p-6 max-w-[1700px] w-full mx-auto space-y-6">
 
 <!-- TRANG 1: THIẾT LẬP & Ý TƯỞNG -->
 <div id="page-home" class="page-view active grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -42,10 +42,409 @@ body{font-family:'Inter',sans-serif}
       <div class="flex items-center gap-2">
         <label class="text-xs text-slate-400">Chọn dự án:</label>
         <select id="projectSelector" onchange="switchProject(this.value)" class="bg-slate-950 border border-slate-800 rounded-lg px-2 py-1 text-xs text-indigo-300 outline-none"></select>
-        <button onclick="createNewProject()" class="text-xs bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded-lg text-slate-300">+ Truyện mới</button>
+        <button onclick="createNewProject()" class="text-xs bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded-lg text-slate-300 cursor-pointer">+ Truyện mới</button>
       </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
       <div><label class="block text-xs text-slate-400 mb-1">Tên tác phẩm</label>
-        <input id="storyTitleInput" value="Khách sạn Biển Lặng
+        <input id="storyTitleInput" value="Khách sạn Biển Lặng" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs outline-none focus:border-indigo-500"></div>
+      <div>
+        <div class="flex justify-between items-center mb-1">
+          <label class="block text-xs text-slate-400">Giọng văn (Style)</label>
+          <select onchange="$('styleInput').value = this.value" class="bg-slate-950 border border-slate-800 text-[10px] text-indigo-400 rounded px-1">
+            <option value="">-- Mẫu giọng văn --</option>
+            <option value="Nhẹ nhàng, sâu lắng, miêu tả chi tiết giác quan, đối thoại sắc sảo">Ngôn tình sâu lắng</option>
+            <option value="Hào môn tranh đấu, căng thẳng, lạnh lùng, dồn dập kịch tính">Hào môn kịch tính</option>
+            <option value="Trinh thám ly kỳ, logic chặt chẽ, nhiều nút thắt bất ngờ">Trinh thám ly kỳ</option>
+          </select>
+        </div>
+        <input id="styleInput" value="Nhẹ nhàng, ấm áp, có chút hài hước trong đối thoại, sâu lắng khi hé lộ quá khứ" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs outline-none focus:border-indigo-500">
+      </div>
+      <div><label class="block text-xs text-slate-400 mb-1">Ngôi kể (POV)</label>
+        <select id="povInput" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs outline-none focus:border-indigo-500">
+          <option value="Ngôi thứ ba, bám sát cảm xúc nhân vật chính">Ngôi thứ ba hạn tri</option>
+          <option value="Ngôi thứ nhất (Tôi)">Ngôi thứ nhất (Tôi)</option>
+        </select></div>
+    </div>
+
+    <div>
+      <label class="block text-xs text-slate-400 mb-1">Ý tưởng ngắn hoặc Tóm tắt cốt truyện</label>
+      <textarea id="ideaInput" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs outline-none resize-none focus:border-indigo-500" placeholder="Ví dụ: Cô gái thừa kế một khách sạn cũ bên biển từ người bà chưa từng gặp, phải hợp tác với anh quản lý lạnh lùng..."></textarea>
+      <div class="flex items-center gap-2 mt-2">
+        <label class="text-xs text-slate-400">Số chương dự kiến</label>
+        <input id="chapCount" type="number" min="3" max="50" value="24" class="w-16 bg-slate-950 border border-slate-800 rounded-lg px-2 py-1 text-xs">
+        <button onclick="aiPlan()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium py-2 rounded-lg cursor-pointer">✨ AI tự động lập Hồ sơ & Dàn ý</button>
+      </div>
+    </div>
+
+    <div><label class="block text-xs text-slate-400 mb-1">Hồ sơ truyện (Story Bible - Nhân vật, bối cảnh, bí mật)</label>
+      <textarea id="charBibleInput" rows="4" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs outline-none resize-y focus:border-indigo-500"></textarea></div>
+
+    <div><label class="block text-xs text-slate-400 mb-1">Dàn ý chi tiết (Mỗi dòng một chương; dòng bắt đầu bằng "Phần" là tiêu đề phần)</label>
+      <textarea id="ideaPromptInput" rows="8" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs outline-none resize-y leading-relaxed font-mono focus:border-indigo-500"></textarea></div>
+
+    <button onclick="initBook()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 rounded-lg text-xs cursor-pointer shadow-lg shadow-indigo-600/20">🚀 Lưu & Tạo Mục Lục Tác Phẩm</button>
+  </div>
+
+  <div class="lg:col-span-4 bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-4 shadow-xl flex flex-col justify-between">
+    <div class="space-y-3">
+      <h3 class="text-xs font-semibold text-amber-400 border-b border-slate-800 pb-2">🔑 Cấu hình AI (Google Gemini)</h3>
+      <select id="provider" onchange="saveCfg()" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs outline-none">
+        <option value="gemini">Tự động: Google Gemini API</option>
+        <option value="manual">Thủ công: Dán qua Claude / ChatGPT miễn phí</option>
+      </select>
+      <input id="apiKey" type="password" onchange="saveCfg()" placeholder="Dán Gemini API Key của bạn" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs outline-none font-mono">
+      <input id="modelName" onchange="saveCfg()" value="gemini-2.5-flash" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs outline-none font-mono">
+
+      <h3 class="text-xs font-semibold text-emerald-400 border-b border-slate-800 pb-2 pt-2">💡 Quy trình làm việc chuẩn</h3>
+      <ol class="text-xs text-slate-300 space-y-2 list-decimal pl-4 leading-relaxed">
+        <li>Nhập ý tưởng ngắn, bấm nút xanh lá để AI lập hồ sơ & dàn ý.</li>
+        <li>Bấm "Tạo Mục Lục Tác Phẩm" để khóa cấu trúc.</li>
+        <li>Vào mục lục, mở chương 1 và bấm <strong>"Viết chương này bằng AI"</strong>.</li>
+      </ol>
+    </div>
+    <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 text-center">
+      <button onclick="switchPage('outline')" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg font-medium transition cursor-pointer">Xem Mục Lục Cây Thư Mục ➔</button>
+    </div>
+  </div>
+</div>
+
+<!-- TRANG 2: HỒ SƠ & BỘ NHỚ -->
+<div id="page-bible" class="page-view">
+  <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-4 shadow-xl">
+    <h2 class="text-sm font-bold text-indigo-400 border-b border-slate-800 pb-3">🛡️ Hồ sơ Truyện & Bộ nhớ đệm ngữ cảnh</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-2">
+        <h3 class="text-xs font-semibold text-emerald-400">👤 Hồ sơ Nhân vật & Cốt truyện</h3>
+        <div id="bibleViewContent" class="text-xs text-slate-300 whitespace-pre-line leading-relaxed">Chưa có dữ liệu.</div>
+      </div>
+      <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-2">
+        <h3 class="text-xs font-semibold text-amber-400">🧠 Bộ nhớ tóm tắt các chương đã viết</h3>
+        <div id="memoryView" class="text-xs text-slate-300 whitespace-pre-line leading-relaxed">Chưa có chương nào được viết.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRANG 3: MỤC LỤC CÂY THƯ MỤC -->
+<div id="page-outline" class="page-view">
+  <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl space-y-4">
+    <div class="flex justify-between items-center border-b border-slate-800 pb-3 flex-wrap gap-2">
+      <h2 id="outlineBookTitle" class="text-sm font-bold text-emerald-400">📚 Mục lục tác phẩm</h2>
+      <div class="flex gap-2">
+        <button onclick="writeNext()" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 rounded-lg text-white cursor-pointer font-medium">✨ Viết chương tiếp theo bằng AI</button>
+        <button onclick="downloadBook()" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-slate-300 cursor-pointer">💾 Tải file .txt</button>
+      </div>
+    </div>
+    <div id="treeOutlineContainer" class="space-y-6 max-h-[600px] overflow-y-auto pr-2">
+      <p class="text-xs text-slate-500 italic">Chưa có mục lục. Hãy khởi tạo ở Trang 1.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TRANG 4: ĐỌC & SỬA CHƯƠNG SONG SONG -->
+<div id="page-reader" class="page-view grid grid-cols-1 lg:grid-cols-12 gap-6">
+  <div class="lg:col-span-3 bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3 shadow-xl">
+    <h3 class="text-xs font-semibold text-indigo-400 border-b border-slate-800 pb-2">📂 Danh mục chương</h3>
+    <div id="readerSidebarTree" class="space-y-1 max-h-[560px] overflow-y-auto pr-1 text-xs"></div>
+  </div>
+
+  <div class="lg:col-span-9 bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-4 shadow-xl">
+    <div class="flex justify-between items-center border-b border-slate-800 pb-3 flex-wrap gap-2">
+      <div>
+        <span id="readerPartBadge" class="text-[11px] text-indigo-400 font-semibold"></span>
+        <h2 id="readerChapterTitle" class="text-sm font-bold text-amber-400">Chưa chọn chương</h2>
+      </div>
+      <div class="flex gap-2 flex-wrap items-center">
+        <button onclick="writeChapter(cur)" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 rounded-lg text-white cursor-pointer font-medium">✨ Viết chương này bằng AI</button>
+        <button onclick="writeNext()" class="text-xs bg-indigo-800 hover:bg-indigo-700 px-3 py-1.5 rounded-lg text-white cursor-pointer">Viết chương tiếp</button>
+        <button onclick="saveEdited()" class="text-xs bg-emerald-700 hover:bg-emerald-600 px-3 py-1.5 rounded-lg text-white cursor-pointer font-medium">💾 Lưu chỉnh sửa</button>
+        <button onclick="copyText()" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-slate-300 cursor-pointer">📋 Sao chép</button>
+      </div>
+    </div>
+    <p id="readerOutline" class="text-[11px] text-slate-400 italic bg-slate-950 p-2 rounded border border-slate-800"></p>
+    
+    <textarea id="readerContentEditor" rows="18" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-5 text-sm text-slate-200 leading-loose outline-none focus:border-indigo-500 resize-y font-sans"></textarea>
+    
+    <div class="flex gap-2">
+      <input id="reviseInput" class="flex-1 bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs outline-none focus:border-indigo-500" placeholder="Yêu cầu lệnh sửa, ví dụ: viết buồn hơn, thêm hội thoại...">
+      <button onclick="reviseChapter()" class="text-xs bg-amber-600 hover:bg-amber-500 px-4 py-2 rounded-lg text-white cursor-pointer font-medium">✨ Viết lại theo lệnh</button>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- MODAL THỦ CÔNG -->
+<div id="modal" class="hidden fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4">
+  <div class="bg-slate-900 border border-slate-700 rounded-xl p-5 w-full max-w-3xl space-y-3 shadow-2xl">
+    <h3 class="text-xs font-bold text-amber-400">Chế độ thủ công (Claude / ChatGPT miễn phí)</h3>
+    <p class="text-xs text-slate-300">Bước 1: Sao chép prompt. Bước 2: Dán vào AI miễn phí. Bước 3: Dán kết quả vào ô bên dưới.</p>
+    <textarea id="mPrompt" readonly rows="6" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs font-mono"></textarea>
+    <button onclick="navigator.clipboard.writeText($('mPrompt').value); alert('Đã sao chép prompt!');" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg cursor-pointer">📋 Sao chép yêu cầu</button>
+    <textarea id="mResult" rows="7" placeholder="Dán kết quả nội dung văn bản của AI vào đây..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs font-sans"></textarea>
+    <div class="flex gap-2 justify-end">
+      <button onclick="_mNo()" class="text-xs bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg cursor-pointer">Hủy</button>
+      <button onclick="_mOk()" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-lg text-white cursor-pointer font-medium">Dùng kết quả này</button>
+    </div>
+  </div>
+</div>
+
+<div id="busy" class="hidden fixed bottom-4 right-4 bg-indigo-600 text-white text-xs px-4 py-3 rounded-lg shadow-2xl z-50 flex items-center gap-2">
+  <div class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+  <span id="busyText">Đang xử lý...</span>
+</div>
+
+<script>
+const PROJECTS_KEY = 'novelStudio_v19_projects';
+let projects = {};
+let currentProjId = 'bien-lang';
+let book = { title: '', bible: '', style: '', pov: '', parts: [] };
+let cur = 1;
+
+const $ = id => document.getElementById(id);
+const chapters = () => book.parts.flatMap(p => p.chapters);
+
+function loadAllProjects() {
+  try {
+    const data = localStorage.getItem(PROJECTS_KEY);
+    if(data) projects = JSON.parse(data);
+  } catch(e) {}
+  
+  if(!projects['bien-lang']) {
+    projects['bien-lang'] = {
+      title: "Khách sạn Biển Lặng",
+      bible: "Linh (27 tuổi, nhân viên văn phòng Sài Gòn, bướng bỉnh, sợ bị bỏ rơi). Khải (31 tuổi, quản lý khách sạn lạnh lùng). Bà Ngọc (bà ngoại đã mất). Mẹ là Thanh Vân.",
+      style: "Nhẹ nhàng, sâu lắng, miêu tả chi tiết giác quan, đối thoại sắc sảo",
+      pov: "Ngôi thứ ba, bám sát cảm xúc nhân vật chính",
+      parts: [
+        {
+          partName: "Phần 1: Người lạ ở Biển Lặng",
+          chapters: [
+            { id: 1, title: "Cuộc gọi từ một người xa lạ", outline: "Linh nhận thông báo thừa kế khi đang bị sếp mắng. Cô tưởng là lừa đảo.", text: "", summary: "" },
+            { id: 2, title: "Khách sạn không chào đón", outline: "Cô đến thị trấn biển, thấy khách sạn cũ kỹ, vắng khách. Lần đầu gặp Khải, anh tỏ rõ sự không chào đón.", text: "", summary: "" }
+          ]
+        }
+      ]
+    };
+  }
+}
+
+function saveCurrentProject() {
+  projects[currentProjId] = book;
+  localStorage.setItem(PROJECTS_KEY, JSON.stringify(projects));
+  updateProjectSelector();
+}
+
+function updateProjectSelector() {
+  const sel = $('projectSelector');
+  if(!sel) return;
+  sel.innerHTML = '';
+  Object.keys(projects).forEach(id => {
+    const opt = document.createElement('option');
+    opt.value = id;
+    opt.textContent = projects[id].title || id;
+    if(id === currentProjId) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+function switchProject(id) {
+  if(projects[id]) {
+    currentProjId = id;
+    book = projects[id];
+    loadBookToUI();
+    renderAll();
+    switchPage('home');
+  }
+}
+
+function createNewProject() {
+  const name = prompt("Nhập tên tác phẩm mới:", "Tác phẩm mới");
+  if(!name) return;
+  const id = 'proj_' + Date.now();
+  projects[id] = {
+    title: name,
+    bible: "Nhân vật chính và bối cảnh cốt lõi...",
+    style: "Nhẹ nhàng, sâu lắng",
+    pov: "Ngôi thứ ba, bám sát cảm xúc nhân vật chính",
+    parts: [{ partName: "Phần 1: Khởi Đầu", chapters: [{ id: 1, title: "Mở đầu", outline: "Giới thiệu nhân vật và hoàn cảnh xuất phát", text: "", summary: "" }] }]
+  };
+  currentProjId = id;
+  book = projects[id];
+  saveCurrentProject();
+  loadBookToUI();
+  renderAll();
+  switchPage('home');
+}
+
+function loadBookToUI() {
+  $('storyTitleInput').value = book.title || '';
+  $('charBibleInput').value = book.bible \vert{}\vert{} '';$('styleInput').value = book.style || '';
+  $('povInput').value = book.pov \vert{}\vert{} '';$('ideaPromptInput').value = book.parts.map(p => p.partName + '\n' + p.chapters.map(c => `Chương ${c.id}: ${c.outline}`).join('\n')).join('\n');
+}
+
+function switchPage(id) {
+  ['home', 'bible', 'outline', 'reader'].forEach(p => {
+    const el = $('page-' + p);
+    const nav = $('nav-' + p);
+    if(el) el.classList.remove('active');
+    if(nav) nav.className = 'px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition text-xs';
+  });
+  const targetPage = $('page-' + id);
+  const targetNav = $('nav-' + id);
+  if(targetPage) targetPage.classList.add('active');
+  if(targetNav) targetNav.className = 'px-3 py-1.5 bg-indigo-600 text-white font-medium rounded-lg transition text-xs';
+}
+
+function setBusy(msg) { 
+  $('busyText').textContent = msg || 'Đang xử lý...'; 
+  $('busy').classList.toggle('hidden', !msg); 
+}
+
+const cfg = () => { try { return JSON.parse(localStorage.getItem('novelStudio_v19_cfg') || '{}'); } catch(e) { return {}; } };
+function saveCfg() { 
+  localStorage.setItem('novelStudio_v19_cfg', JSON.stringify({ 
+    provider: $('provider').value, 
+    key: $('apiKey').value.trim(), 
+    model: $('modelName').value.trim() 
+  })); 
+}
+
+async function callAI(prompt, max = 6000, temp = 0.9) {
+  const c = cfg();
+  if((c.provider || 'gemini') === 'manual') return manualAI(prompt);
+  if(!c.key) {
+    switchPage('home');
+    throw new Error('Chưa nhập Google Gemini API Key ở Trang 1.');
+  }
+  
+  const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${c.model || 'gemini-2.5-flash'}:generateContent?key=${encodeURIComponent(c.key)}`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { maxOutputTokens: max, temperature: temp } })
+  });
+  const d = await r.json();
+  if(!r.ok) throw new Error((d.error && d.error.message) || 'Lỗi kết nối API: ' + r.status);
+  const t = ((d.candidates && d.candidates[0] && d.candidates[0].content && d.candidates[0].content.parts) || []).map(p => p.text || '').join('');
+  if(!t) throw new Error('AI không trả về nội dung.');
+  return t;
+}
+
+function manualAI(prompt) {
+  return new Promise((resolve, reject) => {
+    setBusy('');
+    $('mPrompt').value = prompt; $('mResult').value = '';$('modal').classList.remove('hidden');
+    window._mOk = () => { const v = $('mResult').value.trim(); if (!v) return alert('Hãy dán kết quả vào ô.'); $('modal').classList.add('hidden'); resolve(v); };
+    window._mNo = () => { $('modal').classList.add('hidden'); reject(new Error('Đã hủy.')); };
+  });
+}
+
+async function aiPlan() {
+  const idea = $('ideaInput').value.trim();
+  if (!idea) return alert('Hãy nhập ý tưởng ngắn trước.');
+  const n = parseInt($('chapCount').value) || 12;
+  setBusy('AI đang phân tích và lập hồ sơ, dàn ý...');
+  try {
+    const t = await callAI(
+`Bạn là biên tập viên tiểu thuyết tiếng Việt chuyên nghiệp. Từ ý tưởng dưới đây, hãy tạo hồ sơ truyện và dàn ý ${n} chương, chia thành các phần rõ ràng, mở đầu cuốn hút, xung đột tăng dần và kết thúc trọn vẹn.
+Ý TƯỞNG: ${idea}
+GIỌNG VĂN: ${$('styleInput').value}
+Chỉ trả về JSON hợp lệ, không thêm chữ nào khác, đúng định dạng:
+{"title":"tên truyện","bible":"nhân vật chính (tên, tuổi, tính cách, điểm yếu), bối cảnh, bí mật cốt lõi, kết thúc","outline":["Phần 1: tên phần","Chương 1: nội dung tóm tắt chương 2-3 câu","Chương 2: ...","Phần 2: ..."]}`, 4000, 0.8);
+    const j = JSON.parse(t.slice(t.indexOf('{'), t.lastIndexOf('}') + 1));
+    $('storyTitleInput').value = j.title \vert{}\vert{}$('storyTitleInput').value;
+    $('charBibleInput').value = j.bible \vert{}\vert{} '';$('ideaPromptInput').value = (j.outline || []).join('\n');
+    alert('AI đã lập xong hồ sơ và dàn ý thành công!');
+  } catch (e) { alert('Lỗi: ' + e.message); }
+  finally { setBusy(''); }
+}
+
+function initBook() {
+  const raw = $('ideaPromptInput').value.trim();
+  if (!raw) return alert('Dàn ý đang trống.');
+  if (chapters().some(c => c.text) && !confirm('Tạo lại mục lục sẽ ghi đè cấu trúc cũ. Tiếp tục?')) return;
+  
+  book.title = $('storyTitleInput').value.trim() || 'Tác phẩm mới';
+  book.bible = $('charBibleInput').value.trim();
+  book.style = $('styleInput').value.trim();
+  book.pov = $('povInput').value;
+  book.parts = [];
+
+  let part = null, id = 1;
+  raw.split('\n').map(s => s.trim()).filter(Boolean).forEach(l => {
+    if (/^phần/i.test(l)) { part = { partName: l, chapters: [] }; book.parts.push(part); return; }
+    if (!part) { part = { partName: 'Phần 1: Khởi Đầu', chapters: [] }; book.parts.push(part); }
+    const t = l.replace(/^chương\s*\d+\s*[:.\-]?\s*/i, '');
+    part.chapters.push({ id: id++, title: t.length > 50 ? t.slice(0, 47) + '...' : t, outline: t, text: '', summary: '' });
+  });
+
+  saveCurrentProject();
+  renderAll();
+  switchPage('outline');
+  alert('Đã tạo mục lục tác phẩm thành công!');
+}
+
+function chapterPrompt(ch) {
+  const all = chapters();
+  const prev = all.filter(c => c.id < ch.id && c.summary).map(c => `Chương ${c.id}: ${c.summary}`).join('\n') || '(đây là những chương đầu tiên)';
+  const last = all.find(c => c.id === ch.id - 1);
+  const excerpt = last && last.text ? last.text.slice(-1500) : '(chưa có đoạn trước)';
+  
+  return `Bạn là tiểu thuyết gia chuyên nghiệp viết bằng tiếng Việt.
+
+HỒ SƠ TRUYỆN (BIBLE):
+${book.bible}
+
+TÓM TẮT CÁC CHƯƠNG TRƯỚC:
+${prev}
+
+ĐOẠN CUỐI CHƯƠNG TRƯỚC (để nối mạch cảm xúc):
+${excerpt}
+
+NHIỆM VỤ: Viết hoàn chỉnh CHƯƠNG ${ch.id}: "${ch.outline}".
+
+QUY TẮC BẮT BUỘC:
+- Độ dài từ 1.500 đến 2.200 chữ.
+- Viết thành các cảnh cụ thể: đối thoại sắc sảo, hành động, biểu cảm, chi tiết giác quan. Không tóm tắt, không kể lướt.
+- Giữ đúng tên, tuổi, tính cách nhân vật, không làm sai lệch mốc thời gian hoặc thông tin đã thiết lập.
+- Giọng văn: ${book.style}. Ngôi kể: ${book.pov}.
+- Kết chương bằng một móc câu (cliffhanger) hấp dẫn khiến người đọc muốn bấm sang chương tiếp theo.
+- Chỉ trả về nội dung chương truyện hoàn chỉnh, không thêm bình luận ngoài truyện.`;
+}
+
+async function writeChapter(id) {
+  const ch = chapters().find(c => c.id === id);
+  if (!ch) return alert('Không tìm thấy chương.');
+  setBusy(`AI đang sáng tác chương ${id}...`);
+  try {
+    ch.text = (await callAI(chapterPrompt(ch), 7000, 0.9)).trim();
+    
+    setBusy(`Đang tóm tắt chương ${id} để làm bộ nhớ...`);
+    try {
+      ch.summary = (await callAI(`Tóm tắt ngắn gọn chương truyện sau trong 3-4 câu: \n\n${ch.text}`, 400, 0.3)).trim();
+    } catch(err) {
+      ch.summary = ch.text.slice(0, 300) + "...";
+    }
+
+    saveCurrentProject();
+    renderAll();
+    openChapter(id);
+  } catch (e) { alert('Lỗi: ' + e.message); }
+  finally { setBusy(''); }
+}
+
+function writeNext() {
+  const c = chapters().find(c => !c.text);
+  if (!c) return alert(chapters().length ? 'Tất cả các chương đã viết xong!' : 'Chưa có mục lục chương.');
+  writeChapter(c.id);
+}
+
+async function reviseChapter() {
+  const ch = chapters().find(c => c.id === cur);
+  const ins = $('reviseInput').value.trim();
+  const text = $('readerContentEditor').value.trim();
+  if (!ch || !text) return alert('Chương chưa có nội dung.');
+  if (!ins) return alert('Hãy nhập yêu cầu chỉnh sửa.');
+  setBusy('AI đang viết lại chương...');
+  try {
