@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Ultimate Master Novel Studio v19.1 Fixed</title>
+<title>AI Ultimate Master Novel Studio v19.2</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -19,8 +19,8 @@ body{font-family:'Inter',sans-serif}
     <div class="flex items-center space-x-3">
       <span class="bg-indigo-600 text-white font-bold p-1.5 rounded text-sm">TVPL</span>
       <div>
-        <h1 class="text-base font-bold text-slate-200">AI Ultimate Master Novel Studio v19.1</h1>
-        <p class="text-xs text-slate-400">Hệ thống sáng tác tiểu thuyết toàn diện · Đa dự án · Bộ nhớ nối mạch · AI Kép</p>
+        <h1 class="text-base font-bold text-slate-200">AI Ultimate Master Novel Studio v19.2</h1>
+        <p class="text-xs text-slate-400">Hệ thống sáng tác tiểu thuyết toàn diện · Ổn định tuyệt đối · AI Kép</p>
       </div>
     </div>
     <nav class="flex gap-1.5 text-xs">
@@ -50,15 +50,7 @@ body{font-family:'Inter',sans-serif}
       <div><label class="block text-xs text-slate-400 mb-1">Tên tác phẩm</label>
         <input id="storyTitleInput" value="Khách sạn Biển Lặng" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs outline-none focus:border-indigo-500"></div>
       <div>
-        <div class="flex justify-between items-center mb-1">
-          <label class="block text-xs text-slate-400">Giọng văn (Style)</label>
-          <select onchange="$('styleInput').value = this.value" class="bg-slate-950 border border-slate-800 text-[10px] text-indigo-400 rounded px-1">
-            <option value="">-- Mẫu giọng văn --</option>
-            <option value="Nhẹ nhàng, sâu lắng, miêu tả chi tiết giác quan, đối thoại sắc sảo">Ngôn tình sâu lắng</option>
-            <option value="Hào môn tranh đấu, căng thẳng, lạnh lùng, dồn dập kịch tính">Hào môn kịch tính</option>
-            <option value="Trinh thám ly kỳ, logic chặt chẽ, nhiều nút thắt bất ngờ">Trinh thám ly kỳ</option>
-          </select>
-        </div>
+        <label class="block text-xs text-slate-400 mb-1">Giọng văn (Style)</label>
         <input id="styleInput" value="Nhẹ nhàng, ấm áp, có chút hài hước trong đối thoại, sâu lắng khi hé lộ quá khứ" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs outline-none focus:border-indigo-500">
       </div>
       <div><label class="block text-xs text-slate-400 mb-1">Ngôi kể (POV)</label>
@@ -74,7 +66,7 @@ body{font-family:'Inter',sans-serif}
       <div class="flex items-center gap-2 mt-2">
         <label class="text-xs text-slate-400">Số chương dự kiến</label>
         <input id="chapCount" type="number" min="3" max="50" value="24" class="w-16 bg-slate-950 border border-slate-800 rounded-lg px-2 py-1 text-xs">
-        <button onclick="aiPlan()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium py-2 rounded-lg cursor-pointer">✨ AI tự động lập Hồ sơ & Dàn ý</button>
+        <button type="button" onclick="aiPlan()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium py-2 rounded-lg cursor-pointer">✨ AI tự động lập Hồ sơ & Dàn ý</button>
       </div>
     </div>
 
@@ -84,7 +76,7 @@ body{font-family:'Inter',sans-serif}
     <div><label class="block text-xs text-slate-400 mb-1">Dàn ý chi tiết (Mỗi dòng một chương; dòng bắt đầu bằng "Phần" là tiêu đề phần)</label>
       <textarea id="ideaPromptInput" rows="8" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs outline-none resize-y leading-relaxed font-mono focus:border-indigo-500"></textarea></div>
 
-    <button onclick="initBook()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 rounded-lg text-xs cursor-pointer shadow-lg shadow-indigo-600/20">🚀 Lưu & Tạo Mục Lục Tác Phẩm</button>
+    <button type="button" onclick="initBook()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 rounded-lg text-xs cursor-pointer shadow-lg shadow-indigo-600/20">🚀 Lưu & Tạo Mục Lục Tác Phẩm</button>
   </div>
 
   <div class="lg:col-span-4 bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-4 shadow-xl flex flex-col justify-between">
@@ -105,7 +97,7 @@ body{font-family:'Inter',sans-serif}
       </ol>
     </div>
     <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 text-center">
-      <button onclick="switchPage('outline')" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg font-medium transition cursor-pointer">Xem Mục Lục Cây Thư Mục ➔</button>
+      <button type="button" onclick="switchPage('outline')" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg font-medium transition cursor-pointer">Xem Mục Lục Cây Thư Mục ➔</button>
     </div>
   </div>
 </div>
@@ -133,8 +125,8 @@ body{font-family:'Inter',sans-serif}
     <div class="flex justify-between items-center border-b border-slate-800 pb-3 flex-wrap gap-2">
       <h2 id="outlineBookTitle" class="text-sm font-bold text-emerald-400">📚 Mục lục tác phẩm</h2>
       <div class="flex gap-2">
-        <button onclick="writeNext()" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 rounded-lg text-white cursor-pointer font-medium">✨ Viết chương tiếp theo bằng AI</button>
-        <button onclick="downloadBook()" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-slate-300 cursor-pointer">💾 Tải file .txt</button>
+        <button type="button" onclick="writeNext()" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 rounded-lg text-white cursor-pointer font-medium">✨ Viết chương tiếp theo bằng AI</button>
+        <button type="button" onclick="downloadBook()" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-slate-300 cursor-pointer">💾 Tải file .txt</button>
       </div>
     </div>
     <div id="treeOutlineContainer" class="space-y-6 max-h-[600px] overflow-y-auto pr-2">
@@ -157,10 +149,10 @@ body{font-family:'Inter',sans-serif}
         <h2 id="readerChapterTitle" class="text-sm font-bold text-amber-400">Chưa chọn chương</h2>
       </div>
       <div class="flex gap-2 flex-wrap items-center">
-        <button onclick="writeChapter(cur)" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 rounded-lg text-white cursor-pointer font-medium">✨ Viết chương này bằng AI</button>
-        <button onclick="writeNext()" class="text-xs bg-indigo-800 hover:bg-indigo-700 px-3 py-1.5 rounded-lg text-white cursor-pointer">Viết chương tiếp</button>
-        <button onclick="saveEdited()" class="text-xs bg-emerald-700 hover:bg-emerald-600 px-3 py-1.5 rounded-lg text-white cursor-pointer font-medium">💾 Lưu chỉnh sửa</button>
-        <button onclick="copyText()" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-slate-300 cursor-pointer">📋 Sao chép</button>
+        <button type="button" onclick="writeChapter(cur)" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 rounded-lg text-white cursor-pointer font-medium">✨ Viết chương này bằng AI</button>
+        <button type="button" onclick="writeNext()" class="text-xs bg-indigo-800 hover:bg-indigo-700 px-3 py-1.5 rounded-lg text-white cursor-pointer">Viết chương tiếp</button>
+        <button type="button" onclick="saveEdited()" class="text-xs bg-emerald-700 hover:bg-emerald-600 px-3 py-1.5 rounded-lg text-white cursor-pointer font-medium">💾 Lưu chỉnh sửa</button>
+        <button type="button" onclick="copyText()" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-slate-300 cursor-pointer">📋 Sao chép</button>
       </div>
     </div>
     <p id="readerOutline" class="text-[11px] text-slate-400 italic bg-slate-950 p-2 rounded border border-slate-800"></p>
@@ -169,7 +161,7 @@ body{font-family:'Inter',sans-serif}
     
     <div class="flex gap-2">
       <input id="reviseInput" class="flex-1 bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs outline-none focus:border-indigo-500" placeholder="Yêu cầu lệnh sửa, ví dụ: viết buồn hơn, thêm hội thoại...">
-      <button onclick="reviseChapter()" class="text-xs bg-amber-600 hover:bg-amber-500 px-4 py-2 rounded-lg text-white cursor-pointer font-medium">✨ Viết lại theo lệnh</button>
+      <button type="button" onclick="reviseChapter()" class="text-xs bg-amber-600 hover:bg-amber-500 px-4 py-2 rounded-lg text-white cursor-pointer font-medium">✨ Viết lại theo lệnh</button>
     </div>
   </div>
 </div>
@@ -182,11 +174,11 @@ body{font-family:'Inter',sans-serif}
     <h3 class="text-xs font-bold text-amber-400">Chế độ thủ công (Claude / ChatGPT miễn phí)</h3>
     <p class="text-xs text-slate-300">Bước 1: Sao chép prompt. Bước 2: Dán vào AI miễn phí. Bước 3: Dán kết quả vào ô bên dưới.</p>
     <textarea id="mPrompt" readonly rows="6" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs font-mono"></textarea>
-    <button onclick="navigator.clipboard.writeText($('mPrompt').value); alert('Đã sao chép prompt!');" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg cursor-pointer">📋 Sao chép yêu cầu</button>
+    <button type="button" onclick="navigator.clipboard.writeText($('mPrompt').value); alert('Đã sao chép prompt!');" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg cursor-pointer">📋 Sao chép yêu cầu</button>
     <textarea id="mResult" rows="7" placeholder="Dán kết quả nội dung văn bản của AI vào đây..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs font-sans"></textarea>
     <div class="flex gap-2 justify-end">
-      <button onclick="_mNo()" class="text-xs bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg cursor-pointer">Hủy</button>
-      <button onclick="_mOk()" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-lg text-white cursor-pointer font-medium">Dùng kết quả này</button>
+      <button type="button" onclick="_mNo()" class="text-xs bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg cursor-pointer">Hủy</button>
+      <button type="button" onclick="_mOk()" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-lg text-white cursor-pointer font-medium">Dùng kết quả này</button>
     </div>
   </div>
 </div>
@@ -197,7 +189,7 @@ body{font-family:'Inter',sans-serif}
 </div>
 
 <script>
-const PROJECTS_KEY = 'novelStudio_v19_projects';
+const PROJECTS_KEY = 'novelStudio_v192_projects';
 let projects = {};
 let currentProjId = 'bien-lang';
 let book = { title: '', bible: '', style: '', pov: '', parts: [] };
@@ -281,8 +273,8 @@ function createNewProject() {
 
 function loadBookToUI() {
   $('storyTitleInput').value = book.title || '';
-  $('charBibleInput').value = book.bible \vert{}\vert{} '';$('styleInput').value = book.style || '';
-  $('povInput').value = book.pov \vert{}\vert{} '';$('ideaPromptInput').value = book.parts.map(p => p.partName + '\n' + p.chapters.map(c => `Chương ${c.id}: ${c.outline}`).join('\n')).join('\n');
+  $('charBibleInput').value = book.bible || '';$('styleInput').value = book.style || '';
+  $('povInput').value = book.pov || '';$('ideaPromptInput').value = book.parts.map(p => p.partName + '\n' + p.chapters.map(c => `Chương ${c.id}: ${c.outline}`).join('\n')).join('\n');
 }
 
 function switchPage(id) {
@@ -303,9 +295,9 @@ function setBusy(msg) {
   $('busy').classList.toggle('hidden', !msg); 
 }
 
-const cfg = () => { try { return JSON.parse(localStorage.getItem('novelStudio_v19_cfg') || '{}'); } catch(e) { return {}; } };
+const cfg = () => { try { return JSON.parse(localStorage.getItem('novelStudio_v192_cfg') || '{}'); } catch(e) { return {}; } };
 function saveCfg() { 
-  localStorage.setItem('novelStudio_v19_cfg', JSON.stringify({ 
+  localStorage.setItem('novelStudio_v192_cfg', JSON.stringify({ 
     provider: $('provider').value, 
     key: $('apiKey').value.trim(), 
     model: $('modelName').value.trim() 
@@ -448,3 +440,91 @@ async function reviseChapter() {
   if (!ins) return alert('Hãy nhập yêu cầu chỉnh sửa.');
   setBusy('AI đang viết lại chương...');
   try {
+    ch.text = (await callAI(`Viết lại chương truyện sau theo yêu cầu chỉnh sửa, giữ vững cốt truyện.\nYÊU CẦU: ${ins}\nHỒ SƠ TRUYỆN: ${book.bible}\nGIỌNG VĂN: ${book.style}\n\nNỘI DUNG:\n${text}\n\nChỉ trả về nội dung hoàn chỉnh.`, 7000, 0.9)).trim();
+    $('reviseInput').value = '';
+    saveCurrentProject();
+    openChapter(cur);
+    alert('Đã viết lại chương thành công!');
+  } catch (e) { alert('Lỗi: ' + e.message); }
+  finally { setBusy(''); }
+}
+
+function renderAll() {
+  $('outlineBookTitle').textContent = '📚 Mục lục: ' + (book.title || '');
+  $('bibleViewContent').textContent = book.bible ? `✨ HỒ SƠ:\n${book.bible}\n\n🎨 Giọng văn: ${book.style}\n📖 Ngôi kể: ${book.pov}` : 'Chưa có dữ liệu.';
+  
+  const sums = chapters().filter(c => c.summary).map(c => `Chương ${c.id}: ${c.summary}`).join('\n\n');
+  $('memoryView').textContent = sums || 'Chưa có chương nào được viết.';
+
+  $('treeOutlineContainer').innerHTML = book.parts.map(p => `
+    <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
+      <h3 class="text-xs font-bold text-indigo-400 border-b border-slate-800 pb-2">📂 ${esc(p.partName)}</h3>
+      <div class="space-y-2 pl-3 border-l border-slate-800">
+        ${p.chapters.map(c => `
+          <div onclick="openChapter(${c.id})" class="bg-slate-900 hover:bg-indigo-600/30 border border-slate-800 p-3 rounded-lg cursor-pointer flex justify-between items-center gap-3 transition">
+            <span class="text-xs text-slate-200">Chương ${c.id}:${esc(c.title)}</span>
+            <span class="text-[10px] shrink-0 px-2.5 py-1 rounded border font-medium ${c.text ? 'text-emerald-400 border-emerald-800 bg-emerald-950/60' : 'text-slate-400 border-slate-700 bg-slate-950'}">${c.text ? 'Đã viết' : 'Chưa viết'}</span>
+          </div>`).join('')}
+      </div>
+    </div>`).join('') || '<p class="text-xs text-slate-500 italic">Chưa có mục lục.</p>';
+
+  $('readerSidebarTree').innerHTML = book.parts.map(p => `
+    <div class="space-y-1 mb-2">
+      <p class="text-[11px] font-bold text-indigo-300">${esc(p.partName)}</p>
+      <div class="pl-2 space-y-1 border-l border-slate-800">
+        ${p.chapters.map(c => `<button type="button" onclick="openChapter(${c.id})" class="w-full text-left px-2 py-1.5 rounded text-xs hover:bg-slate-800 transition truncate cursor-pointer ${c.id === cur ? 'text-amber-300 font-semibold bg-slate-800/60' : 'text-slate-300'}">${c.text ? '✓ ' : '• '}Chương ${c.id}:${esc(c.title)}</button>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function esc(s) { return String(s).replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m])); }
+
+function openChapter(id) {
+  const part = book.parts.find(p => p.chapters.some(c => c.id === id));
+  if (!part) return;
+  const ch = part.chapters.find(c => c.id === id);
+  cur = id;
+  $('readerPartBadge').textContent = part.partName;
+  $('readerChapterTitle').textContent = `Chương ${ch.id}: ${ch.title}`;
+  $('readerOutline').textContent = 'Dàn ý chương: ' + ch.outline;
+  $('readerContentEditor').value = ch.text || '';
+  renderAll();
+  switchPage('reader');
+}
+
+function saveEdited() {
+  const ch = chapters().find(c => c.id === cur);
+  if (!ch) return;
+  ch.text = $('readerContentEditor').value;
+  saveCurrentProject();
+  renderAll();
+  alert('Đã lưu chỉnh sửa chương thành công!');
+}
+
+function copyText() { 
+  navigator.clipboard.writeText($('readerContentEditor').value); 
+  alert('Đã sao chép nội dung vào bộ nhớ tạm!'); 
+}
+
+function downloadBook() {
+  if (!chapters().some(c => c.text)) return alert('Chưa có nội dung chương nào được viết để tải.');
+  const t = book.title + '\n\n' + book.parts.map(p => p.partName + '\n\n' + p.chapters.filter(c => c.text).map(c => c.text).join('\n\n\n')).join('\n\n\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([t], { type: 'text/plain;charset=utf-8' }));
+  a.download = (book.title || 'truyen') + '.txt';
+  a.click();
+}
+
+loadAllProjects();
+book = projects[currentProjId];
+loadBookToUI();
+renderAll();
+
+try { 
+  const c = cfg(); 
+  $('provider').value = c.provider || 'gemini'; 
+  $('apiKey').value = c.key \vert{}\vert{} '';$('modelName').value = c.model || 'gemini-2.5-flash'; 
+} catch(e) {}
+</script>
+</body>
+</html>
