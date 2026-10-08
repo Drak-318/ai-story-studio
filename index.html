@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Ultimate Master Novel Studio v19.2</title>
+<title>AI Ultimate Master Novel Studio v19.3</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -19,15 +19,15 @@ body{font-family:'Inter',sans-serif}
     <div class="flex items-center space-x-3">
       <span class="bg-indigo-600 text-white font-bold p-1.5 rounded text-sm">TVPL</span>
       <div>
-        <h1 class="text-base font-bold text-slate-200">AI Ultimate Master Novel Studio v19.2</h1>
-        <p class="text-xs text-slate-400">Hệ thống sáng tác tiểu thuyết toàn diện · Ổn định tuyệt đối · AI Kép</p>
+        <h1 class="text-base font-bold text-slate-200">AI Ultimate Master Novel Studio v19.3</h1>
+        <p class="text-xs text-slate-400">Hệ thống sáng tác tiểu thuyết toàn diện · Bắt lỗi thông minh · AI Kép</p>
       </div>
     </div>
     <nav class="flex gap-1.5 text-xs">
-      <button onclick="switchPage('home')" id="nav-home" class="px-3 py-1.5 bg-indigo-600 text-white font-medium rounded-lg transition cursor-pointer">1. Thiết lập & Ý tưởng</button>
-      <button onclick="switchPage('bible')" id="nav-bible" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition cursor-pointer">2. Hồ sơ & Bộ nhớ</button>
-      <button onclick="switchPage('outline')" id="nav-outline" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition cursor-pointer">3. Mục lục Cây thư mục</button>
-      <button onclick="switchPage('reader')" id="nav-reader" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition cursor-pointer">4. Đọc & Sửa chương</button>
+      <button type="button" onclick="switchPage('home')" id="nav-home" class="px-3 py-1.5 bg-indigo-600 text-white font-medium rounded-lg transition cursor-pointer">1. Thiết lập & Ý tưởng</button>
+      <button type="button" onclick="switchPage('bible')" id="nav-bible" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition cursor-pointer">2. Hồ sơ & Bộ nhớ</button>
+      <button type="button" onclick="switchPage('outline')" id="nav-outline" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition cursor-pointer">3. Mục lục Cây thư mục</button>
+      <button type="button" onclick="switchPage('reader')" id="nav-reader" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition cursor-pointer">4. Đọc & Sửa chương</button>
     </nav>
   </div>
 </header>
@@ -42,15 +42,14 @@ body{font-family:'Inter',sans-serif}
       <div class="flex items-center gap-2">
         <label class="text-xs text-slate-400">Chọn dự án:</label>
         <select id="projectSelector" onchange="switchProject(this.value)" class="bg-slate-950 border border-slate-800 rounded-lg px-2 py-1 text-xs text-indigo-300 outline-none"></select>
-        <button onclick="createNewProject()" class="text-xs bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded-lg text-slate-300 cursor-pointer">+ Truyện mới</button>
+        <button type="button" onclick="createNewProject()" class="text-xs bg-slate-800 hover:bg-slate-700 px-2.5 py-1 rounded-lg text-slate-300 cursor-pointer">+ Truyện mới</button>
       </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
       <div><label class="block text-xs text-slate-400 mb-1">Tên tác phẩm</label>
         <input id="storyTitleInput" value="Khách sạn Biển Lặng" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs outline-none focus:border-indigo-500"></div>
-      <div>
-        <label class="block text-xs text-slate-400 mb-1">Giọng văn (Style)</label>
+      <div><label class="block text-xs text-slate-400 mb-1">Giọng văn (Style)</label>
         <input id="styleInput" value="Nhẹ nhàng, ấm áp, có chút hài hước trong đối thoại, sâu lắng khi hé lộ quá khứ" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs outline-none focus:border-indigo-500">
       </div>
       <div><label class="block text-xs text-slate-400 mb-1">Ngôi kể (POV)</label>
@@ -62,11 +61,11 @@ body{font-family:'Inter',sans-serif}
 
     <div>
       <label class="block text-xs text-slate-400 mb-1">Ý tưởng ngắn hoặc Tóm tắt cốt truyện</label>
-      <textarea id="ideaInput" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs outline-none resize-none focus:border-indigo-500" placeholder="Ví dụ: Cô gái thừa kế một khách sạn cũ bên biển từ người bà chưa từng gặp, phải hợp tác với anh quản lý lạnh lùng..."></textarea>
+      <textarea id="ideaInput" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs outline-none resize-none focus:border-indigo-500" placeholder="Ví dụ: Cô gái thừa kế một khách sạn cũ bên biển từ người bà chưa từng gặp..."></textarea>
       <div class="flex items-center gap-2 mt-2">
         <label class="text-xs text-slate-400">Số chương dự kiến</label>
         <input id="chapCount" type="number" min="3" max="50" value="24" class="w-16 bg-slate-950 border border-slate-800 rounded-lg px-2 py-1 text-xs">
-        <button type="button" onclick="aiPlan()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium py-2 rounded-lg cursor-pointer">✨ AI tự động lập Hồ sơ & Dàn ý</button>
+        <button type="button" onclick="safeAiPlan()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium py-2 rounded-lg cursor-pointer">✨ AI tự động lập Hồ sơ & Dàn ý</button>
       </div>
     </div>
 
@@ -189,7 +188,7 @@ body{font-family:'Inter',sans-serif}
 </div>
 
 <script>
-const PROJECTS_KEY = 'novelStudio_v192_projects';
+const PROJECTS_KEY = 'novelStudio_v193_projects';
 let projects = {};
 let currentProjId = 'bien-lang';
 let book = { title: '', bible: '', style: '', pov: '', parts: [] };
@@ -295,9 +294,9 @@ function setBusy(msg) {
   $('busy').classList.toggle('hidden', !msg); 
 }
 
-const cfg = () => { try { return JSON.parse(localStorage.getItem('novelStudio_v192_cfg') || '{}'); } catch(e) { return {}; } };
+const cfg = () => { try { return JSON.parse(localStorage.getItem('novelStudio_v193_cfg') || '{}'); } catch(e) { return {}; } };
 function saveCfg() { 
-  localStorage.setItem('novelStudio_v192_cfg', JSON.stringify({ 
+  localStorage.setItem('novelStudio_v193_cfg', JSON.stringify({ 
     provider: $('provider').value, 
     key: $('apiKey').value.trim(), 
     model: $('modelName').value.trim() 
@@ -332,49 +331,61 @@ function manualAI(prompt) {
   });
 }
 
-async function aiPlan() {
-  const idea = $('ideaInput').value.trim();
-  if (!idea) return alert('Hãy nhập ý tưởng ngắn trước.');
-  const n = parseInt($('chapCount').value) || 12;
-  setBusy('AI đang phân tích và lập hồ sơ, dàn ý...');
+// Hàm an toàn bọc nút bấm để bắt lỗi nếu có
+async function safeAiPlan() {
   try {
+    const idea = $('ideaInput').value.trim();
+    if (!idea) {
+      alert('Hãy nhập ý tưởng ngắn trước khi bấm AI lập hồ sơ!');
+      return;
+    }
+    const n = parseInt($('chapCount').value) || 12;
+    setBusy('AI đang phân tích và lập hồ sơ, dàn ý...');
+    
     const t = await callAI(
 `Bạn là biên tập viên tiểu thuyết tiếng Việt chuyên nghiệp. Từ ý tưởng dưới đây, hãy tạo hồ sơ truyện và dàn ý ${n} chương, chia thành các phần rõ ràng, mở đầu cuốn hút, xung đột tăng dần và kết thúc trọn vẹn.
 Ý TƯỞNG: ${idea}
 GIỌNG VĂN: ${$('styleInput').value}
 Chỉ trả về JSON hợp lệ, không thêm chữ nào khác, đúng định dạng:
 {"title":"tên truyện","bible":"nhân vật chính (tên, tuổi, tính cách, điểm yếu), bối cảnh, bí mật cốt lõi, kết thúc","outline":["Phần 1: tên phần","Chương 1: nội dung tóm tắt chương 2-3 câu","Chương 2: ...","Phần 2: ..."]}`, 4000, 0.8);
+    
     const j = JSON.parse(t.slice(t.indexOf('{'), t.lastIndexOf('}') + 1));
     $('storyTitleInput').value = j.title \vert{}\vert{}$('storyTitleInput').value;
     $('charBibleInput').value = j.bible \vert{}\vert{} '';$('ideaPromptInput').value = (j.outline || []).join('\n');
     alert('AI đã lập xong hồ sơ và dàn ý thành công!');
-  } catch (e) { alert('Lỗi: ' + e.message); }
-  finally { setBusy(''); }
+  } catch (e) {
+    alert('Lỗi khi chạy AI: ' + e.message);
+  } finally {
+    setBusy('');
+  }
 }
 
 function initBook() {
-  const raw = $('ideaPromptInput').value.trim();
-  if (!raw) return alert('Dàn ý đang trống.');
-  if (chapters().some(c => c.text) && !confirm('Tạo lại mục lục sẽ ghi đè cấu trúc cũ. Tiếp tục?')) return;
-  
-  book.title = $('storyTitleInput').value.trim() || 'Tác phẩm mới';
-  book.bible = $('charBibleInput').value.trim();
-  book.style = $('styleInput').value.trim();
-  book.pov = $('povInput').value;
-  book.parts = [];
+  try {
+    const raw = $('ideaPromptInput').value.trim();
+    if (!raw) return alert('Dàn ý đang trống.');
+    
+    book.title = $('storyTitleInput').value.trim() || 'Tác phẩm mới';
+    book.bible = $('charBibleInput').value.trim();
+    book.style = $('styleInput').value.trim();
+    book.pov = $('povInput').value;
+    book.parts = [];
 
-  let part = null, id = 1;
-  raw.split('\n').map(s => s.trim()).filter(Boolean).forEach(l => {
-    if (/^phần/i.test(l)) { part = { partName: l, chapters: [] }; book.parts.push(part); return; }
-    if (!part) { part = { partName: 'Phần 1: Khởi Đầu', chapters: [] }; book.parts.push(part); }
-    const t = l.replace(/^chương\s*\d+\s*[:.\-]?\s*/i, '');
-    part.chapters.push({ id: id++, title: t.length > 50 ? t.slice(0, 47) + '...' : t, outline: t, text: '', summary: '' });
-  });
+    let part = null, id = 1;
+    raw.split('\n').map(s => s.trim()).filter(Boolean).forEach(l => {
+      if (/^phần/i.test(l)) { part = { partName: l, chapters: [] }; book.parts.push(part); return; }
+      if (!part) { part = { partName: 'Phần 1: Khởi Đầu', chapters: [] }; book.parts.push(part); }
+      const t = l.replace(/^chương\s*\d+\s*[:.\-]?\s*/i, '');
+      part.chapters.push({ id: id++, title: t.length > 50 ? t.slice(0, 47) + '...' : t, outline: t, text: '', summary: '' });
+    });
 
-  saveCurrentProject();
-  renderAll();
-  switchPage('outline');
-  alert('Đã tạo mục lục tác phẩm thành công!');
+    saveCurrentProject();
+    renderAll();
+    switchPage('outline');
+    alert('Đã tạo mục lục tác phẩm thành công!');
+  } catch(e) {
+    alert('Lỗi khi tạo mục lục: ' + e.message);
+  }
 }
 
 function chapterPrompt(ch) {
