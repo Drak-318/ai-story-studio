@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Master Novel Studio v18</title>
+<title>AI Master Novel Studio</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E📖%3C/text%3E%3C/svg%3E">
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style type="text/tailwindcss">
@@ -14,47 +15,95 @@ body{font-family:'Inter',sans-serif}
 .box{@apply bg-slate-950 border border-slate-800 p-4 rounded-xl}
 .btn{@apply text-xs px-3 py-1.5 rounded-lg text-white}
 .lb{@apply block text-xs text-slate-400 mb-1}
-.nav{@apply px-3 py-1.5 rounded-lg text-xs bg-slate-800 hover:bg-slate-700 text-slate-300}
+.nav{@apply px-4 py-2 rounded-lg text-sm bg-slate-800 hover:bg-slate-700 text-slate-300 inline-flex items-center gap-2}
+.ic{@apply w-7 h-7 rounded-md inline-flex items-center justify-center text-base}
+.hbtn{@apply text-sm px-4 py-2 rounded-lg text-white}
 .nav.on{@apply bg-indigo-600 hover:bg-indigo-600 text-white font-medium}
+</style>
+<style>
+.run-track{position:relative;height:60px;overflow:hidden}
+.runloop{position:absolute;bottom:0;left:-150px;height:56px;animation:runx 9s linear infinite}
+@keyframes runx{from{left:-150px}to{left:100%}}
+.rbob{animation:rbob .32s ease-in-out infinite alternate}
+@keyframes rbob{from{transform:translateY(0)}to{transform:translateY(-3px)}}
+.rl1,.rl2{transform-origin:36px 47px;animation:rleg .32s ease-in-out infinite alternate}
+.rl2{animation-direction:alternate-reverse}
+@keyframes rleg{from{transform:rotate(-35deg)}to{transform:rotate(35deg)}}
+.rsn1,.rsn2{transform-origin:60px 36px;animation:rsn .28s ease-in-out infinite alternate}
+.rsn2{animation-direction:alternate-reverse}
+@keyframes rsn{from{transform:rotate(-8deg)}to{transform:rotate(8deg)}}
+.rpage{animation:rflap .25s ease-in-out infinite alternate}
+@keyframes rflap{from{transform:translateY(0)}to{transform:translateY(-4px)}}
+@media (prefers-reduced-motion:reduce){.runloop,.rbob,.rl1,.rl2,.rsn1,.rsn2,.rpage,.runloop svg{animation:none}}
+.runloop svg{height:56px;width:104px;display:block;overflow:visible}
+.runloop.big{height:72px}
+.runloop.big svg{height:72px;width:134px}
+.run-track.big{height:78px}
+#busyRun svg{height:40px;width:74px;display:block}
+.runloop.pingpong{left:0;animation:runxp 11s linear infinite alternate}
+@keyframes runxp{from{left:0}to{left:calc(100% - 134px)}}
+.runloop.pingpong svg{animation:rflip 22s linear infinite}
+@keyframes rflip{0%,49.99%{transform:scaleX(1)}50%,100%{transform:scaleX(-1)}}
 </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+<svg style="display:none"><symbol id="logo" viewBox="0 0 48 48"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#d946ef"/></linearGradient></defs><rect width="48" height="48" rx="12" fill="url(#lg)"/><path d="M10 15c5-2 10-1 14 2 4-3 9-4 14-2v21c-5-2-10-1-14 2-4-3-9-4-14-2z" fill="#fff" fill-opacity=".93"/><path d="M24 17v21" stroke="#6366f1" stroke-width="2"/><path d="M37 5l1.6 3.4L42 10l-3.4 1.6L37 15l-1.6-3.4L32 10l3.4-1.6z" fill="#fde68a"/></symbol></svg>
 
-<header class="bg-slate-900 border-b border-slate-800 px-6 py-3 shadow-md sticky top-0 z-50">
-  <div class="flex justify-between items-center max-w-[1700px] mx-auto flex-wrap gap-2">
-    <div class="flex items-center space-x-3">
-      <span class="bg-indigo-600 text-white font-bold p-1.5 rounded text-sm">TVPL</span>
-      <div>
-        <h1 class="text-base font-bold text-slate-200">AI Master Novel Studio v18</h1>
-        <p class="text-xs text-slate-400">Viết từng phần nhỏ · Tự thử lại khi AI quá tải · Lưu tiến độ liên tục</p>
-      </div>
-    </div>
-    <nav class="flex gap-1.5">
-      <button onclick="switchPage('home')" id="nav-home" class="nav on">1. Ý tưởng</button>
-      <button onclick="switchPage('bible')" id="nav-bible" class="nav">2. Hồ sơ & Bộ nhớ</button>
-      <button onclick="switchPage('outline')" id="nav-outline" class="nav">3. Mục lục</button>
-      <button onclick="switchPage('reader')" id="nav-reader" class="nav">4. Đọc & Sửa chương</button>
-    </nav>
+<header class="px-6 pt-6 pb-4 text-center">
+  <div class="inline-flex items-center justify-center gap-3">
+    <svg class="w-16 h-16 shrink-0"><use href="#logo"/></svg>
+    <div class="text-left"><h1 class="text-3xl font-extrabold text-slate-100">AI Master Novel Studio</h1><p class="text-sm text-slate-400">Từ ý tưởng đến cuốn truyện hoàn chỉnh</p></div>
   </div>
 </header>
+<div class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur border-y border-slate-800 px-6 py-2 space-y-2">
+  <div class="flex items-center justify-center gap-1.5 flex-wrap">
+    <select id="projSel" onchange="switchProj(this.value)" class="inp !w-auto !text-sm !py-2 max-w-[260px]"></select>
+    <button onclick="newProj()" class="hbtn bg-emerald-600 hover:bg-emerald-500">＋ Dự án mới</button>
+    <button onclick="renameProj()" class="hbtn bg-slate-800 hover:bg-slate-700 text-slate-300">Đổi tên</button>
+    <button onclick="delProj()" class="hbtn bg-slate-800 hover:bg-red-700 text-slate-300">Xóa</button>
+    <button onclick="openReadAll()" class="hbtn bg-indigo-600 hover:bg-indigo-500 font-medium">📖 Đọc toàn bộ truyện</button>
+  </div>
+  <nav class="flex justify-center gap-1.5 flex-wrap">
+    <button onclick="switchPage('home')" id="nav-home" class="nav on"><span class="ic bg-amber-500/25">💡</span>Ý tưởng</button>
+    <button onclick="switchPage('bible')" id="nav-bible" class="nav"><span class="ic bg-emerald-500/25">📖</span>Hồ sơ & Bộ nhớ</button>
+    <button onclick="switchPage('outline')" id="nav-outline" class="nav"><span class="ic bg-sky-500/25">📚</span>Mục lục</button>
+    <button onclick="switchPage('reader')" id="nav-reader" class="nav"><span class="ic bg-fuchsia-500/25">✍️</span>Đọc & Sửa chương</button>
+    <button onclick="switchPage('history')" id="nav-history" class="nav"><span class="ic bg-rose-500/25">🕘</span>Lịch sử</button>
+  </nav>
+</div>
 
 <main class="flex-1 p-6 max-w-[1700px] w-full mx-auto">
 
 <div id="page-home" class="page-view active grid grid-cols-1 lg:grid-cols-12 gap-6">
+  <div class="lg:col-span-12 rounded-2xl overflow-hidden bg-gradient-to-r from-indigo-600/30 via-fuchsia-600/20 to-emerald-500/20 border border-slate-800 px-8 pt-8 pb-8 flex flex-col items-center text-center gap-3">
+    <svg class="w-20 h-20 shrink-0"><use href="#logo"/></svg>
+    <h2 class="text-2xl md:text-3xl font-extrabold text-slate-100">Biến ý tưởng thành cuốn truyện hoàn chỉnh</h2>
+    <p class="text-sm text-slate-400">Viết từng chương · 42 giọng văn, đổi theo từng cảnh · Nhiều dự án và lịch sử phiên bản</p>
+    <div class="run-track big w-full -mb-8 mt-2"><div class="runloop big pingpong" data-runner></div></div>
+  </div>
   <div class="lg:col-span-8 card space-y-4">
     <h2 class="text-sm font-semibold text-indigo-400 border-b border-slate-800 pb-2">Bước 1: Nhập ý tưởng, để AI lập hồ sơ và dàn ý</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-      <div><label class="lb">Tên tác phẩm</label><input id="storyTitleInput" value="Khách sạn Biển Lặng" class="inp"></div>
-      <div><label class="lb">Giọng văn</label><input id="styleInput" value="Nhẹ nhàng, ấm áp, có chút hài hước trong đối thoại, sâu lắng khi hé lộ quá khứ" class="inp"></div>
+      <div><label class="lb">Tên tác phẩm</label><input id="storyTitleInput" class="inp"></div>
+      <div><label class="lb">Giọng văn chung</label><select id="toneInput" class="inp"></select></div>
       <div><label class="lb">Ngôi kể</label>
         <select id="povInput" class="inp">
           <option value="Ngôi thứ ba, bám sát cảm xúc nhân vật chính">Ngôi thứ ba</option>
           <option value="Ngôi thứ nhất (Tôi)">Ngôi thứ nhất</option>
         </select></div>
     </div>
+    <div><label class="lb">Ghi chú thêm về giọng văn (không bắt buộc)</label><input id="styleInput" class="inp"></div>
+    <div><div id="genreWrap" class="relative"><label class="lb">Thể loại (chọn được nhiều)</label>
+      <button type="button" onclick="toggleGenreMenu()" class="inp text-left flex justify-between items-center gap-2"><span id="genreSum" class="truncate">Chọn thể loại...</span><span class="text-slate-400">▾</span></button>
+      <div id="genreMenu" class="hidden absolute z-30 mt-1 w-full max-h-72 overflow-y-auto bg-slate-900 border border-slate-700 rounded-lg shadow-xl p-2"></div></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+        <div><label class="lb">Thể loại chính (quyết định mạch truyện)</label><select id="genreMain" onchange="setMainGenre(this.value)" class="inp"></select></div>
+        <div><label class="lb">Thể loại khác (nếu có)</label><input id="genreExtra" class="inp"></div>
+      </div></div>
     <div>
       <label class="lb">Ý tưởng ngắn (chỉ cần 1-3 câu, AI sẽ lo phần còn lại)</label>
-      <textarea id="ideaInput" rows="3" class="inp p-3 resize-none" placeholder="Ví dụ: Cô gái thừa kế một khách sạn cũ bên biển từ người bà chưa từng gặp, phải hợp tác với anh quản lý lạnh lùng biết nhiều bí mật gia đình cô."></textarea>
+      <div class="run-track"><div class="runloop" data-runner></div></div>
+      <textarea id="ideaInput" rows="3" class="inp p-3 resize-none" placeholder="Nhập ý tưởng của bạn..."></textarea>
       <div class="flex items-center gap-2 mt-2">
         <label class="text-xs text-slate-400">Số chương</label>
         <input id="chapCount" type="number" min="3" max="40" value="12" class="w-16 bg-slate-950 border border-slate-800 rounded-lg px-2 py-1 text-xs">
@@ -62,13 +111,9 @@ body{font-family:'Inter',sans-serif}
       </div>
     </div>
     <div><label class="lb">Hồ sơ truyện (nhân vật, bối cảnh, bí mật, kết thúc) - có thể sửa tay</label>
-      <textarea id="charBibleInput" rows="5" class="inp p-3 resize-y">Linh (27 tuổi, nhân viên văn phòng Sài Gòn, bướng bỉnh, hay giả vờ ổn, sợ bị bỏ rơi). Khải (31 tuổi, quản lý khách sạn, lạnh lùng, kỷ luật, biết bí mật của gia đình Linh). Bà Ngọc (bà ngoại của Linh, chủ khách sạn Biển Lặng ở thị trấn Vũng Lặng, đã mất). Mẹ Linh là Thanh Vân, rời đi khi Linh còn nhỏ vì bị buộc phải bảo vệ con. Chị Hạnh (nhân viên lâu năm, ấm áp). Ông Triết (chủ tập đoàn bất động sản, đối thủ). Kết thúc ấm áp.</textarea></div>
+      <textarea id="charBibleInput" rows="5" class="inp p-3 resize-y"></textarea></div>
     <div><label class="lb">Dàn ý (mỗi dòng một chương; dòng bắt đầu bằng "Phần" là tiêu đề phần) - có thể dán dàn ý của bạn</label>
-      <textarea id="ideaPromptInput" rows="9" class="inp p-3 resize-y leading-relaxed font-mono">Phần 1: Người lạ ở Biển Lặng
-Chương 1: Linh nhận thông báo thừa kế khi đang bị sếp mắng. Cô tưởng là lừa đảo.
-Chương 2: Cô đến thị trấn biển, thấy khách sạn cũ kỹ, vắng khách. Lần đầu gặp Khải, anh tỏ rõ sự không chào đón.
-Chương 3: Luật thừa kế: phải làm chủ đủ một năm, không được bán. Linh định ở vài hôm rồi về.
-Chương 4: Chị Hạnh và các nhân viên kể về bà Ngọc. Linh nhận ra mọi người biết bà rõ hơn cô tưởng.</textarea></div>
+      <textarea id="ideaPromptInput" rows="9" class="inp p-3 resize-y leading-relaxed font-mono"></textarea></div>
     <button onclick="initBook()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 rounded-lg text-xs">Tạo mục lục tác phẩm</button>
   </div>
 
@@ -81,6 +126,10 @@ Chương 4: Chị Hạnh và các nhân viên kể về bà Ngọc. Linh nhận 
       </select>
       <input id="apiKey" type="password" onchange="saveCfg()" placeholder="Khóa Gemini (chỉ lưu trên máy bạn)" class="inp">
       <input id="modelName" onchange="saveCfg()" value="gemini-3.8-flash" class="inp">
+      <label class="lb">AI dự phòng (không bắt buộc): địa chỉ API, khóa, tên model</label>
+      <input id="openaiUrl" onchange="saveCfg()" value="https://api.openai.com/v1" class="inp">
+      <input id="openaiKey" type="password" onchange="saveCfg()" placeholder="Khóa dự phòng (OpenAI / Groq / OpenRouter)" class="inp">
+      <input id="openaiModel" onchange="saveCfg()" value="gpt-4o-mini" class="inp">
       <label class="lb">Chế độ tự động: chia mỗi chương thành</label>
       <select id="segInput" onchange="saveCfg()" class="inp">
         <option value="2">2 phần (ít lần gọi hơn)</option>
@@ -88,14 +137,6 @@ Chương 4: Chị Hạnh và các nhân viên kể về bà Ngọc. Linh nhận 
         <option value="4">4 phần (nhẹ nhất, ít lỗi nhất)</option>
       </select>
     </div>
-    <h3 class="text-xs font-semibold text-emerald-400 border-b border-slate-800 pb-2">Cách hoạt động</h3>
-    <ol class="text-xs text-slate-300 space-y-2 list-decimal pl-4 leading-relaxed">
-      <li>Nhập ý tưởng, bấm nút xanh để AI lập hồ sơ và dàn ý (hoặc tự dán dàn ý).</li>
-      <li>Bấm "Tạo mục lục tác phẩm".</li>
-      <li>Mở chương 1, bấm "Viết chương này bằng AI". Mỗi chương được viết từng phần nhỏ và lưu ngay sau mỗi phần.</li>
-      <li>Nếu AI quá tải, web tự thử lại rồi đổi model dự phòng. Nếu vẫn lỗi, phần đã viết được giữ lại, bấm lại nút để viết tiếp.</li>
-      <li>Muốn đổi gì, gõ yêu cầu ngắn (ví dụ "buồn hơn") rồi bấm Viết lại.</li>
-    </ol>
     <p class="text-[11px] text-slate-500">Dữ liệu lưu trong trình duyệt của bạn. Nhớ bấm "Tải .txt" để sao lưu.</p>
   </div>
 </div>
@@ -142,6 +183,7 @@ Chương 4: Chị Hạnh và các nhân viên kể về bà Ngọc. Linh nhận 
       </div>
     </div>
     <p id="readerOutline" class="text-[11px] text-slate-400 italic"></p>
+    <div class="flex items-center gap-2"><label class="text-xs text-slate-400">Giọng văn chương này</label><select id="chapTone" onchange="setChapTone(this.value)" class="inp !w-auto"></select></div>
     <textarea id="readerContentEditor" rows="20" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-5 text-sm text-slate-200 leading-loose outline-none focus:border-indigo-500 resize-y"></textarea>
     <div class="flex gap-2">
       <input id="reviseInput" class="inp flex-1" placeholder="Yêu cầu chỉnh sửa, ví dụ: viết buồn hơn, thêm đối thoại, Khải bớt lạnh lùng...">
@@ -150,6 +192,9 @@ Chương 4: Chị Hạnh và các nhân viên kể về bà Ngọc. Linh nhận 
   </div>
 </div>
 
+<div id="page-history" class="page-view"><div class="card space-y-4">
+  <div class="flex justify-between items-center border-b border-slate-800 pb-3 flex-wrap gap-2"><h2 class="text-sm font-bold text-rose-400">Lịch sử phiên bản của dự án</h2><button onclick="snapManual()" class="btn bg-emerald-600 hover:bg-emerald-500">＋ Lưu phiên bản hiện tại</button></div>
+  <div id="histList" class="space-y-2"></div></div></div>
 </main>
 
 <div id="modal" class="hidden fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4">
@@ -165,8 +210,41 @@ Chương 4: Chị Hạnh và các nhân viên kể về bà Ngọc. Linh nhận 
   </div>
 </div>
 
+<div id="readAll" class="hidden fixed inset-0 bg-black/80 z-[80] flex items-center justify-center p-3">
+  <div class="relative bg-slate-900 border border-slate-700 rounded-xl w-full max-w-4xl h-[92vh] flex flex-col">
+    <div class="p-4 border-b border-slate-800 text-center space-y-2">
+      <div class="flex justify-end gap-2"><button onclick="downloadBook()" class="btn bg-slate-800 hover:bg-slate-700 text-slate-300">Tải .txt</button><button onclick="closeReadAll()" class="btn bg-indigo-600 hover:bg-indigo-500">Đóng ✕</button></div>
+      <h2 id="raTitle" class="text-base font-bold text-emerald-400 uppercase tracking-wide"></h2>
+      <p id="raInfo" class="text-[11px] text-slate-400"></p>
+      <p id="raCur" class="text-xs text-slate-300"></p>
+      <div class="flex justify-center items-stretch gap-2 flex-wrap">
+        <button onclick="raStep(-1)" class="btn bg-emerald-700 hover:bg-emerald-600">‹ Chương trước</button>
+        <select id="raSel" onchange="raGo(+this.value)" class="inp !w-auto max-w-[240px]"></select>
+        <button onclick="raStep(1)" class="btn bg-emerald-700 hover:bg-emerald-600">Chương tiếp ›</button>
+      </div>
+    </div>
+    <div id="raBody" class="flex-1 overflow-y-auto p-6 space-y-10"></div>
+    <div class="absolute right-5 bottom-5 flex flex-col gap-2">
+      <button onclick="raTop()" title="Về đầu trang" class="w-9 h-9 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg">↑</button>
+      <button onclick="raEnd()" title="Xuống cuối trang" class="w-9 h-9 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg">↓</button>
+    </div>
+  </div>
+</div>
+<div id="dlg" class="hidden fixed inset-0 bg-black/70 z-[90] flex items-center justify-center p-4">
+  <div class="bg-slate-900 border border-slate-700 rounded-xl p-5 w-full max-w-sm space-y-3">
+    <p id="dlgMsg" class="text-sm text-slate-200"></p>
+    <input id="dlgIn" class="inp hidden">
+    <div class="flex gap-2 justify-end"><button id="dlgNo" class="btn bg-slate-800 hover:bg-slate-700 px-4 py-2">Hủy</button><button id="dlgOk" class="btn bg-indigo-600 hover:bg-indigo-500 px-4 py-2">OK</button></div>
+  </div>
+</div>
 <div id="toast" class="hidden fixed top-20 left-1/2 -translate-x-1/2 bg-amber-600 text-white text-xs px-4 py-3 rounded-lg shadow-lg z-[70] max-w-md text-center"></div>
-<div id="busy" class="hidden fixed bottom-4 right-4 bg-indigo-600 text-white text-xs px-4 py-3 rounded-lg shadow-lg z-50"></div>
+<div id="busy" class="hidden fixed bottom-4 left-1/2 -translate-x-1/2 w-[min(92vw,460px)] bg-slate-900 border border-indigo-500/40 rounded-xl px-4 py-3 shadow-xl z-50">
+  <div class="relative mt-10 h-2 bg-slate-800 rounded-full">
+    <div id="busyBar" class="h-full bg-gradient-to-r from-indigo-500 to-fuchsia-500 rounded-full" style="width:0%"></div>
+    <div id="busyRun" data-runner class="absolute bottom-1 h-10 pointer-events-none" style="left:0%"></div>
+  </div>
+  <div class="flex justify-between items-center text-xs mt-2"><span id="busyTxt" class="text-slate-300"></span><b id="busyPct" class="text-amber-300">0%</b></div>
+</div>
 
 <script>
 const KEY = 'novelStudioV17';
@@ -176,32 +254,214 @@ let book = { title: '', bible: '', style: '', pov: '', parts: [] };
 let cur = 1;
 const $ = id => document.getElementById(id);
 const chapters = () => book.parts.flatMap(p => p.chapters);
-const save = () => localStorage.setItem(KEY, JSON.stringify(book));
+const save = () => { if (!proj.cur) return; try { localStorage.setItem('nsp_' + proj.cur, JSON.stringify({ book, form: getForm() })); } catch (e) { msg('Bộ nhớ trình duyệt đầy, hãy xóa bớt phiên bản cũ ở mục Lịch sử.'); } };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 // Chương "xong" khi đã viết đủ các phần (chương cũ không có seg thì coi là xong)
 const done = c => !!c.text && (c.seg === undefined || c.seg >= (c.total || 1));
 const esc = s => String(s).replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
 
+const TONES = ['Nhẹ nhàng','Ấm áp','Hài hước','Dí dỏm','Trào phúng','Châm biếm','Lãng mạn','Ngọt ngào','Trữ tình','Thơ mộng','Hoài niệm','Man mác buồn','Bi thương','Sầu muộn','Day dứt','Sâu lắng','Chiêm nghiệm','Triết lý','U tối','Rùng rợn','Hồi hộp','Căng thẳng','Gay cấn','Kịch tính','Bí ẩn','Ma mị','Lạnh lùng','Khô khan','Mạnh mẽ','Hào hùng','Bi tráng','Dữ dội','Cay đắng','Mỉa mai','Tinh nghịch','Trong trẻo','Dịu dàng','Thân mật đời thường','Cổ điển trang nhã','Mộc mạc','Giàu hình ảnh','Tối giản gãy gọn'];
+function fillTones() {
+  const o = TONES.map(t => `<option>${t}</option>`).join('');
+  $('toneInput').innerHTML = '<option value="auto">Tự chọn theo từng cảnh (khuyên dùng)</option>' + o;
+  $('chapTone').innerHTML = '<option value="">Theo giọng chung</option><option value="auto">Tự chọn theo cảnh</option>' + o;
+}
+// Giọng văn của một chương: giọng riêng của chương, nếu không có thì giọng chung
+const toneText = ch => {
+  const t = (ch && ch.tone) || book.tone || '';
+  return (t === 'auto' ? 'tự chọn 1-3 giọng điệu hợp nhất với diễn biến phần này trong danh sách: ' + TONES.join(', ') : t) + (book.style ? '. ' + book.style : '');
+};
+function setChapTone(v) { const ch = chapters().find(c => c.id === cur); if (ch) { ch.tone = v; save(); } }
+
+// ===== Dự án và lịch sử phiên bản =====
+// Hộp thoại ngay trong trang (không dùng prompt/confirm vì nhiều trình duyệt chặn)
+function dlg(text, def) {
+  return new Promise(res => {
+    const inp = $('dlgIn'), hasIn = def !== undefined;
+    $('dlgMsg').textContent = text; inp.classList.toggle('hidden', !hasIn); inp.value = hasIn ? def : '';
+    $('dlg').classList.remove('hidden'); if (hasIn) setTimeout(() => inp.select(), 50);
+    const end = v => { $('dlg').classList.add('hidden'); res(v); };
+    $('dlgOk').onclick = () => end(hasIn ? inp.value : true);
+    $('dlgNo').onclick = () => end(hasIn ? null : false);
+    inp.onkeydown = e => { if (e.key === 'Enter') $('dlgOk').click(); };
+  });
+}
+// Nhân vật chạy
+const RUNNER = `<svg viewBox="0 0 130 70" width="130" height="70" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="40" cy="67" rx="16" ry="3" fill="#000" opacity=".25"/>
+<g class="rbob">
+<g class="rl1"><rect x="33" y="47" width="6" height="15" rx="3" fill="#fde4c8"/><ellipse cx="38" cy="63" rx="6" ry="3" fill="#7c3aed"/></g>
+<g class="rl2"><rect x="33" y="47" width="6" height="15" rx="3" fill="#fcd9b0"/><ellipse cx="38" cy="63" rx="6" ry="3" fill="#6d28d9"/></g>
+<path d="M29 36h20l4 14H25z" fill="#f59e0b"/>
+<path d="M30 37L24 45" stroke="#fde4c8" stroke-width="5" stroke-linecap="round"/>
+<path d="M48 38L60 36" stroke="#fde4c8" stroke-width="5" stroke-linecap="round"/>
+<g class="rsn1"><path d="M60 36L90 32L90 36z" fill="#e2e8f0"/><circle cx="56" cy="31" r="4.5" fill="none" stroke="#ef4444" stroke-width="2"/></g>
+<g class="rsn2"><path d="M60 36L90 40L90 36z" fill="#94a3b8"/><circle cx="56" cy="41" r="4.5" fill="none" stroke="#ef4444" stroke-width="2"/></g>
+<circle cx="38" cy="24" r="14" fill="#fde4c8"/>
+<path d="M24 24a14 14 0 0 1 28 0c-5-5-14-7-28 0z" fill="#b45309"/>
+<circle cx="30" cy="9" r="6" fill="#b45309"/>
+<rect x="25" y="5" width="14" height="3" rx="1.5" fill="#fbbf24" transform="rotate(-25 32 7)"/>
+<circle cx="45" cy="26" r="2.3" fill="#1e293b"/><circle cx="45.8" cy="25.2" r=".8" fill="#fff"/>
+<circle cx="49" cy="31" r="2.6" fill="#fb7185" opacity=".6"/>
+<path d="M42 32q3 3 6 0" stroke="#9a3412" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+</g>
+<g class="rpage"><path d="M97 28q-9-9-14 1q6 4 14-1z" fill="#c7d2fe"/><path d="M110 28q9-9 14 1q-6 4-14-1z" fill="#c7d2fe"/><rect x="97" y="22" width="13" height="17" rx="1.5" fill="#fff"/><path d="M100 27h7M100 31h7M100 35h4" stroke="#6366f1" stroke-width="1.2" stroke-linecap="round"/></g>
+</svg>`;
+
+// ===== Thể loại =====
+const GENRES = ['Ngôn tình','Lãng mạn','Học đường','Đô thị hiện đại','Gia đình','Chữa lành','Đời thường','Tâm lý','Hài hước','Cổ trang','Cung đấu','Xuyên không','Trọng sinh','Huyền huyễn','Tiên hiệp','Kiếm hiệp','Khoa học viễn tưởng','Tận thế','Kinh dị','Ma quái','Trinh thám','Hình sự','Bí ẩn','Giật gân','Phiêu lưu','Hành động','Lịch sử','Chiến tranh','Thể thao','Kinh doanh','Y học','Đam mỹ','Bách hợp','Hệ thống / Game'];
+let G = { sel: [], main: '' };
+function renderGenres() {
+  const m = $('genreMenu'), st = m.scrollTop;
+  m.innerHTML = GENRES.map((g, i) => `<label class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-slate-800 text-xs text-slate-200 cursor-pointer"><input type="checkbox" class="accent-indigo-500" ${G.sel.includes(g) ? 'checked' : ''} onchange="toggleGenre(${i})"><span>${esc(g)}</span>${g === G.main ? '<span class="ml-auto text-amber-400">★ chính</span>' : ''}</label>`).join('');
+  m.scrollTop = st;
+  $('genreSum').textContent = G.sel.length ? (G.main ? '★ ' + G.main : '') + (G.sel.length > 1 ? ' + ' + G.sel.filter(g => g !== G.main).join(', ') : '') : 'Chọn thể loại...';
+  $('genreMain').innerHTML = G.sel.length ? G.sel.map(g => `<option ${g === G.main ? 'selected' : ''}>${esc(g)}</option>`).join('') : '<option value="">(chọn thể loại ở trên)</option>';
+}
+const toggleGenreMenu = () => $('genreMenu').classList.toggle('hidden');
+function toggleGenre(i) { const g = GENRES[i]; G.sel = G.sel.includes(g) ? G.sel.filter(x => x !== g) : [...G.sel, g]; if (!G.sel.includes(G.main)) G.main = G.sel[0] || ''; renderGenres(); save(); }
+function setMainGenre(v) { G.main = v; renderGenres(); save(); }
+function genreText() {
+  const m = G.main || G.sel[0] || '', o = G.sel.filter(g => g !== m), x = ($('genreExtra').value || '').trim();
+  if (!m && !x) return '';
+  return `Thể loại chính: ${m || x}.` + (o.length ? ` Thể loại phụ kết hợp: ${o.join(', ')}.` : '') + (m && x ? ` Ghi chú thể loại: ${x}.` : '') + ' Hãy viết đúng chất thể loại chính (nhịp kể, mô-típ, cảm xúc độc giả mong đợi), dùng thể loại phụ làm gia vị, không để lấn át.';
+}
+
+// ===== Đọc toàn bộ: chuyển chương, về đầu, xuống cuối =====
+let raIds = [];
+const raCurIdx = () => { const top = $('raBody').getBoundingClientRect().top + 24; let k = 0; raIds.forEach((id, i) => { if ($('ra-' + id).getBoundingClientRect().top <= top) k = i; }); return k; };
+function raGo(id) { const el = $('ra-' + id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+function raStep(d) {
+  if (!raIds.length) return;
+  const i = raCurIdx(); let t = i + d;
+  if (d < 0 && $('ra-' + raIds[i]).getBoundingClientRect().top < $('raBody').getBoundingClientRect().top - 80) t = i; // đang ở giữa chương: về đầu chương này trước
+  raGo(raIds[Math.min(raIds.length - 1, Math.max(0, t))]);
+}
+const raTop = () => $('raBody').scrollTo({ top: 0, behavior: 'smooth' });
+const raEnd = () => $('raBody').scrollTo({ top: $('raBody').scrollHeight, behavior: 'smooth' });
+function raSync() {
+  if (!raIds.length) { $('raCur').textContent = ''; return; }
+  const id = raIds[raCurIdx()], c = chapters().find(x => x.id === id);
+  $('raSel').value = id; $('raCur').textContent = `Chương ${id}: ${c.title}`;
+}
+function openReadAll() {
+  const all = chapters(), w = all.filter(c => c.text);
+  raIds = w.map(c => c.id);
+  const words = w.reduce((n, c) => n + c.text.trim().split(/\s+/).length, 0);
+  $('raTitle').textContent = book.title || 'Chưa có tên tác phẩm';
+  $('raInfo').textContent = `${w.length}/${all.length} chương đã viết · khoảng ${words.toLocaleString('vi-VN')} chữ`;
+  $('raSel').innerHTML = w.map(c => `<option value="${c.id}">Chương ${c.id}: ${esc(c.title)}</option>`).join('') || '<option>Chưa có chương</option>';
+  const nav = i => `<div class="flex justify-center gap-2 pt-2"><button onclick="raGo(${raIds[i - 1]})" class="btn bg-emerald-700 hover:bg-emerald-600 ${i > 0 ? '' : 'invisible'}">‹ Chương trước</button><button onclick="raTop()" class="btn bg-slate-800 hover:bg-slate-700 text-slate-300">↑ Đầu trang</button><button onclick="raGo(${raIds[i + 1]})" class="btn bg-emerald-700 hover:bg-emerald-600 ${i < raIds.length - 1 ? '' : 'invisible'}">Chương tiếp ›</button></div>`;
+  $('raBody').innerHTML = !w.length ? '<p class="text-xs text-slate-500 text-center">Chưa có chương nào được viết hoặc chưa tạo mục lục.</p>' :
+    book.parts.map(p => `<div class="space-y-8"><h3 class="text-sm font-bold text-indigo-400 border-b border-slate-800 pb-2 text-center">${esc(p.partName)}</h3>` + p.chapters.map(c => c.text
+      ? `<section id="ra-${c.id}" class="space-y-4"><div class="text-center space-y-1"><h4 class="text-sm font-bold text-amber-400">Chương ${c.id}: ${esc(c.title)}${done(c) ? '' : ' (viết dở)'}</h4><button onclick="closeReadAll();openChapter(${c.id})" class="btn bg-slate-800 hover:bg-slate-700 text-slate-300">Sửa chương này</button><div class="text-slate-600 text-lg select-none">❦</div></div><div class="whitespace-pre-line text-sm leading-loose text-slate-200 max-w-2xl mx-auto">${esc(c.text)}</div>${nav(raIds.indexOf(c.id))}</section>`
+      : `<p class="text-xs text-slate-500 text-center">Chương ${c.id}: ${esc(c.title)} (chưa viết)</p>`).join('') + '</div>').join('');
+  $('readAll').classList.remove('hidden'); $('raBody').scrollTop = 0; raSync();
+}
+const closeReadAll = () => $('readAll').classList.add('hidden');
+
+const PK = 'nsProjects';
+let proj = { cur: '', list: [] };
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+const saveProj = () => localStorage.setItem(PK, JSON.stringify(proj));
+const getForm = () => ({ title: $('storyTitleInput').value, tone: $('toneInput').value, style: $('styleInput').value, pov: $('povInput').value, idea: $('ideaInput').value, n: $('chapCount').value, bible: $('charBibleInput').value, outline: $('ideaPromptInput').value, genres: G.sel, main: G.main, gx: $('genreExtra').value });
+function setForm(f) {
+  $('storyTitleInput').value = f.title || ''; $('toneInput').value = f.tone || 'auto'; $('styleInput').value = f.style || '';
+  $('povInput').value = f.pov || $('povInput').options[0].value; $('ideaInput').value = f.idea || ''; $('chapCount').value = f.n || 12;
+  $('charBibleInput').value = f.bible || ''; $('ideaPromptInput').value = f.outline || ''; G = { sel: f.genres || [], main: f.main || '' }; $('genreExtra').value = f.gx || ''; renderGenres();
+}
+function renderProjSel() { $('projSel').innerHTML = proj.list.map(p => `<option value="${p.id}" ${p.id === proj.cur ? 'selected' : ''}>${esc(p.name)}</option>`).join(''); }
+function loadProj(id) {
+  proj.cur = id; saveProj();
+  let d = {}; try { d = JSON.parse(localStorage.getItem('nsp_' + id) || '{}'); } catch (e) {}
+  book = d.book || { title: '', bible: '', style: '', tone: '', pov: '', parts: [] };
+  setForm(d.form || {}); if (!book.tone) book.tone = $('toneInput').value;
+  cur = 1; $('readerContentEditor').value = ''; $('readerChapterTitle').textContent = 'Chưa chọn chương'; $('readerPartBadge').textContent = ''; $('readerOutline').textContent = '';
+  renderProjSel(); renderAll(); renderHist(); switchPage('home');
+}
+function switchProj(id) { save(); loadProj(id); }
+function newProj() {
+  try { // tạo ngay một dự án trống, đặt tên lại bằng nút "Đổi tên"
+    save(); const id = uid(), name = 'Truyện mới ' + (proj.list.length + 1);
+    proj.list.push({ id, name }); loadProj(id); save(); window.scrollTo(0, 0);
+    msg(`Đã tạo "${name}" (trống). Nhập ý tưởng bên dưới, hoặc bấm Đổi tên để đặt tên dự án.`);
+  } catch (e) { msg('Lỗi tạo dự án: ' + e.message); }
+}
+async function renameProj() {
+  const p = proj.list.find(x => x.id === proj.cur), n = await dlg('Đổi tên dự án:', p.name);
+  if (n && n.trim()) { p.name = n.trim(); saveProj(); renderProjSel(); }
+}
+async function delProj() {
+  const p = proj.list.find(x => x.id === proj.cur);
+  if (!await dlg(`Xóa dự án "${p.name}" cùng toàn bộ lịch sử? Không thể hoàn tác.`)) return;
+  localStorage.removeItem('nsp_' + proj.cur); localStorage.removeItem('nss_' + proj.cur);
+  proj.list = proj.list.filter(x => x.id !== proj.cur);
+  if (!proj.list.length) proj.list.push({ id: uid(), name: 'Dự án mới' });
+  loadProj(proj.list[0].id);
+}
+const snapsOf = () => { try { return JSON.parse(localStorage.getItem('nss_' + proj.cur) || '[]'); } catch (e) { return []; } };
+function snap(label) {
+  const a = snapsOf(); a.unshift({ t: Date.now(), label, book, form: getForm() });
+  while (a.length > 10) a.pop();
+  for (;;) { try { localStorage.setItem('nss_' + proj.cur, JSON.stringify(a)); break; } catch (e) { if (a.length <= 1) break; a.pop(); } }
+  renderHist();
+}
+async function snapManual() { const l = await dlg('Tên phiên bản:', new Date().toLocaleString('vi-VN')); if (l !== null) { snap(l || 'Phiên bản'); msg('Đã lưu phiên bản.'); } }
+async function restoreSnap(i) {
+  const s = snapsOf()[i]; if (!s || !await dlg('Khôi phục phiên bản này? Bản hiện tại sẽ được lưu vào lịch sử trước.')) return;
+  snap('Trước khi khôi phục'); book = s.book; setForm(s.form || {}); save(); renderAll(); renderHist(); msg('Đã khôi phục phiên bản.');
+}
+function delSnap(i) { const a = snapsOf(); a.splice(i, 1); localStorage.setItem('nss_' + proj.cur, JSON.stringify(a)); renderHist(); }
+function renderHist() {
+  $('histList').innerHTML = snapsOf().map((s, i) => {
+    const n = s.book.parts.flatMap(p => p.chapters).filter(c => c.text).length;
+    return `<div class="box flex justify-between items-center gap-3 flex-wrap"><div><p class="text-xs font-semibold text-slate-200">${esc(s.label)}</p><p class="text-[11px] text-slate-500">${new Date(s.t).toLocaleString('vi-VN')} · ${n} chương đã viết</p></div><div class="flex gap-2"><button onclick="restoreSnap(${i})" class="btn bg-indigo-600 hover:bg-indigo-500">Khôi phục</button><button onclick="delSnap(${i})" class="btn bg-slate-800 hover:bg-slate-700 text-slate-300">Xóa</button></div></div>`;
+  }).join('') || '<p class="text-xs text-slate-500">Chưa có phiên bản nào. Phiên bản được lưu khi bạn bấm nút bên trên, hoặc tự động trước khi viết đè, viết lại chương hay tạo lại mục lục (giữ 10 bản gần nhất).</p>';
+}
+function initProjects() {
+  try { proj = JSON.parse(localStorage.getItem(PK) || 'null') || { cur: '', list: [] }; } catch (e) { proj = { cur: '', list: [] }; }
+  if (!proj.list.length) {
+    const id = uid(); let name = 'Dự án 1';
+    try { // chuyển dữ liệu của bản cũ sang dự án đầu tiên
+      const o = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (o && o.parts) { name = o.title || name; localStorage.setItem('nsp_' + id, JSON.stringify({ book: o, form: { title: o.title, style: o.style, pov: o.pov, bible: o.bible, outline: o.parts.map(p => p.partName + '\n' + p.chapters.map(c => `Chương ${c.id}: ${c.outline}`).join('\n')).join('\n') } })); }
+    } catch (e) {}
+    proj = { cur: id, list: [{ id, name }] };
+  }
+  if (!proj.list.some(p => p.id === proj.cur)) proj.cur = proj.list[0].id;
+  loadProj(proj.cur);
+  $('page-home').addEventListener('change', () => { book.tone = $('toneInput').value; book.style = $('styleInput').value.trim(); book.pov = $('povInput').value; save(); });
+}
+
 function switchPage(id) {
-  ['home', 'bible', 'outline', 'reader'].forEach(p => {
+  ['home', 'bible', 'outline', 'reader', 'history'].forEach(p => {
     $('page-' + p).classList.toggle('active', p === id);
     $('nav-' + p).classList.toggle('on', p === id);
   });
 }
-function setBusy(t) { $('busy').textContent = t || ''; $('busy').classList.toggle('hidden', !t); }
+let _bp = 0, _bc = 90, _bt = null;
+function paintBusy() { const p = Math.round(_bp); $('busyBar').style.width = p + '%'; $('busyRun').style.left = p + '%'; $('busyRun').style.transform = `translateX(-${p}%)`; $('busyPct').textContent = p + '%'; }
+// setBusy(chữ, % bắt đầu, % trần): nhân vật tự chạy chậm dần tới "trần" trong lúc chờ AI
+function setBusy(t, from, to) {
+  const e = $('busy');
+  if (!t) { clearInterval(_bt); _bt = null; e.classList.add('hidden'); return; }
+  const wasHidden = e.classList.contains('hidden');
+  e.classList.remove('hidden'); $('busyTxt').textContent = t;
+  if (from !== undefined) { _bp = from; _bc = to; } else if (wasHidden) { _bp = 2; _bc = 90; }
+  paintBusy();
+  if (!_bt) _bt = setInterval(() => { if (_bp < _bc) { _bp += (_bc - _bp) * 0.04; paintBusy(); } }, 400);
+}
 let _toastT;
 function msg(t) { const e = $('toast'); e.textContent = t; e.classList.remove('hidden'); clearTimeout(_toastT); _toastT = setTimeout(() => e.classList.add('hidden'), 9000); }
 
 const cfg = () => { try { const c = JSON.parse(localStorage.getItem(KEY + 'cfg') || '{}'); if (c.model === 'gemini-2.0-flash') c.model = DEFAULT_MODEL; return c; } catch (e) { return {}; } };
-function saveCfg() { localStorage.setItem(KEY + 'cfg', JSON.stringify({ provider: $('provider').value, key: $('apiKey').value.trim(), model: $('modelName').value.trim(), seg: $('segInput').value })); }
+function saveCfg() { localStorage.setItem(KEY + 'cfg', JSON.stringify({ provider: $('provider').value, key: $('apiKey').value.trim(), model: $('modelName').value.trim(), ourl: $('openaiUrl').value.trim(), okey: $('openaiKey').value.trim(), omodel: $('openaiModel').value.trim(), seg: $('segInput').value })); }
 // Thủ công: 1 lần dán/chương. Tự động: chia nhiều phần
 const segCount = () => (cfg().provider || 'manual') === 'manual' ? 1 : (parseInt(cfg().seg) || 3);
 
 // Gọi AI: tự thử lại (chờ tăng dần) rồi đổi sang model dự phòng nếu bị quá tải
-async function callAI(prompt, max = 4096, temp = 0.9) {
+async function callGemini(prompt, max = 4096, temp = 0.9) {
   const c = cfg();
-  if ((c.provider || 'manual') === 'manual') return manualAI(prompt);
-  if (!c.key) throw new Error('Chưa nhập khóa Gemini ở trang 1.');
   const models = [...new Set([c.model || DEFAULT_MODEL, ...FALLBACK])];
   let last = 'Không rõ lỗi';
   for (let mi = 0; mi < models.length; mi++) {
@@ -232,6 +492,47 @@ async function callAI(prompt, max = 4096, temp = 0.9) {
   throw new Error('Gemini đang quá tải. Hãy thử lại sau ít phút hoặc chuyển sang chế độ Thủ công. (' + last + ')');
 }
 
+// ChatGPT (OpenAI) làm dự phòng khi Gemini lỗi
+async function callOpenAI(prompt, max = 4096) {
+  const c = cfg();
+  let last = 'Không rõ lỗi';
+  for (let a = 0; a < 3; a++) {
+    try {
+      const base = (c.ourl || 'https://api.openai.com/v1').replace(/\/+$/, '');
+      const body = { model: c.omodel || 'gpt-4o-mini', messages: [{ role: 'user', content: prompt }] };
+      body[base.includes('api.openai.com') ? 'max_completion_tokens' : 'max_tokens'] = max;
+      const r = await fetch(base + '/chat/completions', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + c.okey },
+        body: JSON.stringify(body)
+      });
+      const d = await r.json();
+      if (r.ok) {
+        const t = d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content;
+        if (t) return t;
+        last = 'ChatGPT không trả về nội dung.';
+      } else {
+        last = (d.error && d.error.message) || 'Lỗi ' + r.status;
+        if (![429, 500, 502, 503].includes(r.status)) { const e = new Error(last); e.fatal = true; throw e; }
+      }
+    } catch (e) { if (e.fatal) throw e; last = e.message; }
+    if (a < 2) { setBusy(`AI dự phòng đang bận, thử lại lần ${a + 2}/3...`); await sleep(2000 * 2 ** a); }
+  }
+  throw new Error('AI dự phòng lỗi: ' + last);
+}
+
+// Gemini trước, lỗi thì tự chuyển sang ChatGPT (nếu có khóa)
+async function callAI(prompt, max = 4096, temp = 0.9) {
+  const c = cfg();
+  if ((c.provider || 'manual') === 'manual') return manualAI(prompt);
+  const hasG = !!c.key, hasO = !!c.okey;
+  if (!hasG && !hasO) throw new Error('Chưa nhập khóa Gemini hoặc ChatGPT ở trang 1.');
+  if (hasG) {
+    try { return await callGemini(prompt, max, temp); }
+    catch (e) { if (!hasO) throw e; setBusy('Gemini lỗi, chuyển sang AI dự phòng...'); }
+  }
+  return callOpenAI(prompt, max);
+}
+
 function manualAI(prompt) {
   return new Promise((resolve, reject) => {
     setBusy('');
@@ -250,7 +551,7 @@ async function aiPlan() {
     const t = await callAI(
 `Bạn là biên tập viên tiểu thuyết tiếng Việt giàu kinh nghiệm. Từ ý tưởng dưới đây, hãy tạo hồ sơ truyện và dàn ý ${n} chương, chia thành 3-4 phần, có mở đầu cuốn hút, xung đột tăng dần, một bí mật lớn được hé lộ dần và kết thúc rõ ràng.
 Ý TƯỞNG: ${idea}
-GIỌNG VĂN: ${$('styleInput').value}
+${genreText() ? 'THỂ LOẠI: ' + genreText() + '\n' : ''}GIỌNG VĂN: ${$('toneInput').value === 'auto' ? 'đa dạng, đổi theo từng cảnh' : $('toneInput').value}. ${$('styleInput').value}
 Chỉ trả về JSON hợp lệ, không thêm chữ nào khác, đúng dạng:
 {"title":"tên truyện","bible":"nhân vật (tên, tuổi, tính cách, điểm yếu, mối quan hệ), bối cảnh, bí mật lớn, kết thúc","outline":["Phần 1: tên phần","Chương 1: nội dung 2-3 câu","Chương 2: ...","Phần 2: ..."]}`, 8192, 0.8);
     let j;
@@ -267,7 +568,8 @@ function initBook() {
   const raw = $('ideaPromptInput').value.trim();
   if (!raw) return msg('Dàn ý đang trống.');
   const old = chapters();
-  book = { title: $('storyTitleInput').value.trim() || 'Tác phẩm mới', bible: $('charBibleInput').value.trim(), style: $('styleInput').value.trim(), pov: $('povInput').value, parts: [] };
+  if (old.some(c => c.text)) snap('Trước khi tạo lại mục lục');
+  book = { title: $('storyTitleInput').value.trim() || 'Tác phẩm mới', bible: $('charBibleInput').value.trim(), style: $('styleInput').value.trim(), tone: $('toneInput').value, pov: $('povInput').value, parts: [] };
   let part = null, id = 1;
   raw.split('\n').map(s => s.trim()).filter(Boolean).forEach(l => {
     if (/^phần/i.test(l)) { part = { partName: l, chapters: [] }; book.parts.push(part); return; }
@@ -308,9 +610,9 @@ NHIỆM VỤ: ${task}
 Nội dung chương: ${ch.outline}
 
 QUY TẮC:
-- Viết thành cảnh cụ thể: đối thoại, hành động, cảm xúc, chi tiết giác quan. Không tóm tắt, không kể lướt.
+${genreText() ? '- ' + genreText() + '\n' : ''}- Viết thành cảnh cụ thể: đối thoại, hành động, cảm xúc, chi tiết giác quan. Không tóm tắt, không kể lướt.
 - Giữ đúng tên, tuổi, tính cách và thông tin trong hồ sơ và các chương trước. Không mâu thuẫn.
-- Giọng văn: ${book.style}. Ngôi kể: ${book.pov}.
+- Giọng văn: ${toneText(ch)}. Ngôi kể: ${book.pov}.
 - ${K > 1 && k < K ? 'Chưa kết chương ở phần này.' : 'Kết chương bằng một móc câu khiến người đọc muốn đọc tiếp.'}
 - Chỉ trả về nội dung truyện, không bình luận ngoài truyện.`;
 }
@@ -321,7 +623,7 @@ async function writeChapter(id) {
   if (!ch) return msg('Hãy tạo mục lục và chọn một chương trước.');
   if (done(ch)) {
     if (window._ow !== id) { window._ow = id; return msg('Chương này đã viết xong. Bấm lại một lần nữa nếu muốn viết đè.'); }
-    ch.text = ''; ch.summary = ''; ch.seg = 0; ch.total = 0;
+    snap('Trước khi viết đè chương ' + id); ch.text = ''; ch.summary = ''; ch.seg = 0; ch.total = 0;
   }
   window._ow = null;
   const K = ch.seg > 0 && ch.total ? ch.total : segCount();
@@ -329,7 +631,7 @@ async function writeChapter(id) {
   openChapter(id);
   try {
     for (let k = ch.seg + 1; k <= K; k++) {
-      setBusy(`Chương ${id}: đang viết phần ${k}/${K}...`);
+      setBusy(`Chương ${id}: đang viết phần ${k}/${K}...`, (k - 1) / (K + 1) * 100, k / (K + 1) * 100 - 3);
       const t = (await callAI(chapterPrompt(ch, k, K), 4096, 0.9)).trim();
       ch.text = (ch.text ? ch.text + '\n\n' : '') + t; ch.seg = k;
       save(); renderAll(); $('readerContentEditor').value = ch.text;
@@ -337,11 +639,11 @@ async function writeChapter(id) {
     const fallbackSum = ch.text.slice(0, 400) + ' ... ' + ch.text.slice(-300);
     if ((cfg().provider || 'manual') === 'manual') ch.summary = fallbackSum;
     else {
-      setBusy(`Đang tóm tắt chương ${id} làm bộ nhớ...`);
+      setBusy(`Đang tóm tắt chương ${id} làm bộ nhớ...`, K / (K + 1) * 100, 97);
       try { ch.summary = (await callAI(`Tóm tắt chương truyện sau trong 3-4 câu: sự kiện chính, thông tin mới được tiết lộ, trạng thái cảm xúc và quan hệ giữa các nhân vật. Chỉ trả về bản tóm tắt.\n\n${ch.text}`, 600, 0.3)).trim(); }
       catch (e) { ch.summary = fallbackSum; } // tóm tắt lỗi không làm mất chương
     }
-    save(); renderAll(); msg(`Đã viết xong chương ${id}.`);
+    save(); setBusy(`Xong chương ${id}!`, 100, 100); await sleep(900); renderAll(); msg(`Đã viết xong chương ${id}.`);
   } catch (e) {
     save(); renderAll();
     msg('Lỗi: ' + e.message + (ch.seg ? ` Đã lưu ${ch.seg}/${K} phần, bấm "Viết chương này bằng AI" để viết tiếp.` : ''));
@@ -360,9 +662,10 @@ async function reviseChapter() {
   const text = $('readerContentEditor').value.trim();
   if (!ch || !text) return msg('Chương này chưa có nội dung để chỉnh sửa.');
   if (!ins) return msg('Hãy nhập yêu cầu chỉnh sửa.');
+  snap('Trước khi viết lại chương ' + cur);
   setBusy('AI đang viết lại chương...');
   try {
-    ch.text = (await callAI(`Viết lại chương truyện sau theo yêu cầu, giữ nguyên cốt truyện, tên nhân vật và các chi tiết quan trọng; độ dài tương đương hoặc dài hơn.\nYÊU CẦU: ${ins}\nHỒ SƠ TRUYỆN: ${book.bible}\nGIỌNG VĂN: ${book.style}\n\nCHƯƠNG HIỆN TẠI:\n${text}\n\nChỉ trả về nội dung chương đã viết lại.`, 8192, 0.9)).trim();
+    ch.text = (await callAI(`Viết lại chương truyện sau theo yêu cầu, giữ nguyên cốt truyện, tên nhân vật và các chi tiết quan trọng; độ dài tương đương hoặc dài hơn.\nYÊU CẦU: ${ins}\nHỒ SƠ TRUYỆN: ${book.bible}\nGIỌNG VĂN: ${toneText(ch)}\nTHỂ LOẠI: ${genreText()}\n\nCHƯƠNG HIỆN TẠI:\n${text}\n\nChỉ trả về nội dung chương đã viết lại.`, 8192, 0.9)).trim();
     ch.seg = 1; ch.total = 1;
     $('reviseInput').value = '';
     save(); openChapter(cur);
@@ -377,7 +680,7 @@ const badge = c => done(c)
 
 function renderAll() {
   $('outlineBookTitle').textContent = 'Mục lục: ' + (book.title || '');
-  $('bibleViewContent').textContent = book.bible ? `${book.bible}\n\nGiọng văn: ${book.style}\nNgôi kể: ${book.pov}` : 'Chưa có dữ liệu.';
+  $('bibleViewContent').textContent = book.bible ? `${book.bible}\n\nGiọng văn chung: ${book.tone === 'auto' ? 'tự chọn theo từng cảnh' : (book.tone || '')}${book.style ? '. ' + book.style : ''}\nNgôi kể: ${book.pov}` : 'Chưa có dữ liệu.';
   $('memoryView').textContent = chapters().filter(c => c.summary).map(c => `Chương ${c.id}: ${c.summary}`).join('\n\n') || 'Chưa có chương nào.';
   $('treeOutlineContainer').innerHTML = book.parts.map(p => `
     <div class="box space-y-3">
@@ -406,7 +709,7 @@ function openChapter(id) {
   $('readerPartBadge').textContent = part.partName;
   $('readerChapterTitle').textContent = `Chương ${ch.id}: ${ch.title}`;
   $('readerOutline').textContent = 'Dàn ý: ' + ch.outline;
-  $('readerContentEditor').value = ch.text || '';
+  $('readerContentEditor').value = ch.text || ''; $('chapTone').value = ch.tone || '';
   renderAll(); switchPage('reader');
 }
 
@@ -426,16 +729,14 @@ function downloadBook() {
   a.download = (book.title || 'truyen') + '.txt'; a.click();
 }
 
-// Khôi phục dữ liệu đã lưu khi mở lại trang
-try {
-  const s = localStorage.getItem(KEY);
-  if (s) {
-    book = JSON.parse(s);
-    $('storyTitleInput').value = book.title; $('charBibleInput').value = book.bible; $('styleInput').value = book.style;
-    $('ideaPromptInput').value = book.parts.map(p => p.partName + '\n' + p.chapters.map(c => `Chương ${c.id}: ${c.outline}`).join('\n')).join('\n');
-  }
-} catch (e) {}
-try { const c = cfg(); $('provider').value = c.provider || 'manual'; $('apiKey').value = c.key || ''; $('modelName').value = c.model || DEFAULT_MODEL; $('segInput').value = c.seg || '3'; } catch (e) {}
+document.querySelectorAll('[data-runner]').forEach(e => { e.innerHTML = RUNNER; });
+fillTones();
+initProjects();
+$('raBody').addEventListener('scroll', raSync);
+document.addEventListener('click', e => { const w = $('genreWrap'); if (w && !w.contains(e.target)) $('genreMenu').classList.add('hidden'); });
+$('readAll').onclick = e => { if (e.target.id === 'readAll') closeReadAll(); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeReadAll(); });
+try { const c = cfg(); $('provider').value = c.provider || 'manual'; $('apiKey').value = c.key || ''; $('modelName').value = c.model || DEFAULT_MODEL; $('segInput').value = c.seg || '3'; $('openaiUrl').value = c.ourl || 'https://api.openai.com/v1'; $('openaiKey').value = c.okey || ''; $('openaiModel').value = c.omodel || 'gpt-4o-mini'; } catch (e) {}
 renderAll();
 </script>
 </body>
