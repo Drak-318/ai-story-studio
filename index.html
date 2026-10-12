@@ -1,248 +1,1655 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Master Novel Studio</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E📖%3C/text%3E%3C/svg%3E">
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style type="text/tailwindcss">
-body{font-family:'Inter',sans-serif}
-.page-view{display:none}.page-view.active{display:block}
-.inp{@apply w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs outline-none focus:border-indigo-500}
-.card{@apply bg-slate-900 border border-slate-800 rounded-xl p-6}
-.box{@apply bg-slate-950 border border-slate-800 p-4 rounded-xl}
-.btn{@apply text-xs px-3 py-1.5 rounded-lg text-white}
-.lb{@apply block text-xs text-slate-400 mb-1}
-.nav{@apply px-4 py-2 rounded-lg text-sm bg-slate-800 hover:bg-slate-700 text-slate-300 inline-flex items-center gap-2}
-.ic{@apply w-7 h-7 rounded-md inline-flex items-center justify-center text-base}
-.hbtn{@apply text-sm px-4 py-2 rounded-lg text-white}
-.nav.on{@apply bg-indigo-600 hover:bg-indigo-600 text-white font-medium}
-</style>
+<!-- =========================================================
+     AI STORY STUDIO — ANIME / GWEN UPGRADE
+     Dán toàn bộ khối này ngay trước </body>
+     Yêu cầu thư mục:
+       assets/gwen.glb
+       assets/s1.jpg
+       assets/s2.jpg
+       assets/s3.jpg
+       assets/s4.jpg
+       assets/s5.jpg
+       assets/s6.jpg
+       assets/s7.jpg
+========================================================= -->
+
 <style>
-.run-track{position:relative;height:60px;overflow:hidden}
-.runloop{position:absolute;bottom:0;left:-150px;height:56px;animation:runx 9s linear infinite}
-@keyframes runx{from{left:-150px}to{left:100%}}
-.rbob{animation:rbob .32s ease-in-out infinite alternate}
-@keyframes rbob{from{transform:translateY(0)}to{transform:translateY(-3px)}}
-.rl1,.rl2{transform-origin:36px 47px;animation:rleg .32s ease-in-out infinite alternate}
-.rl2{animation-direction:alternate-reverse}
-@keyframes rleg{from{transform:rotate(-35deg)}to{transform:rotate(35deg)}}
-.rsn1,.rsn2{transform-origin:60px 36px;animation:rsn .28s ease-in-out infinite alternate}
-.rsn2{animation-direction:alternate-reverse}
-@keyframes rsn{from{transform:rotate(-8deg)}to{transform:rotate(8deg)}}
-.rpage{animation:rflap .25s ease-in-out infinite alternate}
-@keyframes rflap{from{transform:translateY(0)}to{transform:translateY(-4px)}}
-@media (prefers-reduced-motion:reduce){.runloop,.rbob,.rl1,.rl2,.rsn1,.rsn2,.rpage,.runloop svg{animation:none}}
-.runloop svg{height:56px;width:104px;display:block;overflow:visible}
-.runloop.big{height:72px}
-.runloop.big svg{height:72px;width:134px}
-.run-track.big{height:78px}
-#busyRun svg{height:40px;width:74px;display:block}
-.runloop.pingpong{left:0;animation:runxp 11s linear infinite alternate}
-@keyframes runxp{from{left:0}to{left:calc(100% - 134px)}}
-.runloop.pingpong svg{animation:rflip 22s linear infinite}
-@keyframes rflip{0%,49.99%{transform:scaleX(1)}50%,100%{transform:scaleX(-1)}}
+/* =========================
+   ANIME BACKGROUND
+========================= */
+
+#anime-page-bg{
+  position:fixed;
+  inset:0;
+  z-index:-10;
+  overflow:hidden;
+  pointer-events:none;
+  background:#070b18;
+}
+
+.anime-page-slide{
+  position:absolute;
+  inset:-4%;
+  background-size:cover;
+  background-position:center;
+  opacity:0;
+  transform:scale(1.02);
+  transition:
+    opacity 1.8s ease,
+    transform 8s ease;
+  filter:saturate(1.08) brightness(.72);
+}
+
+.anime-page-slide.active{
+  opacity:.42;
+  transform:scale(1.08);
+}
+
+#anime-page-bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(
+      circle at 50% 10%,
+      rgba(99,102,241,.18),
+      transparent 40%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(5,8,25,.38),
+      rgba(5,8,25,.88)
+    );
+}
+
+/* =========================
+   BANNER
+========================= */
+
+#anime-hero-bg{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  z-index:0;
+}
+
+.anime-hero-slide{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  opacity:0;
+  transform:scale(1);
+  transition:
+    opacity 1.6s ease,
+    transform 9s ease;
+}
+
+.anime-hero-slide.active{
+  opacity:1;
+  transform:scale(1.08);
+}
+
+#anime-hero-bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(10,12,35,.12),
+      rgba(10,12,35,.72)
+    ),
+    linear-gradient(
+      90deg,
+      rgba(79,70,229,.24),
+      rgba(217,70,239,.08),
+      rgba(16,185,129,.12)
+    );
+}
+
+/* =========================
+   BANNER CONTENT
+========================= */
+
+#page-home > div:first-child{
+  position:relative !important;
+  isolation:isolate;
+  border-color:rgba(255,255,255,.13) !important;
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.28),
+    inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+#page-home > div:first-child > *{
+  position:relative;
+  z-index:2;
+}
+
+#page-home > div:first-child h2{
+  text-shadow:
+    0 3px 20px rgba(0,0,0,.55);
+}
+
+#page-home > div:first-child p{
+  color:#e2e8f0 !important;
+}
+
+/* =========================
+   CARD ANIME GLASS
+========================= */
+
+.card{
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  box-shadow:
+    0 12px 40px rgba(0,0,0,.18);
+}
+
+.box{
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+
+/* =========================
+   GWEN STAGE
+========================= */
+
+.gwen-stage{
+  position:relative;
+  width:100%;
+  height:430px;
+  margin:0 auto -24px;
+  overflow:hidden;
+  border-radius:20px;
+  isolation:isolate;
+  touch-action:pan-y;
+}
+
+.gwen-stage::before{
+  content:"";
+  position:absolute;
+  left:4%;
+  right:4%;
+  bottom:38px;
+  height:80px;
+  border-radius:50%;
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(129,140,248,.35),
+      transparent 70%
+    );
+  filter:blur(18px);
+  pointer-events:none;
+}
+
+.gwen-stage::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(255,255,255,.05),
+      transparent 42%
+    );
+}
+
+.gwen-canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  cursor:grab;
+  touch-action:pan-y;
+}
+
+.gwen-canvas:active{
+  cursor:grabbing;
+}
+
+/* =========================
+   GWEN CONTROLS
+========================= */
+
+.gwen-controls{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:14px;
+  z-index:10;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:7px;
+}
+
+.gwen-btn{
+  appearance:none;
+  border:1px solid rgba(255,255,255,.20);
+  background:rgba(15,23,42,.72);
+  color:#fff;
+  border-radius:999px;
+  padding:7px 13px;
+  font-size:12px;
+  line-height:1;
+  cursor:pointer;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  box-shadow:0 5px 18px rgba(0,0,0,.20);
+  transition:
+    transform .18s ease,
+    background .18s ease,
+    border-color .18s ease;
+}
+
+.gwen-btn:hover{
+  transform:translateY(-2px);
+  background:rgba(79,70,229,.75);
+  border-color:rgba(255,255,255,.35);
+}
+
+.gwen-btn:active{
+  transform:translateY(0);
+}
+
+.gwen-hint{
+  position:absolute;
+  left:15px;
+  right:15px;
+  bottom:54px;
+  z-index:8;
+  text-align:center;
+  font-size:11px;
+  color:#e2e8f0;
+  opacity:.72;
+  pointer-events:none;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:640px){
+
+  .gwen-stage{
+    height:360px;
+  }
+
+  .gwen-controls{
+    bottom:10px;
+  }
+
+  .gwen-btn{
+    padding:7px 10px;
+    font-size:11px;
+  }
+
+  .gwen-hint{
+    bottom:52px;
+    font-size:10px;
+  }
+}
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  .anime-page-slide,
+  .anime-hero-slide{
+    transition:none;
+    transform:none;
+  }
+}
 </style>
-</head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
-<svg style="display:none"><symbol id="logo" viewBox="0 0 48 48"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#d946ef"/></linearGradient></defs><rect width="48" height="48" rx="12" fill="url(#lg)"/><path d="M10 15c5-2 10-1 14 2 4-3 9-4 14-2v21c-5-2-10-1-14 2-4-3-9-4-14-2z" fill="#fff" fill-opacity=".93"/><path d="M24 17v21" stroke="#6366f1" stroke-width="2"/><path d="M37 5l1.6 3.4L42 10l-3.4 1.6L37 15l-1.6-3.4L32 10l3.4-1.6z" fill="#fde68a"/></symbol></svg>
 
-<header class="px-6 pt-6 pb-4 text-center">
-  <div class="inline-flex items-center justify-center gap-3">
-    <svg class="w-16 h-16 shrink-0"><use href="#logo"/></svg>
-    <div class="text-left"><h1 class="text-3xl font-extrabold text-slate-100">AI Master Novel Studio</h1><p class="text-sm text-slate-400">Từ ý tưởng đến cuốn truyện hoàn chỉnh</p></div>
-  </div>
-</header>
-<div class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur border-y border-slate-800 px-6 py-2 space-y-2">
-  <div class="flex items-center justify-center gap-1.5 flex-wrap">
-    <select id="projSel" onchange="switchProj(this.value)" class="inp !w-auto !text-sm !py-2 max-w-[260px]"></select>
-    <button onclick="newProj()" class="hbtn bg-emerald-600 hover:bg-emerald-500">＋ Dự án mới</button>
-    <button onclick="renameProj()" class="hbtn bg-slate-800 hover:bg-slate-700 text-slate-300">Đổi tên</button>
-    <button onclick="delProj()" class="hbtn bg-slate-800 hover:bg-red-700 text-slate-300">Xóa</button>
-    <button onclick="openReadAll()" class="hbtn bg-indigo-600 hover:bg-indigo-500 font-medium">📖 Đọc toàn bộ truyện</button>
-  </div>
-  <nav class="flex justify-center gap-1.5 flex-wrap">
-    <button onclick="switchPage('home')" id="nav-home" class="nav on"><span class="ic bg-amber-500/25">💡</span>Ý tưởng</button>
-    <button onclick="switchPage('bible')" id="nav-bible" class="nav"><span class="ic bg-emerald-500/25">📖</span>Hồ sơ & Bộ nhớ</button>
-    <button onclick="switchPage('outline')" id="nav-outline" class="nav"><span class="ic bg-sky-500/25">📚</span>Mục lục</button>
-    <button onclick="switchPage('reader')" id="nav-reader" class="nav"><span class="ic bg-fuchsia-500/25">✍️</span>Đọc & Sửa chương</button>
-    <button onclick="switchPage('history')" id="nav-history" class="nav"><span class="ic bg-rose-500/25">🕘</span>Lịch sử</button>
-  </nav>
-</div>
+<script>
+(function(){
 
-<main class="flex-1 p-6 max-w-[1700px] w-full mx-auto">
+  "use strict";
 
-<div id="page-home" class="page-view active grid grid-cols-1 lg:grid-cols-12 gap-6">
-  <div class="lg:col-span-12 rounded-2xl overflow-hidden bg-gradient-to-r from-indigo-600/30 via-fuchsia-600/20 to-emerald-500/20 border border-slate-800 px-8 pt-8 pb-8 flex flex-col items-center text-center gap-3">
-    <svg class="w-20 h-20 shrink-0"><use href="#logo"/></svg>
-    <h2 class="text-2xl md:text-3xl font-extrabold text-slate-100">Biến ý tưởng thành cuốn truyện hoàn chỉnh</h2>
-    <p class="text-sm text-slate-400">Viết từng chương · 42 giọng văn, đổi theo từng cảnh · Nhiều dự án và lịch sử phiên bản</p>
-    <div class="run-track big w-full -mb-8 mt-2"><div class="runloop big pingpong" data-runner></div></div>
-  </div>
-  <div class="lg:col-span-8 card space-y-4">
-    <h2 class="text-sm font-semibold text-indigo-400 border-b border-slate-800 pb-2">Bước 1: Nhập ý tưởng, để AI lập hồ sơ và dàn ý</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-      <div><label class="lb">Tên tác phẩm</label><input id="storyTitleInput" class="inp"></div>
-      <div><label class="lb">Giọng văn chung</label><select id="toneInput" class="inp"></select></div>
-      <div><label class="lb">Ngôi kể</label>
-        <select id="povInput" class="inp">
-          <option value="Ngôi thứ ba, bám sát cảm xúc nhân vật chính">Ngôi thứ ba</option>
-          <option value="Ngôi thứ nhất (Tôi)">Ngôi thứ nhất</option>
-        </select></div>
-    </div>
-    <div><label class="lb">Ghi chú thêm về giọng văn (không bắt buộc)</label><input id="styleInput" class="inp"></div>
-    <div><div id="genreWrap" class="relative"><label class="lb">Thể loại (chọn được nhiều)</label>
-      <button type="button" onclick="toggleGenreMenu()" class="inp text-left flex justify-between items-center gap-2"><span id="genreSum" class="truncate">Chọn thể loại...</span><span class="text-slate-400">▾</span></button>
-      <div id="genreMenu" class="hidden absolute z-30 mt-1 w-full max-h-72 overflow-y-auto bg-slate-900 border border-slate-700 rounded-lg shadow-xl p-2"></div></div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
-        <div><label class="lb">Thể loại chính (quyết định mạch truyện)</label><select id="genreMain" onchange="setMainGenre(this.value)" class="inp"></select></div>
-        <div><label class="lb">Thể loại khác (nếu có)</label><input id="genreExtra" class="inp"></div>
-      </div></div>
-    <div>
-      <label class="lb">Ý tưởng ngắn (chỉ cần 1-3 câu, AI sẽ lo phần còn lại)</label>
-      <div class="run-track"><div class="runloop" data-runner></div></div>
-      <textarea id="ideaInput" rows="3" class="inp p-3 resize-none" placeholder="Nhập ý tưởng của bạn..."></textarea>
-      <div class="flex items-center gap-2 mt-2">
-        <label class="text-xs text-slate-400">Số chương</label>
-        <input id="chapCount" type="number" min="3" max="40" value="12" class="w-16 bg-slate-950 border border-slate-800 rounded-lg px-2 py-1 text-xs">
-        <button onclick="aiPlan()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-medium py-2 rounded-lg">AI tạo hồ sơ & dàn ý từ ý tưởng</button>
+  /* =====================================================
+     CONFIG
+  ===================================================== */
+
+  const IMAGE_LIST = [
+    "assets/s1.jpg",
+    "assets/s2.jpg",
+    "assets/s3.jpg",
+    "assets/s4.jpg",
+    "assets/s5.jpg",
+    "assets/s6.jpg",
+    "assets/s7.jpg"
+  ];
+
+  const GWEN_MODEL = "assets/gwen.glb";
+
+  const REDUCED_MOTION =
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+
+  /* =====================================================
+     HELPERS
+  ===================================================== */
+
+  function wait(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  function addScript(src){
+    return new Promise((resolve,reject)=>{
+      const s=document.createElement("script");
+      s.src=src;
+      s.onload=resolve;
+      s.onerror=reject;
+      document.head.appendChild(s);
+    });
+  }
+
+
+  /* =====================================================
+     1. ANIME PAGE BACKGROUND
+  ===================================================== */
+
+  function createAnimeBackground(){
+
+    if(document.getElementById("anime-page-bg")) return;
+
+    const bg=document.createElement("div");
+    bg.id="anime-page-bg";
+
+    IMAGE_LIST.forEach((src,index)=>{
+
+      const slide=document.createElement("div");
+
+      slide.className="anime-page-slide";
+
+      slide.style.backgroundImage=`url("${src}")`;
+
+      if(index===0){
+        slide.classList.add("active");
+      }
+
+      bg.appendChild(slide);
+
+    });
+
+    document.body.prepend(bg);
+
+    const slides=[
+      ...bg.querySelectorAll(".anime-page-slide")
+    ];
+
+    if(REDUCED_MOTION) return;
+
+    let current=0;
+
+    setInterval(()=>{
+
+      slides[current].classList.remove("active");
+
+      current=(current+1)%slides.length;
+
+      slides[current].classList.add("active");
+
+    },7000);
+  }
+
+
+  /* =====================================================
+     2. ANIME HERO BANNER
+  ===================================================== */
+
+  function createHeroBackground(){
+
+    const hero=
+      document.querySelector("#page-home > div:first-child");
+
+    if(!hero) return;
+
+    if(hero.querySelector("#anime-hero-bg")) return;
+
+    const bg=document.createElement("div");
+
+    bg.id="anime-hero-bg";
+
+    IMAGE_LIST.forEach((src,index)=>{
+
+      const slide=document.createElement("div");
+
+      slide.className="anime-hero-slide";
+
+      slide.style.backgroundImage=`url("${src}")`;
+
+      if(index===0){
+        slide.classList.add("active");
+      }
+
+      bg.appendChild(slide);
+
+    });
+
+    hero.prepend(bg);
+
+    const slides=[
+      ...bg.querySelectorAll(".anime-hero-slide")
+    ];
+
+    if(REDUCED_MOTION) return;
+
+    let current=0;
+
+    setInterval(()=>{
+
+      slides[current].classList.remove("active");
+
+      current=(current+1)%slides.length;
+
+      slides[current].classList.add("active");
+
+    },7000);
+  }
+
+
+  /* =====================================================
+     3. TẠO KHUNG GWEN
+  ===================================================== */
+
+  function createGwenStage(){
+
+    const hero=
+      document.querySelector("#page-home > div:first-child");
+
+    if(!hero) return;
+
+    const old=
+      hero.querySelector(".run-track.big");
+
+    if(!old) return;
+
+    if(hero.querySelector(".gwen-stage")) return;
+
+    const stage=document.createElement("div");
+
+    stage.className="gwen-stage";
+
+    stage.innerHTML=`
+
+      <canvas class="gwen-canvas"></canvas>
+
+      <div class="gwen-hint">
+        Bấm vào Gwen để cô ấy chạy sang phía đối diện · Kéo ngang để di chuyển
       </div>
-    </div>
-    <div><label class="lb">Hồ sơ truyện (nhân vật, bối cảnh, bí mật, kết thúc) - có thể sửa tay</label>
-      <textarea id="charBibleInput" rows="5" class="inp p-3 resize-y"></textarea></div>
-    <div><label class="lb">Dàn ý (mỗi dòng một chương; dòng bắt đầu bằng "Phần" là tiêu đề phần) - có thể dán dàn ý của bạn</label>
-      <textarea id="ideaPromptInput" rows="9" class="inp p-3 resize-y leading-relaxed font-mono"></textarea></div>
-    <button onclick="initBook()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 rounded-lg text-xs">Tạo mục lục tác phẩm</button>
-  </div>
 
-  <div class="lg:col-span-4 card space-y-3">
-    <div class="space-y-2 pb-3 border-b border-slate-800">
-      <h3 class="text-xs font-semibold text-amber-400">Cách dùng AI (không cần trả tiền)</h3>
-      <select id="provider" onchange="saveCfg()" class="inp">
-        <option value="manual">Thủ công: tự dán vào Claude/ChatGPT miễn phí</option>
-        <option value="gemini">Tự động: khóa Google Gemini (có gói miễn phí)</option>
-      </select>
-      <input id="apiKey" type="password" onchange="saveCfg()" placeholder="Khóa Gemini (chỉ lưu trên máy bạn)" class="inp">
-      <input id="modelName" onchange="saveCfg()" value="gemini-3.8-flash" class="inp">
-      <label class="lb">AI dự phòng (không bắt buộc): địa chỉ API, khóa, tên model</label>
-      <input id="openaiUrl" onchange="saveCfg()" value="https://api.openai.com/v1" class="inp">
-      <input id="openaiKey" type="password" onchange="saveCfg()" placeholder="Khóa dự phòng (OpenAI / Groq / OpenRouter)" class="inp">
-      <input id="openaiModel" onchange="saveCfg()" value="gpt-4o-mini" class="inp">
-      <label class="lb">Chế độ tự động: chia mỗi chương thành</label>
-      <select id="segInput" onchange="saveCfg()" class="inp">
-        <option value="2">2 phần (ít lần gọi hơn)</option>
-        <option value="3" selected>3 phần (khuyên dùng)</option>
-        <option value="4">4 phần (nhẹ nhất, ít lỗi nhất)</option>
-      </select>
-    </div>
-    <p class="text-[11px] text-slate-500">Dữ liệu lưu trong trình duyệt của bạn. Nhớ bấm "Tải .txt" để sao lưu.</p>
-  </div>
-</div>
+      <div class="gwen-controls">
 
-<div id="page-bible" class="page-view">
-  <div class="card space-y-4">
-    <h2 class="text-sm font-bold text-indigo-400 border-b border-slate-800 pb-3">Hồ sơ truyện & bộ nhớ các chương</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="box"><h3 class="text-xs font-semibold text-emerald-400 mb-2">Hồ sơ truyện</h3>
-        <div id="bibleViewContent" class="text-xs text-slate-300 whitespace-pre-line leading-relaxed">Chưa có dữ liệu.</div></div>
-      <div class="box"><h3 class="text-xs font-semibold text-amber-400 mb-2">Tóm tắt các chương đã viết (AI dùng làm bộ nhớ)</h3>
-        <div id="memoryView" class="text-xs text-slate-300 whitespace-pre-line leading-relaxed">Chưa có chương nào.</div></div>
-    </div>
-  </div>
-</div>
+        <button class="gwen-btn" data-gwen="left">
+          ◀
+        </button>
 
-<div id="page-outline" class="page-view">
-  <div class="card">
-    <div class="flex justify-between items-center border-b border-slate-800 pb-3 mb-4 flex-wrap gap-2">
-      <h2 id="outlineBookTitle" class="text-sm font-bold text-emerald-400">Mục lục</h2>
-      <div class="flex gap-2 flex-wrap">
-        <button onclick="writeNext()" class="btn bg-indigo-600 hover:bg-indigo-500">Viết chương tiếp theo</button>
-        <button onclick="writeAllRemaining()" class="btn bg-amber-600 hover:bg-amber-500 font-bold">⚡ Viết tự động đến hết</button>
-        <button onclick="downloadBook()" class="btn bg-slate-800 hover:bg-slate-700 text-slate-300">Tải .txt</button>
+        <button class="gwen-btn" data-gwen="auto">
+          ▶ Tự chạy
+        </button>
+
+        <button class="gwen-btn" data-gwen="right">
+          ▶
+        </button>
+
+        <button class="gwen-btn" data-gwen="face">
+          🔍 Xem mặt
+        </button>
+
       </div>
-    </div>
-    <div id="treeOutlineContainer" class="space-y-6 max-h-[600px] overflow-y-auto pr-2"></div>
-  </div>
-</div>
+    `;
 
-<div id="page-reader" class="page-view grid grid-cols-1 lg:grid-cols-12 gap-6">
-  <div class="lg:col-span-3 card p-4 space-y-3">
-    <h3 class="text-xs font-semibold text-indigo-400 border-b border-slate-800 pb-2">Danh mục chương</h3>
-    <div id="readerSidebarTree" class="space-y-3 max-h-[560px] overflow-y-auto pr-1 text-xs"></div>
-  </div>
-  <div class="lg:col-span-9 card space-y-4">
-    <div class="flex justify-between items-center border-b border-slate-800 pb-3 flex-wrap gap-2">
-      <div><span id="readerPartBadge" class="text-[11px] text-indigo-400 font-semibold"></span>
-        <h2 id="readerChapterTitle" class="text-sm font-bold text-amber-400">Chưa chọn chương</h2></div>
-      <div class="flex gap-2 flex-wrap">
-        <button onclick="writeChapter(cur)" class="btn bg-indigo-600 hover:bg-indigo-500">Viết chương này bằng AI</button>
-        <button onclick="writeNext()" class="btn bg-indigo-800 hover:bg-indigo-700">Viết chương tiếp</button>
-        <button onclick="writeAllRemaining()" class="btn bg-amber-600 hover:bg-amber-500 font-bold">⚡ Viết tự động đến hết</button>
-        <button onclick="saveEdited()" class="btn bg-emerald-700 hover:bg-emerald-600">Lưu chỉnh sửa</button>
-        <button onclick="copyText()" class="btn bg-slate-800 hover:bg-slate-700 text-slate-300">Sao chép</button>
-      </div>
-    </div>
-    <p id="readerOutline" class="text-[11px] text-slate-400 italic"></p>
-    <div class="flex items-center gap-2"><label class="text-xs text-slate-400">Giọng văn chương này</label><select id="chapTone" onchange="setChapTone(this.value)" class="inp !w-auto"></select></div>
-    <textarea id="readerContentEditor" rows="20" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-5 text-sm text-slate-200 leading-loose outline-none focus:border-indigo-500 resize-y"></textarea>
-    <div class="flex gap-2">
-      <input id="reviseInput" class="inp flex-1" placeholder="Yêu cầu chỉnh sửa, ví dụ: viết buồn hơn, thêm đối thoại, Khải bớt lạnh lùng...">
-      <button onclick="reviseChapter()" class="btn bg-amber-600 hover:bg-amber-500 px-4 py-2">Viết lại theo yêu cầu</button>
-    </div>
-  </div>
-</div>
+    old.replaceWith(stage);
 
-<div id="page-history" class="page-view"><div class="card space-y-4">
-  <div class="flex justify-between items-center border-b border-slate-800 pb-3 flex-wrap gap-2"><h2 class="text-sm font-bold text-rose-400">Lịch sử phiên bản của dự án</h2><button onclick="snapManual()" class="btn bg-emerald-600 hover:bg-emerald-500">＋ Lưu phiên bản hiện tại</button></div>
-  <div id="histList" class="space-y-2"></div></div></div>
-</main>
+    startGwen(stage);
+  }
 
-<div id="modal" class="hidden fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4">
-  <div class="bg-slate-900 border border-slate-700 rounded-xl p-5 w-full max-w-3xl space-y-3">
-    <p class="text-xs text-slate-300">Bước 1: sao chép yêu cầu bên dưới và dán vào Claude hoặc ChatGPT (bản miễn phí). Bước 2: dán câu trả lời vào ô thứ hai.</p>
-    <textarea id="mPrompt" readonly rows="6" class="inp p-3"></textarea>
-    <button onclick="navigator.clipboard.writeText($('mPrompt').value)" class="btn bg-slate-800 hover:bg-slate-700">Sao chép yêu cầu</button>
-    <textarea id="mResult" rows="8" placeholder="Dán kết quả của AI vào đây" class="inp p-3"></textarea>
-    <div class="flex gap-2 justify-end">
-      <button onclick="_mNo()" class="btn bg-slate-800 hover:bg-slate-700 px-4 py-2">Hủy</button>
-      <button onclick="_mOk()" class="btn bg-indigo-600 hover:bg-indigo-500 px-4 py-2">Dùng kết quả này</button>
-    </div>
-  </div>
-</div>
 
-<div id="readAll" class="hidden fixed inset-0 bg-black/80 z-[80] flex items-center justify-center p-3">
-  <div class="relative bg-slate-900 border border-slate-700 rounded-xl w-full max-w-4xl h-[92vh] flex flex-col">
-    <div class="p-4 border-b border-slate-800 text-center space-y-2">
-      <div class="flex justify-end gap-2"><button onclick="downloadBook()" class="btn bg-slate-800 hover:bg-slate-700 text-slate-300">Tải .txt</button><button onclick="closeReadAll()" class="btn bg-indigo-600 hover:bg-indigo-500">Đóng ✕</button></div>
-      <h2 id="raTitle" class="text-base font-bold text-emerald-400 uppercase tracking-wide"></h2>
-      <p id="raInfo" class="text-[11px] text-slate-400"></p>
-      <p id="raCur" class="text-xs text-slate-300"></p>
-      <div class="flex justify-center items-stretch gap-2 flex-wrap">
-        <button onclick="raStep(-1)" class="btn bg-emerald-700 hover:bg-emerald-600">‹ Chương trước</button>
-        <select id="raSel" onchange="raGo(+this.value)" class="inp !w-auto max-w-[240px]"></select>
-        <button onclick="raStep(1)" class="btn bg-emerald-700 hover:bg-emerald-600">Chương tiếp ›</button>
-      </div>
-    </div>
-    <div id="raBody" class="flex-1 overflow-y-auto p-6 space-y-10"></div>
-    <div class="absolute right-5 bottom-5 flex flex-col gap-2">
-      <button onclick="raTop()" title="Về đầu trang" class="w-9 h-9 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg">↑</button>
-      <button onclick="raEnd()" title="Xuống cuối trang" class="w-9 h-9 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg">↓</button>
-    </div>
-  </div>
-</div>
-<div id="dlg" class="hidden fixed inset-0 bg-black/70 z-[90] flex items-center justify-center p-4">
-  <div class="bg-slate-900 border border-slate-700 rounded-xl p-5 w-full max-w-sm space-y-3">
-    <p id="dlgMsg" class="text-sm text-slate-200"></p>
-    <input id="dlgIn" class="inp hidden">
-    <div class="flex gap-2 justify-end"><button id="dlgNo" class="btn bg-slate-800 hover:bg-slate-700 px-4 py-2">Hủy</button><button id="dlgOk" class="btn bg-indigo-600 hover:bg-indigo-500 px-4 py-2">OK</button></div>
-  </div>
-</div>
-<div id="toast" class="hidden fixed top-20 left-1/2 -translate-x-1/2 bg-amber-600 text-white text-xs px-4 py-3 rounded-lg shadow-lg z-[70] max-w-md text-center"></div>
-<div id="busy" class="hidden fixed bottom-4 left-1/2 -translate-x-1/2 w-[min(92vw,460px)] bg-slate-900 border border-indigo-500/40 rounded-xl px-4 py-3 shadow-xl z-50">
-  <div class="relative mt-10 h-2 bg-slate-800 rounded-full">
-    <div id="busyBar" class="h-full bg-gradient-to-r from-indigo-500 to-fuchsia-500 rounded-full" style="width:0%"></div>
-    <div id="busyRun" data-runner class="absolute bottom-1 h-10 pointer-events-none" style="left:0%"></div>
-  </div>
-  <div class="flex justify-between items-center text-xs mt-2"><span id="busyTxt" class="text-slate-300"></span><b id="busy
+  /* =====================================================
+     4. GWEN 3D
+  ===================================================== */
+
+  async function startGwen(stage){
+
+    const canvas=
+      stage.querySelector(".gwen-canvas");
+
+    const hint=
+      stage.querySelector(".gwen-hint");
+
+    try{
+
+      if(!window.THREE){
+
+        await addScript(
+          "https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"
+        );
+      }
+
+      if(!window.THREE.GLTFLoader){
+
+        await addScript(
+          "https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/loaders/GLTFLoader.js"
+        );
+      }
+
+    }catch(error){
+
+      hint.textContent=
+        "Không tải được thư viện 3D.";
+
+      console.error(error);
+
+      return;
+    }
+
+
+    /* =========================
+       RENDERER
+    ========================= */
+
+    const renderer=
+      new THREE.WebGLRenderer({
+        canvas,
+        alpha:true,
+        antialias:true,
+        powerPreference:"high-performance"
+      });
+
+    renderer.setPixelRatio(
+      Math.min(
+        window.devicePixelRatio*1.5,
+        3
+      )
+    );
+
+    renderer.outputEncoding=
+      THREE.sRGBEncoding;
+
+
+    /* =========================
+       SCENE
+    ========================= */
+
+    const scene=
+      new THREE.Scene();
+
+    const camera=
+      new THREE.PerspectiveCamera(
+        28,
+        1,
+        .05,
+        50
+      );
+
+
+    /* =========================
+       LIGHT
+    ========================= */
+
+    const ambient=
+      new THREE.AmbientLight(
+        0xffffff,
+        2.1
+      );
+
+    scene.add(ambient);
+
+    const keyLight=
+      new THREE.DirectionalLight(
+        0xffffff,
+        3.2
+      );
+
+    keyLight.position.set(
+      3,
+      5,
+      6
+    );
+
+    scene.add(keyLight);
+
+    const fillLight=
+      new THREE.DirectionalLight(
+        0x9fa8ff,
+        2
+      );
+
+    fillLight.position.set(
+      -4,
+      3,
+      2
+    );
+
+    scene.add(fillLight);
+
+
+    /* =========================
+       CAMERA / POSITION
+    ========================= */
+
+    const MODEL_HEIGHT=1.6;
+
+    const CAMERA_DISTANCE=3.65;
+
+    let horizontalLimit=1.25;
+
+    function resize(){
+
+      const width=
+        canvas.clientWidth || stage.clientWidth;
+
+      const height=
+        canvas.clientHeight || stage.clientHeight;
+
+      renderer.setSize(
+        width,
+        height,
+        false
+      );
+
+      camera.aspect=
+        width/height;
+
+      camera.updateProjectionMatrix();
+
+      horizontalLimit=
+        Math.max(
+          .7,
+          CAMERA_DISTANCE*
+          Math.tan(
+            THREE.MathUtils.degToRad(14)
+          )*
+          camera.aspect
+          -.35
+        );
+    }
+
+    if(window.ResizeObserver){
+
+      new ResizeObserver(resize)
+        .observe(stage);
+
+    }else{
+
+      window.addEventListener(
+        "resize",
+        resize
+      );
+
+    }
+
+    resize();
+
+
+    /* =========================
+       STATE
+    ========================= */
+
+    let model=null;
+
+    let mixer=null;
+
+    let animations={};
+
+    let currentAnimation="";
+
+    let x=-horizontalLimit*.72;
+
+    let direction=1;
+
+    let moving=false;
+
+    let autoRun=false;
+
+    let faceMode=false;
+
+    let manualDirection=0;
+
+    let drag=null;
+
+    let targetRotation=0;
+
+    let rotation=0;
+
+    let cameraDistance=CAMERA_DISTANCE;
+
+    let lastClick=0;
+
+
+    /* =========================
+       BUTTONS
+    ========================= */
+
+    const leftBtn=
+      stage.querySelector(
+        '[data-gwen="left"]'
+      );
+
+    const rightBtn=
+      stage.querySelector(
+        '[data-gwen="right"]'
+      );
+
+    const autoBtn=
+      stage.querySelector(
+        '[data-gwen="auto"]'
+      );
+
+    const faceBtn=
+      stage.querySelector(
+        '[data-gwen="face"]'
+      );
+
+
+    function updateButtons(){
+
+      autoBtn.textContent=
+        autoRun
+          ? "⏸ Dừng chạy"
+          : "▶ Tự chạy";
+
+      faceBtn.textContent=
+        faceMode
+          ? "🔍 Toàn thân"
+          : "🔍 Xem mặt";
+    }
+
+
+    /* =========================
+       ANIMATION
+    ========================= */
+
+    function playAnimation(name){
+
+      if(!mixer) return;
+
+      const action=
+        animations[name];
+
+      if(!action) return;
+
+      if(currentAnimation===name) return;
+
+      const old=
+        animations[currentAnimation];
+
+      if(old){
+
+        old.fadeOut(.18);
+      }
+
+      action
+        .reset()
+        .fadeIn(.18)
+        .play();
+
+      currentAnimation=name;
+    }
+
+
+    function findAnimation(names){
+
+      for(const name of names){
+
+        if(animations[name])
+          return name;
+
+      }
+
+      return null;
+    }
+
+
+    /* =========================
+       LOAD GLB
+    ========================= */
+
+    const loader=
+      new THREE.GLTFLoader();
+
+    loader.load(
+
+      GWEN_MODEL,
+
+      gltf=>{
+
+        model=gltf.scene;
+
+        scene.add(model);
+
+
+        /* =====================
+           MATERIAL QUALITY
+        ===================== */
+
+        model.traverse(obj=>{
+
+          if(
+            obj.material &&
+            obj.material.map
+          ){
+
+            obj.material.map.anisotropy=
+              renderer
+                .capabilities
+                .getMaxAnisotropy();
+
+          }
+
+          if(obj.material){
+
+            obj.material.needsUpdate=true;
+          }
+
+        });
+
+
+        /* =====================
+           ANIMATIONS
+        ===================== */
+
+        if(gltf.animations.length){
+
+          mixer=
+            new THREE.AnimationMixer(
+              model
+            );
+
+          gltf.animations.forEach(clip=>{
+
+            animations[
+              clip.name
+            ]=
+              mixer.clipAction(
+                clip
+              );
+
+          });
+
+          const idle=
+            findAnimation([
+              "Idle_Base",
+              "Idle",
+              "idle",
+              "Idle_01"
+            ]);
+
+          if(idle){
+
+            animations[idle]
+              .play();
+
+            currentAnimation=idle;
+
+          }else{
+
+            const first=
+              gltf.animations[0];
+
+            animations[first.name]
+              .play();
+
+            currentAnimation=
+              first.name;
+          }
+
+        }
+
+        updateButtons();
+
+        hint.textContent=
+          "Bấm Gwen để chạy sang phía đối diện · Kéo ngang để di chuyển";
+
+        animate();
+
+      },
+
+      undefined,
+
+      error=>{
+
+        console.error(
+          "Gwen GLB error:",
+          error
+        );
+
+        hint.textContent=
+          "Không tải được Gwen. Kiểm tra assets/gwen.glb";
+      }
+    );
+
+
+    /* =========================
+       MOVE TO OPPOSITE SIDE
+    ========================= */
+
+    function runToOtherSide(){
+
+      if(!model) return;
+
+      faceMode=false;
+
+      autoRun=false;
+
+      manualDirection=0;
+
+      direction=
+        x<=0
+          ? 1
+          : -1;
+
+      moving=true;
+
+      updateButtons();
+    }
+
+
+    /* =========================
+       BUTTON EVENTS
+    ========================= */
+
+    autoBtn.addEventListener(
+      "click",
+      e=>{
+
+        e.stopPropagation();
+
+        faceMode=false;
+
+        autoRun=!autoRun;
+
+        if(autoRun){
+
+          direction=
+            direction || 1;
+
+          moving=true;
+
+        }else{
+
+          moving=false;
+        }
+
+        updateButtons();
+      }
+    );
+
+
+    faceBtn.addEventListener(
+      "click",
+      e=>{
+
+        e.stopPropagation();
+
+        faceMode=!faceMode;
+
+        autoRun=false;
+
+        moving=false;
+
+        updateButtons();
+      }
+    );
+
+
+    function holdDirection(dir){
+
+      faceMode=false;
+
+      autoRun=false;
+
+      manualDirection=dir;
+
+      direction=dir;
+
+      moving=true;
+
+      updateButtons();
+    }
+
+
+    function releaseDirection(){
+
+      manualDirection=0;
+
+      moving=false;
+    }
+
+
+    leftBtn.addEventListener(
+      "pointerdown",
+      e=>{
+
+        e.preventDefault();
+
+        holdDirection(-1);
+      }
+    );
+
+
+    rightBtn.addEventListener(
+      "pointerdown",
+      e=>{
+
+        e.preventDefault();
+
+        holdDirection(1);
+      }
+    );
+
+
+    window.addEventListener(
+      "pointerup",
+      releaseDirection
+    );
+
+
+    /* =========================
+       KEYBOARD
+    ========================= */
+
+    window.addEventListener(
+      "keydown",
+      e=>{
+
+        const tag=
+          document.activeElement &&
+          document.activeElement.tagName;
+
+        if(
+          tag==="INPUT" ||
+          tag==="TEXTAREA" ||
+          tag==="SELECT"
+        ) return;
+
+        if(e.key==="ArrowLeft"){
+
+          e.preventDefault();
+
+          holdDirection(-1);
+
+        }
+
+        if(e.key==="ArrowRight"){
+
+          e.preventDefault();
+
+          holdDirection(1);
+        }
+      }
+    );
+
+
+    window.addEventListener(
+      "keyup",
+      e=>{
+
+        if(
+          e.key==="ArrowLeft" ||
+          e.key==="ArrowRight"
+        ){
+
+          releaseDirection();
+        }
+      }
+    );
+
+
+    /* =========================
+       DRAG
+    ========================= */
+
+    canvas.addEventListener(
+      "pointerdown",
+      e=>{
+
+        drag={
+          x:e.clientX,
+          y:e.clientY
+        };
+
+        canvas.setPointerCapture(
+          e.pointerId
+        );
+      }
+    );
+
+
+    canvas.addEventListener(
+      "pointermove",
+      e=>{
+
+        if(!drag) return;
+
+        const dx=
+          e.clientX-drag.x;
+
+        const dy=
+          e.clientY-drag.y;
+
+        /*
+         * Chỉ kéo ngang.
+         * Kéo dọc vẫn để trình duyệt cuộn.
+         */
+
+        if(
+          Math.abs(dx) >
+          Math.abs(dy)
+        ){
+
+          x +=
+            dx*
+            (
+              2.2/
+              Math.max(
+                1,
+                canvas.clientWidth
+              )
+            );
+
+          x=
+            THREE.MathUtils.clamp(
+              x,
+              -horizontalLimit,
+              horizontalLimit
+            );
+
+          direction=
+            dx>0
+              ? 1
+              : -1;
+
+          faceMode=false;
+
+          autoRun=false;
+
+          moving=true;
+
+          updateButtons();
+        }
+
+        drag.x=e.clientX;
+        drag.y=e.clientY;
+      }
+    );
+
+
+    canvas.addEventListener(
+      "pointerup",
+      e=>{
+
+        drag=null;
+
+        moving=false;
+
+        try{
+          canvas.releasePointerCapture(
+            e.pointerId
+          );
+        }catch(_){}
+      }
+    );
+
+
+    canvas.addEventListener(
+      "pointercancel",
+      ()=>{
+        drag=null;
+        moving=false;
+      }
+    );
+
+
+    /* =========================
+       CLICK GWEN
+    ========================= */
+
+    canvas.addEventListener(
+      "click",
+      e=>{
+
+        const now=
+          Date.now();
+
+        /*
+         * tránh click sau khi kéo
+         */
+
+        if(
+          now-lastClick<300
+        ) return;
+
+        lastClick=now;
+
+        runToOtherSide();
+
+      }
+    );
+
+
+    /* =========================
+       ANIMATION LOOP
+    ========================= */
+
+    const clock=
+      new THREE.Clock();
+
+    function animate(){
+
+      requestAnimationFrame(
+        animate
+      );
+
+      const dt=
+        Math.min(
+          clock.getDelta(),
+          .05
+        );
+
+      const time=
+        clock.elapsedTime;
+
+
+      if(mixer){
+
+        mixer.update(dt);
+      }
+
+
+      if(!model){
+
+        renderer.render(
+          scene,
+          camera
+        );
+
+        return;
+      }
+
+
+      /* =====================
+         MOVE
+      ===================== */
+
+      let isMoving=false;
+
+      if(!faceMode){
+
+        if(manualDirection){
+
+          x +=
+            manualDirection*
+            1.05*
+            dt;
+
+          direction=
+            manualDirection;
+
+          isMoving=true;
+
+        }else if(autoRun){
+
+          x +=
+            direction*
+            .70*
+            dt;
+
+          isMoving=true;
+
+        }else if(moving){
+
+          x +=
+            direction*
+            .95*
+            dt;
+
+          isMoving=true;
+        }
+
+
+        if(
+          x>=horizontalLimit
+        ){
+
+          x=horizontalLimit;
+
+          if(autoRun){
+
+            direction=-1;
+
+          }else{
+
+            moving=false;
+          }
+        }
+
+
+        if(
+          x<=-horizontalLimit
+        ){
+
+          x=-horizontalLimit;
+
+          if(autoRun){
+
+            direction=1;
+
+          }else{
+
+            moving=false;
+          }
+        }
+      }
+
+
+      /* =====================
+         ANIMATION STATE
+      ===================== */
+
+      const runAnimation=
+        findAnimation([
+          "Run_Haste",
+          "Run",
+          "Run_Fast",
+          "Walking",
+          "Walk"
+        ]);
+
+      const idleAnimation=
+        findAnimation([
+          "Idle_Base",
+          "Idle",
+          "idle",
+          "Idle_01"
+        ]);
+
+      if(isMoving){
+
+        if(runAnimation)
+          playAnimation(runAnimation);
+
+      }else{
+
+        if(idleAnimation)
+          playAnimation(idleAnimation);
+      }
+
+
+      /* =====================
+         POSITION
+      ===================== */
+
+      model.position.x=x;
+
+      model.position.y=
+        isMoving
+          ? Math.abs(
+              Math.sin(
+                time*9
+              )
+            )*.035
+          : 0;
+
+
+      /* =====================
+         FACE DIRECTION
+      ===================== */
+
+      if(isMoving){
+
+        targetRotation=
+          direction>0
+            ? -Math.PI/2
+            : Math.PI/2;
+
+      }else{
+
+        /*
+         * hơi xoay về phía trước
+         */
+
+        targetRotation=
+          direction>0
+            ? -.18
+            : .18;
+      }
+
+
+      rotation +=
+        (
+          targetRotation-
+          rotation
+        )*
+        Math.min(
+          1,
+          dt*8
+        );
+
+      model.rotation.y=
+        rotation;
+
+
+      /* =====================
+         CAMERA
+      ===================== */
+
+      const target=
+        new THREE.Vector3(
+          faceMode
+            ? x
+            : 0,
+          faceMode
+            ? MODEL_HEIGHT*.72
+            : MODEL_HEIGHT*.52,
+          0
+        );
+
+      const cameraTarget=
+        camera.userData.target ||
+        new THREE.Vector3(
+          0,
+          MODEL_HEIGHT*.52,
+          0
+        );
+
+      camera.userData.target=
+        cameraTarget;
+
+      cameraTarget.lerp(
+        target,
+        .08
+      );
+
+
+      const wantedDistance=
+        faceMode
+          ? 1.15
+          : CAMERA_DISTANCE;
+
+      cameraDistance +=
+        (
+          wantedDistance-
+          cameraDistance
+        )*.08;
+
+
+      camera.position.set(
+        cameraTarget.x,
+        cameraTarget.y+.08,
+        cameraTarget.z+
+        cameraDistance
+      );
+
+      camera.lookAt(
+        cameraTarget
+      );
+
+
+      renderer.render(
+        scene,
+        camera
+      );
+    }
+
+  }
+
+
+  /* =====================================================
+     5. AUTO WRITE BUTTON
+     Không phá hệ thống AI hiện tại.
+  ===================================================== */
+
+  function setupAutoWriting(){
+
+    /*
+     * Nếu web gốc đã có nút này thì không thêm nút thứ hai.
+     */
+
+    const existing=
+      document.querySelectorAll(
+        'button[onclick="writeAllRemaining()"]'
+      );
+
+    if(existing.length) return;
+
+    /*
+     * Nếu phiên bản web hiện tại dùng writeNext(),
+     * thêm nút kế bên.
+     */
+
+    document
+      .querySelectorAll(
+        'button[onclick="writeNext()"]'
+      )
+      .forEach(button=>{
+
+        const auto=
+          document.createElement("button");
+
+        auto.type="button";
+
+        auto.className=
+          "btn bg-amber-600 hover:bg-amber-500 font-bold";
+
+        auto.textContent=
+          "⚡ Viết tự động đến hết";
+
+        auto.onclick=async()=>{
+
+          if(
+            typeof window.writeAllRemaining==="function"
+          ){
+
+            await window.writeAllRemaining();
+
+            return;
+          }
+
+          /*
+           * Fallback:
+           * dùng các hàm đang có trong web.
+           */
+
+          if(
+            typeof window.chapters!=="function" ||
+            typeof window.writeChapter!=="function"
+          ){
+
+            alert(
+              "Phiên bản hiện tại chưa có chức năng viết tự động."
+            );
+
+            return;
+          }
+
+          let list=
+            window.chapters();
+
+          for(const chapter of list){
+
+            if(
+              typeof window.done==="function" &&
+              window.done(chapter)
+            ){
+
+              continue;
+            }
+
+            try{
+
+              await window.writeChapter(
+                chapter.id
+              );
+
+              await wait(1800);
+
+            }catch(error){
+
+              console.error(error);
+
+              break;
+            }
+          }
+
+        };
+
+        button.after(auto);
+      });
+  }
+
+
+  /* =====================================================
+     6. INIT
+  ===================================================== */
+
+  function init(){
+
+    createAnimeBackground();
+
+    createHeroBackground();
+
+    createGwenStage();
+
+    setupAutoWriting();
+  }
+
+
+  /*
+   * Chờ web gốc khởi tạo DOM và các hàm.
+   */
+
+  if(
+    document.readyState==="loading"
+  ){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      ()=>{
+        setTimeout(
+          init,
+          300
+        );
+      }
+    );
+
+  }else{
+
+    setTimeout(
+      init,
+      300
+    );
+  }
+
+})();
+</script>
