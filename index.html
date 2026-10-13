@@ -6,6 +6,7 @@
 <title>AI Master Novel Studio</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E📖%3C/text%3E%3C/svg%3E">
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style type="text/tailwindcss">
 body{font-family:'Inter',sans-serif}
@@ -50,6 +51,28 @@ body::before{content:"";position:fixed;inset:-10% 0 0 0;z-index:-1;pointer-event
 .gwen-stage{height:260px;transition:height .5s ease}
 .gwen-stage.face{height:440px}
 .gwen-stage canvas{width:100%;height:100%;display:block;cursor:pointer}
+/* ===== Nâng cấp nhẹ, giữ nguyên layout gốc ===== */
+.gwen-toolbar{max-width:min(78%,900px)}
+.gwen-toolbar button{white-space:nowrap;box-shadow:0 3px 12px rgba(2,6,23,.18)}
+.gwen-stage{min-height:260px;touch-action:pan-y}
+.gwen-stage canvas{position:absolute;inset:0;z-index:1}
+.gwen-hint{position:absolute;z-index:8;left:12px;bottom:8px;padding:4px 9px;border-radius:999px;background:rgba(2,6,23,.48);border:1px solid rgba(255,255,255,.18);font-size:10px;color:#fff;pointer-events:none;backdrop-filter:blur(5px)}
+.gwen-transform-fx{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0}
+.gwen-stage.transforming .gwen-transform-fx{animation:gwenTransformFlash .85s ease-out}
+@keyframes gwenTransformFlash{0%{opacity:0;background:radial-gradient(circle at 50% 60%,rgba(255,255,255,0),transparent 20%)}25%{opacity:1;background:radial-gradient(circle at 50% 60%,rgba(255,255,255,.9),rgba(192,132,252,.48) 18%,transparent 62%)}100%{opacity:0;background:radial-gradient(circle at 50% 60%,rgba(255,255,255,0),transparent 68%)}}
+.page-gwen-banner{position:relative;min-height:330px;margin-bottom:20px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.24);background-color:#164e78;background-image:linear-gradient(90deg,rgba(2,6,23,.12),rgba(2,6,23,.10) 43%,rgba(2,6,23,.68)),linear-gradient(180deg,rgba(2,6,23,.05),rgba(2,6,23,.52)),var(--page-banner-image);background-size:cover;background-position:center;isolation:isolate;box-shadow:0 12px 36px rgba(2,6,23,.18)}
+.page-gwen-title{position:absolute;z-index:12;left:53%;right:28px;top:68px;color:#fff;text-align:left;text-shadow:0 2px 12px rgba(0,0,0,.4);pointer-events:none}
+.page-gwen-title span{font-size:11px;opacity:.85}.page-gwen-title h2{font-size:25px;font-weight:800;margin-top:5px}.page-gwen-title p{max-width:530px;font-size:12px;line-height:1.65;margin-top:6px;color:rgba(255,255,255,.9)}
+.page-gwen-host{position:absolute;inset:0;z-index:4}
+#gwenStage.compact-gwen{position:absolute!important;left:0;right:0;bottom:0;width:100%;height:260px!important;min-height:260px}
+#gwenStage.compact-gwen.face{height:300px!important}
+.page-gwen-banner .gwen-toolbar{top:10px;right:10px}
+.page-gwen-banner .gwen-hint{bottom:8px;left:12px}
+#page-audio .card{background:rgba(8,47,73,.78);backdrop-filter:blur(12px)}
+#audioPlayer{max-height:48px}
+@media(max-width:760px){.gwen-toolbar{max-width:95%;gap:4px}.gwen-toolbar button{font-size:10px;padding:5px 7px}.gwen-stage{height:250px}.page-gwen-banner{min-height:360px}.page-gwen-title{left:38%;right:12px;top:70px}.page-gwen-title h2{font-size:20px}.page-gwen-title p{font-size:11px}.page-gwen-banner #gwenStage.compact-gwen{height:280px!important}}
+@media(max-width:520px){.gwen-toolbar{left:8px;right:8px;max-width:none;justify-content:flex-end}.gwen-toolbar button{font-size:9px;padding:4px 5px}.gwen-hint{font-size:9px;max-width:78%;white-space:normal}.page-gwen-banner{min-height:380px}.page-gwen-title{left:8%;right:8%;top:48px;text-align:center}.page-gwen-title h2{font-size:19px}.page-gwen-banner #gwenStage.compact-gwen{height:240px!important}.page-gwen-banner .gwen-toolbar{top:8px}.page-gwen-banner .gwen-hint{bottom:6px}}
+
 .comet{animation:comet 11s linear infinite}
 @keyframes comet{0%{transform:translate(1500px,60px);opacity:0}4%{opacity:1}28%{transform:translate(380px,230px);opacity:1}32%{transform:translate(300px,240px);opacity:0}100%{transform:translate(300px,240px);opacity:0}}
 .twinkle circle{animation:tw 3.2s ease-in-out infinite alternate}
@@ -100,6 +123,7 @@ body::before{content:"";position:fixed;inset:-10% 0 0 0;z-index:-1;pointer-event
     <button onclick="switchPage('outline')" id="nav-outline" class="nav"><span class="ic bg-sky-500/25">📚</span>Mục lục</button>
     <button onclick="switchPage('reader')" id="nav-reader" class="nav"><span class="ic bg-fuchsia-500/25">✍️</span>Đọc & Sửa chương</button>
     <button onclick="switchPage('history')" id="nav-history" class="nav"><span class="ic bg-rose-500/25">🕘</span>Lịch sử</button>
+    <button onclick="switchPage('audio')" id="nav-audio" class="nav"><span class="ic bg-violet-500/25">🎧</span>Truyện nói</button>
   </nav>
 </div>
 
@@ -110,16 +134,21 @@ body::before{content:"";position:fixed;inset:-10% 0 0 0;z-index:-1;pointer-event
     <div class="absolute inset-0 bg-sky-900"><div class="slide s1"></div><div class="slide s2"></div><div class="slide s3"></div></div>
     <div class="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-transparent pointer-events-none"></div>
     <div id="petals" class="absolute inset-0 z-[15] pointer-events-none overflow-hidden"></div>
-    <div class="absolute right-3 top-3 z-30 flex gap-2 flex-wrap justify-end">
-      <button id="gwenAutoBtn" onclick="gwenToggleAuto()" class="btn bg-black/45 hover:bg-black/65 backdrop-blur border border-white/20">⏸ Dừng chạy</button>
+    <div id="gwenToolbar" class="gwen-toolbar absolute right-3 top-3 z-30 flex gap-2 flex-wrap justify-end">
+      <button id="gwenAutoBtn" onclick="gwenRunSide()" class="btn bg-black/45 hover:bg-black/65 backdrop-blur border border-white/20">▶ Chạy sang phải</button>
       <button id="gwenFaceBtn" onclick="gwenFace()" class="btn bg-black/45 hover:bg-black/65 backdrop-blur border border-white/20">🔍 Xem mặt</button>
+      <button onclick="gwenLaugh()" class="btn bg-black/45 hover:bg-black/65 backdrop-blur border border-white/20">😊 Cười</button>
+      <button onclick="gwenBlink()" class="btn bg-black/45 hover:bg-black/65 backdrop-blur border border-white/20">😉 Nháy mắt</button>
+      <button onclick="gwenTransform()" class="btn bg-black/45 hover:bg-black/65 backdrop-blur border border-white/20">✨ Biến hình</button>
     </div>
     <div class="relative z-10 flex flex-col items-center text-center gap-2 px-6 pt-8">
       <svg class="w-20 h-20 shrink-0 drop-shadow-lg"><use href="#logo"/></svg>
       <h2 class="text-2xl md:text-3xl font-extrabold text-white drop-shadow-lg">Biến ý tưởng thành cuốn truyện hoàn chỉnh</h2>
     </div>
     <div id="gwenStage" class="gwen-stage relative z-10">
-      <canvas id="gwenCanvas"></canvas>
+      <canvas id="gwenCanvas" aria-label="Kéo để xoay Gwen, bấm vào Gwen để xem biểu cảm"></canvas>
+      <div id="gwenTransformFx" class="gwen-transform-fx" aria-hidden="true"></div>
+      <div class="gwen-hint">Kéo để xoay · Bấm Gwen để cười · Chỉ chạy khi bấm nút</div>
       <div id="gwenLoad" class="absolute inset-0 flex flex-col items-center justify-end gap-2 pb-5 px-4 text-center">
         <span id="gwenMsg" class="text-xs text-white bg-black/50 backdrop-blur rounded-lg px-3 py-2 max-w-md">Đang tải Gwen...</span>
         <label id="gwenPick" class="hidden btn bg-indigo-600 hover:bg-indigo-500 cursor-pointer">📂 Chọn file gwen.glb từ máy<input id="gwenFile" type="file" accept=".glb,model/gltf-binary" class="hidden"></label>
@@ -197,6 +226,10 @@ body::before{content:"";position:fixed;inset:-10% 0 0 0;z-index:-1;pointer-event
 </div>
 
 <div id="page-bible" class="page-view">
+  <section class="page-gwen-banner" style="--page-banner-image:var(--a2)">
+    <div class="page-gwen-title"><span>AI Master Novel Studio</span><h2>Hồ sơ & Bộ nhớ</h2><p>Hồ sơ nhân vật, bối cảnh và những chi tiết cần nhớ xuyên suốt câu chuyện.</p></div>
+    <div id="gwenHost-bible" class="page-gwen-host" aria-label="Gwen đồng hành trong mục Hồ sơ & Bộ nhớ"></div>
+  </section>
   <div class="card space-y-4">
     <h2 class="text-sm font-bold text-indigo-400 border-b border-white/15 pb-3">Hồ sơ truyện & bộ nhớ các chương</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -209,6 +242,10 @@ body::before{content:"";position:fixed;inset:-10% 0 0 0;z-index:-1;pointer-event
 </div>
 
 <div id="page-outline" class="page-view">
+  <section class="page-gwen-banner" style="--page-banner-image:var(--a3)">
+    <div class="page-gwen-title"><span>AI Master Novel Studio</span><h2>Mục lục</h2><p>Theo dõi cấu trúc truyện và chọn chương để viết tiếp.</p></div>
+    <div id="gwenHost-outline" class="page-gwen-host" aria-label="Gwen đồng hành trong mục Mục lục"></div>
+  </section>
   <div class="card">
     <div class="flex justify-between items-center border-b border-white/15 pb-3 mb-4 flex-wrap gap-2">
       <h2 id="outlineBookTitle" class="text-sm font-bold text-emerald-400">Mục lục</h2>
@@ -223,6 +260,10 @@ body::before{content:"";position:fixed;inset:-10% 0 0 0;z-index:-1;pointer-event
 </div>
 
 <div id="page-reader" class="page-view grid grid-cols-1 lg:grid-cols-12 gap-6">
+  <section class="page-gwen-banner" style="--page-banner-image:var(--a4)">
+    <div class="page-gwen-title"><span>AI Master Novel Studio</span><h2>Đọc & Sửa chương</h2><p>Đọc lại, chỉnh sửa và hoàn thiện từng chương truyện.</p></div>
+    <div id="gwenHost-reader" class="page-gwen-host" aria-label="Gwen đồng hành trong mục Đọc & Sửa chương"></div>
+  </section>
   <div class="lg:col-span-3 card p-4 space-y-3">
     <h3 class="text-xs font-semibold text-indigo-400 border-b border-white/15 pb-2">Danh mục chương</h3>
     <div id="readerSidebarTree" class="space-y-3 max-h-[560px] overflow-y-auto pr-1 text-xs"></div>
@@ -249,9 +290,45 @@ body::before{content:"";position:fixed;inset:-10% 0 0 0;z-index:-1;pointer-event
   </div>
 </div>
 
-<div id="page-history" class="page-view"><div class="card space-y-4">
+<div id="page-history" class="page-view">
+  <section class="page-gwen-banner" style="--page-banner-image:var(--a6)">
+    <div class="page-gwen-title"><span>AI Master Novel Studio</span><h2>Lịch sử phiên bản</h2><p>Lưu và khôi phục những mốc quan trọng của dự án.</p></div>
+    <div id="gwenHost-history" class="page-gwen-host" aria-label="Gwen đồng hành trong mục Lịch sử phiên bản"></div>
+  </section><div class="card space-y-4">
   <div class="flex justify-between items-center border-b border-white/15 pb-3 flex-wrap gap-2"><h2 class="text-sm font-bold text-rose-400">Lịch sử phiên bản của dự án</h2><button onclick="snapManual()" class="btn bg-emerald-600 hover:bg-emerald-500">＋ Lưu phiên bản hiện tại</button></div>
   <div id="histList" class="space-y-2"></div></div></div>
+
+<div id="page-audio" class="page-view">
+  <section class="page-gwen-banner" style="--page-banner-image:var(--a7)">
+    <div class="page-gwen-title"><span>AI Master Novel Studio</span><h2>Truyện nói</h2><p>Nghe chương truyện bằng giọng trình duyệt miễn phí hoặc tạo file MP3 để tải về.</p></div>
+    <div id="gwenHost-audio" class="page-gwen-host" aria-label="Gwen đồng hành trong mục Truyện nói"></div>
+  </section>
+  <div class="card space-y-4">
+    <div class="flex justify-between items-center flex-wrap gap-2 border-b border-white/15 pb-3">
+      <div><h2 class="text-sm font-bold text-violet-300">🎧 Chuyển truyện thành âm thanh</h2><p id="audioBookTitle" class="text-xs text-slate-300 mt-1">Chọn một chương đã có nội dung để bắt đầu.</p></div>
+      <span class="text-[11px] text-emerald-300">Nghe bằng trình duyệt: miễn phí</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div><label class="lb" for="audioChapterSelect">Chương đã viết</label><select id="audioChapterSelect" class="inp"><option value="">Chưa có chương đã viết</option></select></div>
+      <div><label class="lb" for="audioVoice">Giọng tạo MP3</label><select id="audioVoice" class="inp"><option value="vi-VN-HoaiMyNeural">Giọng nữ · Hoài My</option><option value="vi-VN-NamMinhNeural">Giọng nam · Nam Minh</option></select></div>
+      <div><label class="lb" for="audioRate">Tốc độ đọc MP3</label><select id="audioRate" class="inp"><option value="-10%">Chậm hơn</option><option value="+0%" selected>Bình thường</option><option value="+10%">Nhanh hơn</option></select></div>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <button id="audioListenBtn" onclick="audioListenBrowser()" class="btn bg-indigo-600 hover:bg-indigo-500">🔊 Nghe truyện miễn phí</button>
+      <button onclick="audioPauseBrowser()" class="btn bg-slate-700 hover:bg-slate-600">⏸ Tạm dừng / tiếp tục</button>
+      <button onclick="audioStopBrowser()" class="btn bg-slate-800 hover:bg-slate-700">⏹ Dừng nghe</button>
+      <button id="audioMp3Btn" onclick="audioDownloadCurrentMp3()" class="btn bg-emerald-600 hover:bg-emerald-500">⬇ Tạo & tải MP3 chương này</button>
+      <button id="audioZipBtn" onclick="audioDownloadAllZip()" class="btn bg-fuchsia-600 hover:bg-fuchsia-500">📦 Tải MP3 các chương đã viết (ZIP)</button>
+    </div>
+    <audio id="audioPlayer" class="w-full hidden" controls></audio>
+    <div class="space-y-2">
+      <div class="flex justify-between gap-3 text-xs"><span id="audioStatus" class="text-slate-300" role="status">Chọn chương để nghe hoặc tải MP3.</span><span id="audioProgress" class="text-amber-300"></span></div>
+      <div class="h-2 rounded-full bg-slate-800 overflow-hidden"><div id="audioProgressBar" class="h-full w-0 bg-gradient-to-r from-indigo-500 to-fuchsia-500 transition-all"></div></div>
+    </div>
+    <p class="text-[11px] text-slate-400 leading-relaxed">Lưu ý: nghe trong trình duyệt không cần API. Tạo file MP3 dùng endpoint miễn phí dựa trên Edge TTS, cần kết nối Internet và có thể bị giới hạn hoặc gián đoạn. Nếu dịch vụ không hoạt động, bạn vẫn có thể dùng chức năng nghe miễn phí của trình duyệt.</p>
+  </div>
+</div>
+
 </main>
 
 <div id="modal" class="hidden fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4">
@@ -491,11 +568,166 @@ function initProjects() {
 }
 
 function switchPage(id) {
-  ['home', 'bible', 'outline', 'reader', 'history'].forEach(p => {
-    $('page-' + p).classList.toggle('active', p === id);
-    $('nav-' + p).classList.toggle('on', p === id);
+  ['home', 'bible', 'outline', 'reader', 'history', 'audio'].forEach(p => {
+    const page = $('page-' + p), nav = $('nav-' + p);
+    if (page) page.classList.toggle('active', p === id);
+    if (nav) nav.classList.toggle('on', p === id);
   });
+  if (window.gwenPlaceInPage) window.gwenPlaceInPage(id);
+  if (id === 'audio' && typeof renderAudioChapterOptions === 'function') renderAudioChapterOptions();
 }
+// ===== Truyện nói: nghe miễn phí bằng trình duyệt và xuất MP3 qua API =====
+let _audioObjectUrl = null;
+function audioFileSafe(s) {
+  return String(s || 'truyen').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9_-]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 70) || 'truyen';
+}
+function renderAudioChapterOptions() {
+  const sel = $('audioChapterSelect'); if (!sel) return;
+  const old = sel.value;
+  const list = chapters().filter(c => (c.text || '').trim());
+  sel.innerHTML = list.length ? list.map(c => `<option value="${String(c.id)}">Chương ${c.id}: ${esc(c.title || '')}</option>`).join('') : '<option value="">Chưa có chương đã viết</option>';
+  if (list.some(c => String(c.id) === old)) sel.value = old;
+  if ($('audioBookTitle')) $('audioBookTitle').textContent = (book.title || 'Truyện chưa đặt tên') + ` · ${list.length} chương có nội dung`;
+  if ($('audioMp3Btn')) $('audioMp3Btn').disabled = !list.length;
+  if ($('audioZipBtn')) $('audioZipBtn').disabled = !list.length;
+}
+function audioSelectedChapter() {
+  const id = $('audioChapterSelect')?.value;
+  return chapters().find(c => String(c.id) === String(id) && (c.text || '').trim());
+}
+function audioSelectedText() {
+  const ch = audioSelectedChapter();
+  if (!ch) return '';
+  // Nếu đang sửa đúng chương trong khung đọc thì lấy văn bản mới nhất đang thấy trên màn hình.
+  if (String(cur) === String(ch.id) && $('readerContentEditor') && $('readerContentEditor').value.trim()) return $('readerContentEditor').value.trim();
+  return (ch.text || '').trim();
+}
+function audioStatus(text, percent) {
+  if ($('audioStatus')) $('audioStatus').textContent = text;
+  if ($('audioProgress')) $('audioProgress').textContent = percent == null ? '' : `${Math.round(percent)}%`;
+  if ($('audioProgressBar')) $('audioProgressBar').style.width = percent == null ? '0%' : `${Math.max(0, Math.min(100, percent))}%`;
+}
+function splitAudioText(text, limit = 1600) {
+  const sentences = String(text).replace(/\r/g, '').split(/(?<=[.!?…])\s+|\n+/);
+  const result = []; let part = '';
+  for (let sentence of sentences) {
+    sentence = sentence.trim(); if (!sentence) continue;
+    while (sentence.length > limit) {
+      const cut = sentence.lastIndexOf(' ', limit);
+      const at = cut > limit * .55 ? cut : limit;
+      if (part) { result.push(part); part = ''; }
+      result.push(sentence.slice(0, at).trim()); sentence = sentence.slice(at).trim();
+    }
+    if (!part) part = sentence;
+    else if ((part + ' ' + sentence).length <= limit) part += ' ' + sentence;
+    else { result.push(part); part = sentence; }
+  }
+  if (part) result.push(part);
+  return result;
+}
+function audioGetNativeVoice() {
+  if (!('speechSynthesis' in window)) return null;
+  const voices = window.speechSynthesis.getVoices() || [];
+  const wanted = $('audioVoice')?.value || 'vi-VN-HoaiMyNeural';
+  const key = wanted.includes('HoaiMy') ? ['hoaimy', 'hoai my', 'female', 'nữ'] : ['namminh', 'nam minh', 'male', 'nam'];
+  return voices.find(v => v.lang && /^vi(-|_)/i.test(v.lang) && key.some(k => v.name.toLowerCase().includes(k)))
+    || voices.find(v => v.lang && /^vi(-|_)/i.test(v.lang)) || null;
+}
+function audioListenBrowser() {
+  const text = audioSelectedText();
+  if (!text) return msg('Chưa có nội dung chương để nghe. Hãy viết hoặc chọn chương đã viết trước.');
+  if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) return msg('Trình duyệt này không hỗ trợ đọc văn bản. Hãy thử Microsoft Edge hoặc Chrome.');
+  window.speechSynthesis.cancel();
+  const chunks = splitAudioText(text, 1700);
+  const voice = audioGetNativeVoice();
+  const r = $('audioRate')?.value || '+0%';
+  const rate = r === '-10%' ? 0.9 : r === '+10%' ? 1.1 : 1;
+  chunks.forEach((chunk, i) => {
+    const u = new SpeechSynthesisUtterance(chunk); u.lang = 'vi-VN'; u.rate = rate;
+    if (voice) u.voice = voice;
+    if (i === 0) u.onstart = () => audioStatus('Đang đọc bằng giọng có sẵn của trình duyệt…', 0);
+    if (i === chunks.length - 1) u.onend = () => audioStatus('Đã đọc xong chương.', 100);
+    u.onerror = () => audioStatus('Trình duyệt không đọc được đoạn này. Thử bấm nghe lại.', null);
+    window.speechSynthesis.speak(u);
+  });
+  audioStatus(`Đang chuẩn bị đọc ${chunks.length} đoạn bằng giọng trình duyệt.`, 0);
+}
+function audioPauseBrowser() {
+  if (!('speechSynthesis' in window)) return;
+  if (window.speechSynthesis.paused) window.speechSynthesis.resume();
+  else if (window.speechSynthesis.speaking) window.speechSynthesis.pause();
+  else audioListenBrowser();
+}
+function audioStopBrowser() {
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+  audioStatus('Đã dừng đọc.', null);
+}
+function audioSaveBlob(blob, filename) {
+  const url = URL.createObjectURL(blob); const a = document.createElement('a');
+  a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+}
+async function audioRequestMp3(text, onChunk) {
+  const chunks = splitAudioText(text, 1450);
+  if (!chunks.length) throw new Error('Nội dung chương đang trống.');
+  const files = [];
+  for (let i = 0; i < chunks.length; i++) {
+    if (onChunk) onChunk(i + 1, chunks.length);
+    const response = await fetch('/api/tts', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: chunks[i], voice: $('audioVoice').value, rate: $('audioRate').value })
+    });
+    if (!response.ok) {
+      let detail = 'Không tạo được MP3. Hãy thử lại sau.';
+      try { const data = await response.json(); if (data && data.error) detail = data.error; } catch (_) {}
+      throw new Error(detail);
+    }
+    files.push(await response.blob());
+  }
+  return new Blob(files, { type: 'audio/mpeg' });
+}
+async function audioDownloadCurrentMp3() {
+  const ch = audioSelectedChapter(), text = audioSelectedText();
+  if (!ch || !text) return msg('Chọn một chương đã viết trước khi tải MP3.');
+  const btn = $('audioMp3Btn'); btn.disabled = true;
+  try {
+    audioStatus(`Đang tạo MP3 cho chương ${ch.id}…`, 0);
+    const blob = await audioRequestMp3(text, (i, n) => audioStatus(`Đang tạo âm thanh: đoạn ${i}/${n}…`, (i - 1) / n * 100));
+    if (_audioObjectUrl) URL.revokeObjectURL(_audioObjectUrl);
+    _audioObjectUrl = URL.createObjectURL(blob);
+    const player = $('audioPlayer'); player.src = _audioObjectUrl; player.classList.remove('hidden');
+    audioSaveBlob(blob, `${audioFileSafe(book.title)}_Chuong_${ch.id}.mp3`);
+    audioStatus(`Đã tạo và tải MP3 chương ${ch.id}.`, 100);
+  } catch (e) { audioStatus(e.message || 'Có lỗi khi tạo MP3.', null); msg(e.message || 'Có lỗi khi tạo MP3.'); }
+  finally { btn.disabled = false; }
+}
+async function audioDownloadAllZip() {
+  if (!window.JSZip) return msg('Không tải được thư viện ZIP. Hãy tải lại trang rồi thử lại.');
+  const list = chapters().filter(c => (c.text || '').trim());
+  if (!list.length) return msg('Chưa có chương nào đã viết để tạo MP3.');
+  const btn = $('audioZipBtn'); btn.disabled = true;
+  const zip = new JSZip(); let finished = 0;
+  try {
+    for (const ch of list) {
+      audioStatus(`Đang tạo MP3 chương ${ch.id} (${finished + 1}/${list.length})…`, finished / list.length * 100);
+      const parts = splitAudioText(ch.text, 1450); const audioParts = [];
+      for (let i = 0; i < parts.length; i++) {
+        audioStatus(`Chương ${ch.id}: tạo đoạn ${i + 1}/${parts.length} · ${finished + 1}/${list.length} chương`, (finished + i / parts.length) / list.length * 100);
+        const response = await fetch('/api/tts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: parts[i], voice: $('audioVoice').value, rate: $('audioRate').value }) });
+        if (!response.ok) { let d = 'Dịch vụ TTS không tạo được âm thanh.'; try { const j = await response.json(); if (j.error) d = j.error; } catch (_) {} throw new Error(`Chương ${ch.id}: ${d}`); }
+        audioParts.push(await response.blob());
+      }
+      zip.file(`${audioFileSafe(book.title)}_Chuong_${String(ch.id).padStart(2, '0')}.mp3`, new Blob(audioParts, { type: 'audio/mpeg' }));
+      finished++;
+    }
+    audioStatus('Đang đóng gói các file MP3 thành ZIP…', 98);
+    const blob = await zip.generateAsync({ type: 'blob' });
+    audioSaveBlob(blob, `${audioFileSafe(book.title)}_Truyen_noi.zip`);
+    audioStatus(`Hoàn tất: ${finished} chương đã được đóng gói thành ZIP.`, 100);
+  } catch (e) { audioStatus(e.message || 'Có lỗi khi xuất ZIP.', null); msg(e.message || 'Có lỗi khi xuất ZIP.'); }
+  finally { btn.disabled = false; }
+}
+
 let _bp = 0, _bc = 90, _bt = null;
 function paintBusy() { const p = Math.round(_bp); $('busyBar').style.width = p + '%'; $('busyRun').style.left = p + '%'; $('busyRun').style.transform = `translateX(-${p}%)`; $('busyPct').textContent = p + '%'; }
 // setBusy(chữ, % bắt đầu, % trần): nhân vật tự chạy chậm dần tới "trần" trong lúc chờ AI
@@ -784,6 +1016,7 @@ function renderAll() {
         ${p.chapters.map(c => `<button onclick="openChapter(${c.id})" class="w-full text-left px-2 py-1.5 rounded text-xs hover:bg-slate-800 truncate ${c.id === cur ? 'text-amber-300' : 'text-slate-300'}">${done(c) ? '✓ ' : c.text ? '… ' : ''}Chương ${c.id}: ${esc(c.title)}</button>`).join('')}
       </div>
     </div>`).join('');
+  renderAudioChapterOptions();
 }
 
 function openChapter(id) {
@@ -821,7 +1054,7 @@ function makePetals() {
   for (let i = 0; i < 16; i++) { const s = document.createElement('span'); s.className = 'petal'; s.style.cssText = `left:${Math.random() * 100}%;animation-duration:${7 + Math.random() * 7}s;animation-delay:${-Math.random() * 12}s;width:${7 + Math.random() * 7}px;height:${6 + Math.random() * 5}px`; b.appendChild(s); }
 }
 // Tạm thời cho tới khi Gwen 3D tải xong (module ở cuối trang sẽ thay thế)
-window.gwenToggleAuto = window.gwenFace = () => msg('Gwen đang tải, thử lại sau giây lát.');
+window.gwenRunSide = window.gwenToggleAuto = window.gwenFace = window.gwenLaugh = window.gwenBlink = window.gwenTransform = () => msg('Gwen đang tải, thử lại sau giây lát.');
 setTimeout(() => { if (!window.__gwenStart) { $('gwenMsg').textContent = 'Không tải được thư viện 3D (three.js). Hãy kiểm tra mạng hoặc tắt tiện ích chặn quảng cáo rồi tải lại trang.'; $('gwenFallback').classList.remove('hidden'); } }, 10000);
 
 document.querySelectorAll('[data-runner]').forEach(e => { e.innerHTML = RUNNER; });
@@ -840,7 +1073,7 @@ renderAll();
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 const G$ = id => document.getElementById(id), stage = G$('gwenStage'), canvas = G$('gwenCanvas');
-const showFallback = () => { G$('gwenLoad').classList.add('hidden'); G$('gwenFallback').classList.remove('hidden'); };
+const showFallback = () => { G$('gwenLoad').classList.remove('hidden'); G$('gwenFallback').classList.add('hidden'); if (G$('gwenMsg')) G$('gwenMsg').textContent = 'Không thể khởi tạo 3D. Hãy tải lại trang hoặc chọn file gwen.glb bên dưới.'; if (G$('gwenPick')) G$('gwenPick').classList.remove('hidden'); };
 window.__gwenStart = true;
 let renderer = null;
 try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true }); } catch (e) {}
@@ -848,16 +1081,18 @@ if (!renderer) showFallback();
 else {
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(28, 1, 0.1, 60), clock = new THREE.Clock();
-  const CAM_Y = 1.15, DIST = 6.2, SPEED = 2.3, PI = Math.PI;
-  const S = { auto: true, face: false, x: -2, ry: PI / 2, goal: null, dir: 1, mode: 'run', edges: 0, t: 0 };
+  const CAM_Y = 1.12, DIST = 5.9, SPEED = 2.45, PI = Math.PI;
+  const S = { auto: false, face: false, x: -2, ry: 0, goal: null, dir: 1, nextSide: 'right', mode: 'idle', edges: 0, t: 0 };
   const acts = {}, look = new THREE.Vector3(0, CAM_Y, 0), hp = new THREE.Vector3(), gPos = new THREE.Vector3(), gLook = new THREE.Vector3();
-  let model, mixer, head, cur, emoteAct, halfW = 3, lastEmote = '';
+  let model, pivot, mixer, head, cur, emoteAct, halfW = 3, lastEmote = '';
+  let dragYaw = 0, dragPitch = 0, dragging = false, dragMoved = false, pointerX = 0, pointerY = 0, blinkTime = -1, blinkFactor = 1;
+  const raycaster = new THREE.Raycaster(), pointer = new THREE.Vector2();
   cam.position.set(0, CAM_Y, DIST);
   // bóng đổ mềm dưới chân
   const sc = document.createElement('canvas'); sc.width = sc.height = 64;
   const g2 = sc.getContext('2d'), gr = g2.createRadialGradient(32, 32, 2, 32, 32, 30);
   gr.addColorStop(0, 'rgba(0,0,0,.5)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); g2.fillStyle = gr; g2.fillRect(0, 0, 64, 64);
-  const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1.1, 1.1), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sc), transparent: true, depthWrite: false }));
+  const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 1.5), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sc), transparent: true, depthWrite: false }));
   shadow.rotation.x = -PI / 2; shadow.position.y = 0.01; scene.add(shadow);
 
   function resize() {
@@ -869,7 +1104,9 @@ else {
 
   const fade = (a, d = 0.25) => { if (!a || cur === a) return; a.reset().setEffectiveWeight(1).fadeIn(d).play(); if (cur) cur.fadeOut(d); cur = a; };
   const loop = a => { a.setLoop(THREE.LoopRepeat, Infinity); a.clampWhenFinished = false; return a; };
-  const lim = () => Math.max(1, halfW - 0.8);
+  const lim = () => Math.max(0.9, halfW - 0.8);
+  const edgePos = side => { const L = lim(), inset = Math.min(0.85, L * 0.48); return side === 'right' ? L - inset : -L + inset; };
+  function updateGwenRunButton() { const b = G$('gwenAutoBtn'); if (!b) return; const moving = S.mode === 'run' && S.goal !== null; b.disabled = moving; b.textContent = moving ? '⏳ Gwen đang chạy…' : (S.nextSide === 'right' ? '▶ Chạy sang phải' : '◀ Chạy về trái'); b.classList.toggle('opacity-60', moving); }
   const EMOTES = ['Greeting', 'Laugh01', 'PetChibiGwen_Base_joke.anm', 'Celebrate', 'Laugh02', 'Interact', 'Cast_Animation', 'Dance_Loop', 'PetChibiGwen_Base_tuant.anm'];
   const FACE_EMOTES = ['Laugh02', 'Greeting', 'Laugh01'];
   function setMove() { S.mode = 'run'; const a = acts.Run || acts.Run01 || acts.Run_Haste; if (a) fade(loop(a)); }
@@ -879,12 +1116,17 @@ else {
     if (!n) return setIdle();
     const a = acts[n]; lastEmote = n; emoteAct = a; a.setLoop(THREE.LoopOnce, 1); a.clampWhenFinished = true; S.mode = 'emote'; S.t = 0; fade(a);
   }
-  function endEmote() { emoteAct = null; if (S.face) setIdle(); else if (S.auto || S.goal !== null) setMove(); else setIdle(); }
+  function endEmote() { emoteAct = null; setIdle(); updateGwenRunButton(); }
   function arrive() {
     const clicked = S.goal !== null; S.goal = null;
-    if (!clicked) S.dir *= -1; // tới mép thì quay đầu
-    S.edges++;
-    if (clicked || S.edges % 2 === 0) startEmote(); else if (!S.auto) setIdle();
+    if (clicked) {
+      S.nextSide = S.x >= 0 ? 'left' : 'right';
+      updateGwenRunButton();
+      startEmote(FACE_EMOTES);
+      return;
+    }
+    S.dir *= -1; S.edges++;
+    setIdle(); updateGwenRunButton();
   }
 
   function logic(dt) {
@@ -894,11 +1136,18 @@ else {
       tRy = d > 0 ? PI / 2 : -PI / 2;
       if (Math.abs(d) <= st) { S.x = g; arrive(); } else S.x += Math.sign(d) * st;
     }
-    if (!S.face && S.auto && S.mode === 'run' && S.goal === null) { S.t += dt; if (S.t > 7 + Math.random() * 5) startEmote(); }
-    if (S.face && S.mode === 'idle') { S.t += dt; if (S.t > 3.5) startEmote(FACE_EMOTES); }
+    if (S.face && S.mode === 'idle') { S.t += dt; if (S.t > 5.5) { S.t = 0; startEmote(FACE_EMOTES); } }
     const d = (((tRy - S.ry + PI) % (2 * PI)) + 2 * PI) % (2 * PI) - PI;
     S.ry += d * Math.min(1, dt * 10);
-    model.position.x = S.x; model.rotation.y = S.ry; shadow.position.x = S.x;
+    if (pivot) { pivot.position.x = S.x; pivot.rotation.y = S.ry + dragYaw; pivot.rotation.x = dragPitch; }
+    shadow.position.x = S.x;
+    if (head && blinkTime >= 0) {
+      if (blinkFactor !== 1) head.scale.y /= blinkFactor;
+      const p = Math.min(1, blinkTime / 0.18);
+      blinkFactor = p < 0.5 ? 1 - 0.08 * (p / 0.5) : 0.92 + 0.08 * ((p - 0.5) / 0.5);
+      head.scale.y *= blinkFactor; blinkTime += dt;
+      if (blinkTime >= 0.18) { if (blinkFactor !== 1) head.scale.y /= blinkFactor; blinkFactor = 1; blinkTime = -1; }
+    }
   }
 
   function tick() {
@@ -921,10 +1170,20 @@ else {
     if (model) return;
     model = gltf.scene;
     model.traverse(o => { if (o.isMesh) o.frustumCulled = false; if (o.isBone && o.name === 'Head') head = o; });
-    scene.add(model); mixer = new THREE.AnimationMixer(model);
+    // Chuẩn hóa chiều cao để Gwen không bị quá nhỏ/lệch chân trên màn hình rộng.
+    model.updateMatrixWorld(true);
+    const bounds = new THREE.Box3().setFromObject(model);
+    const size = bounds.getSize(new THREE.Vector3());
+    const center = bounds.getCenter(new THREE.Vector3());
+    const factor = 2.28 / Math.max(size.y, 0.01);
+    model.scale.setScalar(factor);
+    model.position.set(-center.x * factor, -bounds.min.y * factor, -center.z * factor);
+    pivot = new THREE.Group(); pivot.add(model); scene.add(pivot);
+    mixer = new THREE.AnimationMixer(model);
     gltf.animations.forEach(c => { acts[c.name] = mixer.clipAction(c); });
     mixer.addEventListener('finished', e => { if (e.action === emoteAct) endEmote(); });
-    G$('gwenLoad').classList.add('hidden'); window.__gwenOk = true; resize(); setMove(); tick();
+    G$('gwenLoad').classList.add('hidden'); window.__gwenOk = true; resize();
+    S.x = edgePos('left'); S.nextSide = 'right'; S.ry = 0; setIdle(); updateGwenRunButton(); tick();
   }
   const useBuf = buf => new Promise((res, rej) => loader.parse(buf, '', res, rej)).then(setup);
   (async () => {
@@ -942,24 +1201,62 @@ else {
     try { await useBuf(b); } catch (er) { say('Không đọc được file Gwen: ' + (er.message || er), true); }
   });
 
-  // bấm vào sân khấu để Gwen chạy tới chỗ đó
-  stage.addEventListener('click', e => {
-    if (!model || S.face) return;
-    const r = stage.getBoundingClientRect(), L = lim();
-    S.goal = Math.max(-L, Math.min(L, ((e.clientX - r.left) / r.width * 2 - 1) * halfW));
-    emoteAct = null; setMove();
+  // Kéo để xoay Gwen; bấm trực tiếp vào nhân vật để kích hoạt biểu cảm.
+  canvas.addEventListener('pointerdown', e => { dragging = true; dragMoved = false; pointerX = e.clientX; pointerY = e.clientY; try { canvas.setPointerCapture(e.pointerId); } catch (_) {} });
+  canvas.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const dx = e.clientX - pointerX, dy = e.clientY - pointerY;
+    if (Math.abs(dx) + Math.abs(dy) > 3) dragMoved = true;
+    dragYaw += dx * 0.009; dragPitch = Math.max(-0.24, Math.min(0.24, dragPitch + dy * 0.003));
+    pointerX = e.clientX; pointerY = e.clientY;
   });
-  window.gwenToggleAuto = () => {
-    S.auto = !S.auto; G$('gwenAutoBtn').textContent = S.auto ? '⏸ Dừng chạy' : '▶ Tự chạy';
-    if (!model || S.face) return;
-    if (S.auto) { if (S.mode === 'idle') setMove(); } else if (S.mode === 'run' && S.goal === null) setIdle();
+  const endDrag = e => {
+    if (!dragging) return; dragging = false;
+    if (!dragMoved && model) {
+      const r = canvas.getBoundingClientRect();
+      pointer.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+      pointer.y = -(((e.clientY - r.top) / r.height) * 2 - 1);
+      raycaster.setFromCamera(pointer, cam);
+      if (raycaster.intersectObject(model, true).length) startEmote(['Laugh01', 'Laugh02', 'Greeting']);
+    }
+  };
+  canvas.addEventListener('pointerup', endDrag); canvas.addEventListener('pointercancel', () => { dragging = false; });
+
+  window.gwenRunSide = window.gwenToggleAuto = () => {
+    if (!model) return;
+    if (S.mode === 'run' && S.goal !== null) return;
+    S.face = false; stage.classList.remove('face'); G$('gwenFaceBtn').textContent = '🔍 Xem mặt';
+    S.goal = edgePos(S.nextSide); emoteAct = null; setMove(); updateGwenRunButton();
+  };
+  window.gwenLaugh = () => { if (!model) return; if (S.mode === 'run') return msg('Đợi Gwen chạy tới nơi rồi hãy đổi biểu cảm.'); startEmote(['Laugh01', 'Laugh02']); };
+  window.gwenBlink = () => { if (!model) return; if (S.mode === 'run') return msg('Đợi Gwen chạy tới nơi rồi hãy đổi biểu cảm.'); blinkTime = 0; startEmote(['PetChibiGwen_Base_joke.anm', 'Laugh02']); };
+  window.gwenTransform = () => {
+    if (!model) return; if (S.mode === 'run') return msg('Đợi Gwen chạy tới nơi rồi hãy dùng hiệu ứng.');
+    stage.classList.remove('transforming'); void stage.offsetWidth; stage.classList.add('transforming');
+    setTimeout(() => stage.classList.remove('transforming'), 900);
+    startEmote(['Cast_Animation', 'Celebrate', 'Dance_In']);
   };
   window.gwenFace = () => {
     S.face = !S.face; stage.classList.toggle('face', S.face);
     G$('gwenFaceBtn').textContent = S.face ? '↩ Thoát xem mặt' : '🔍 Xem mặt';
     if (!model) return;
-    emoteAct = null; S.goal = null; S.t = 0;
-    if (S.face) setIdle(); else if (S.auto) setMove(); else setIdle();
+    emoteAct = null; S.goal = null; S.t = 0; dragYaw = 0; dragPitch = 0; S.ry = 0;
+    if (S.face) setIdle(); else setIdle(); updateGwenRunButton();
+  };
+
+  // Chuyển đúng một renderer Gwen sang banner của mục đang mở; không tải thêm model.
+  const homeStageParent = stage.parentElement, homeStageNext = stage.nextSibling;
+  const homeToolbar = G$('gwenToolbar'), homeToolbarParent = homeToolbar.parentElement, homeToolbarNext = homeToolbar.nextSibling;
+  window.gwenPlaceInPage = id => {
+    if (id === 'home') {
+      homeStageParent.insertBefore(stage, homeStageNext);
+      homeToolbarParent.insertBefore(homeToolbar, homeToolbarNext);
+      stage.classList.remove('compact-gwen');
+    } else {
+      const host = G$('gwenHost-' + id);
+      if (host) { host.appendChild(stage); host.appendChild(homeToolbar); stage.classList.add('compact-gwen'); }
+    }
+    requestAnimationFrame(() => { resize(); updateGwenRunButton(); });
   };
 }
 </script>
